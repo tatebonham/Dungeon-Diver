@@ -30,6 +30,7 @@ class Entity{
 const adventurer = new Entity(10, 300, 25, 25, 'green')
 adventurer.spawn()
 
+const levelOne = ()=>{
 const goblinA = new Entity(300, 300, 25, 25, 'red')
 goblinA.spawn()
 const goblinB = new Entity(200, 230, 25, 25, 'red')
@@ -38,3 +39,17 @@ const goblinC = new Entity(400, 400, 25, 25, 'red')
 goblinC.spawn()
 const goblinD = new Entity(500, 100, 25, 25, 'red')
 goblinD.spawn()
+}
+
+
+function animate(){
+    window.requestAnimationFrame(animate)
+    ctx.fillStyle = 'gray'
+    ctx.fillRect(0,0, canvas.width, canvas.height)
+    // console.log('go')
+    adventurer.spawn()
+    levelOne()
+}
+
+animate()
+
