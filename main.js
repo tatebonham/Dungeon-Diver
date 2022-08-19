@@ -29,3 +29,12 @@ class Entity{
 
 const adventurer = new Entity(10, 300, 25, 25, 'green')
 adventurer.spawn()
+
+const goblinA = new Entity(300, 300, 25, 25, 'red')
+goblinA.spawn()
+const goblinB = new Entity(200, 230, 25, 25, 'red')
+goblinB.spawn()
+const goblinC = new Entity(400, 400, 25, 25, 'red')
+goblinC.spawn()
+const goblinD = new Entity(500, 100, 25, 25, 'red')
+goblinD.spawn()
