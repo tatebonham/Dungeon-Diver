@@ -25,5 +25,7 @@ class Entity{
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.width, this.height)
     }
-
 }
+
+const adventurer = new Entity(10, 300, 25, 25, 'green')
+adventurer.spawn()

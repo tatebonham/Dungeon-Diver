@@ -1,21 +1,20 @@
 html{
+    height: 100%;
     padding: 0;
     margin: 0;
 }
 
 body{
+    position: relative;
     padding: 0;
-    text-align: center;
     background-color: blanchedalmond;
-    background-image: url(./images/gameboy.png);
-    padding-top: 0px;
-    color: white;
-    background-size: cover;
-    background-repeat: space;
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 
-h1, h2 {
+ div {
     font-family: 'Press Start 2P', monospace;
     font-size: 20px;
     margin: 0;
@@ -23,66 +22,70 @@ h1, h2 {
 
 
 canvas {
-    background-image: url('../img/stone.png');
-    background-repeat: repeat;
     background-color: #222;
+    width: 700px;
+    height: 520px;
+  }
+
+  #gameboy{
+    position:absolute;
+    background-image: url(./images/gameboy.png);
+    padding-top: 0px;
+    color: white;
+    background-size: cover;
+    background-repeat: space;
     width: 100%;
     height: 100%;
-  }
-
-
-  #gameboy {
-  max-width: 680px;
-  height: 520px;
-  background-color: black;
-  margin: 188px auto 0px auto;
-  display: grid;
-  grid-gap: 5px;
-  grid-template-rows: 7% 83% 10%;
-  grid-template-columns: 33% 33% 33%;
-  grid-template-areas: "top-left top-right top-right"
-                        "game game game"
-                        "btm-left btm-middle btm-right";
-  }
-  
-  #top-left, #top-right, #btm-left, #btm-right, #btm-middle {
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: tan;
   }
+
+  #screen {
+    position: relative;
+    width: 700px;
+    height: 520px;
+    margin: 170px auto 0px auto;
+  }
+
   
-  #top-left {
-    grid-area: top-left;
-    background-color: tan;
+  #score {
+    margin-top: 5px;
+    margin-left: 5px;
+    position: absolute;
     color: blueviolet;
   }
   
-  #top-right {
-    grid-area: top-right;
-    background-color: tan;
+  #objective {
+    margin-top: 480px;
+    margin-left: 200px;
+    position: absolute;
     color: black;
   }
   
-  main {
-    grid-area: game;
+  #healthBorder{
+
   }
-  
-  
-  #btm-left {
-    grid-area: btm-left;
-    background-color: tan;
+
+  #health {
+    background-color: green;
+    width: 260px;
+    height: 30px;
+    margin-left: 380px;
+    margin-top: 5px;
+    position: absolute;
     color: green;
   }
   
-  #btm-right {
-    grid-area: btm-right;
-    background-color: tan;
+  #gold {
+    margin-top: 5px;
+    margin-left: 200px;
+    position: absolute;
     color: gold;
   }
 
-  #btm-middle {
-    grid-area: btm-middle;
-    background-color: tan;
+  #arrows {
+    margin-top: 480px;
+    margin-left: 10px;
+    position: absolute;
     color: brown;
   }

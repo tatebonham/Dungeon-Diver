@@ -9,16 +9,20 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="gameboy">
-    <aside id="top-right"><h2 id="objective">Slay all the goblins!</h2></aside>
-    <aside id="top-left"><h2 id="score">Score:0</h2></aside>
-    <main>
+<div id="gameboy">   
+  <div id="screen">
+    <div id="objective">Slay all the goblins!</div>
+    <div id="score">Score:0</div>
+    <div>
+        <div id="health"></div>
+    </div>
+    <div id="arrows">Arrows:5</div>
+    <div id="gold">Gold:0</div>
+    <div>
         <canvas id="canvas"><!-- play it, a game --></canvas>
-    </main>
-    <aside id="btm-left"><h2 id="health">3hp</h2></aside>
-    <aside id="btm-middle"><h2 id="arrows">Arrows:5</h2></aside>
-    <aside id="btm-right"><h2 id="gold">Gold:0</h2></aside>
+    </div>
   </div>
+</div>
   <script src="main.js"></script>
 </body>
 </html>
