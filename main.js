@@ -29,8 +29,21 @@ class Entity{
 
     update(){
         this.spawn()
-        this.x += this.speed.x
-        this.y += this.speed.y
+        if(adventurer.x < 0){
+            adventurer.x = 0
+        } else if(adventurer.x + adventurer.width > canvas.width){
+            adventurer.x = canvas.width - adventurer.width
+        } else {
+            this.x += this.speed.x
+        }
+
+        if(adventurer.y < 0){
+            adventurer.y = 0
+        } else if (adventurer.y  + adventurer.height > canvas.height){
+            adventurer.y = canvas.height - adventurer.height    
+        } else {
+            this.y += this.speed.y
+        }
     }
 
 
@@ -62,33 +75,51 @@ function animate(){
 animate()
 
 window.addEventListener('keydown', (event) => {
-    const playerSpeed = 1
     switch(event.key){
         case 'w':
-            adventurer.speed.y = -1
+            adventurer.speed.y = -2
+            break
+        case 'a':
+            adventurer.speed.x = -2
+          
+            break
+        case 's':
+            adventurer.speed.y = 2
+          
+            break
+        case 'd':
+            adventurer.speed.x = 2
+            
+            break
+    }
+})
+
+window.addEventListener('keyup', (event) => {
+    switch(event.key){
+        case 'w':
+            adventurer.speed.y = 0
             if(adventurer.y < 0){
                 adventurer.y = 0
             }
             break
         case 'a':
-            adventurer.speed.x = -1
+            adventurer.speed.x = 0
             if(adventurer.x < 0){
                 adventurer.x = 0
             }
             break
         case 's':
-            adventurer.speed.y = 1
+            adventurer.speed.y = 0
             if(adventurer.y  + adventurer.height > canvas.height){
                 adventurer.y = canvas.height - adventurer.height
             }
             break
         case 'd':
-            adventurer.speed.x = 1
+            adventurer.speed.x = 0
             if(adventurer.x + adventurer.width > canvas.width){
                 adventurer.x = canvas.width - adventurer.width
             }
             break
-
-
     }
 })
+
