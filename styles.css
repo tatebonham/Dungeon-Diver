@@ -1,0 +1,88 @@
+html{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    padding: 0;
+    text-align: center;
+    background-color: blanchedalmond;
+    background-image: url(./images/gameboy.png);
+    padding-top: 0px;
+    color: white;
+    background-size: cover;
+    background-repeat: space;
+}
+
+
+h1, h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 20px;
+    margin: 0;
+}
+
+
+canvas {
+    background-image: url('../img/stone.png');
+    background-repeat: repeat;
+    background-color: #222;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  #gameboy {
+  max-width: 680px;
+  height: 520px;
+  background-color: black;
+  margin: 188px auto 0px auto;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-rows: 7% 83% 10%;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-areas: "top-left top-right top-right"
+                        "game game game"
+                        "btm-left btm-middle btm-right";
+  }
+  
+  #top-left, #top-right, #btm-left, #btm-right, #btm-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: tan;
+  }
+  
+  #top-left {
+    grid-area: top-left;
+    background-color: tan;
+    color: blueviolet;
+  }
+  
+  #top-right {
+    grid-area: top-right;
+    background-color: tan;
+    color: black;
+  }
+  
+  main {
+    grid-area: game;
+  }
+  
+  
+  #btm-left {
+    grid-area: btm-left;
+    background-color: tan;
+    color: green;
+  }
+  
+  #btm-right {
+    grid-area: btm-right;
+    background-color: tan;
+    color: gold;
+  }
+
+  #btm-middle {
+    grid-area: btm-middle;
+    background-color: tan;
+    color: brown;
+  }

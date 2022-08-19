@@ -31,7 +31,6 @@ Delve deep into the dungeons! ...why? To save the survivors of the last party th
 - Make a survivor against the back wall you must touch and tell the way out is clear
 - Make the survivor de-render after saving him (touching his hitbox)
 - Make doors in the dungon wall that take you to the next room
-- Create more than one room
 - Create a treasure pile to win but there is a twist
 - Make a final boss render after touching the treasure
 - Once dead the game will display a message congragulating the adventurers and ending the game
@@ -49,6 +48,7 @@ Delve deep into the dungeons! ...why? To save the survivors of the last party th
 7. Make enemies move toward the adventurer
 8. Have the adventurer and monsters be pushed back when hit
 9. Set respawn point every 2 rooms
+10. Create more than one room
 
 ---
 
