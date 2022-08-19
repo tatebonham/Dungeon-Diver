@@ -63,6 +63,22 @@ const adventurer = new Entity(10, 300, 25, 25, 'green',{speed: {x: 0, y: 0}})
 // goblinD.spawn()
 // }
 
+const keys = {
+    w: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    },
+    s: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    }
+}
+
+let lastKey = ''
 
 function animate(){
     window.requestAnimationFrame(animate)
@@ -71,25 +87,61 @@ function animate(){
     // console.log('go')
     adventurer.update()
     // levelOne()
+    adventurer.speed.x = 0
+    adventurer.speed.y = 0
+    if(keys.d.pressed && keys.s.pressed){
+        adventurer.speed.x = 2
+        adventurer.speed.y = 2
+    }  else if(keys.a.pressed && keys.s.pressed){
+        adventurer.speed.x = -2
+        adventurer.speed.y = 2
+    }  else if(keys.d.pressed && keys.w.pressed){
+        adventurer.speed.x = 2
+        adventurer.speed.y = -2
+    }  else if(keys.a.pressed && keys.w.pressed){
+        adventurer.speed.x = -2
+        adventurer.speed.y = -2
+    } else if(keys.w.pressed && lastKey == 'w'){
+        adventurer.speed.y = -2
+    } else if(keys.a.pressed && lastKey == 'a'){
+        adventurer.speed.x = -2
+    } else if(keys.s.pressed && lastKey == 's'){
+        adventurer.speed.y = 2
+    } else if(keys.d.pressed && lastKey == 'd'){
+        adventurer.speed.x = 2
+    }    
 }
 animate()
 
+const lastKeyPressed = ()=>{
+if(keys.w.pressed){
+        lastKey = 'w'
+}  else if(keys.a.pressed){
+    lastKey = 'a'
+} else if (keys.s.pressed){
+    lastKey = 's'
+} else if(keys.d.pressed){
+    lastKey = 'd'
+}
+
+}
 window.addEventListener('keydown', (event) => {
     switch(event.key){
         case 'w':
-            adventurer.speed.y = -2
+            keys.w.pressed = true
+            lastKeyPressed()
             break
         case 'a':
-            adventurer.speed.x = -2
-          
+            keys.a.pressed = true  
+            lastKeyPressed()  
             break
         case 's':
-            adventurer.speed.y = 2
-          
+            keys.s.pressed = true
+            lastKeyPressed()
             break
         case 'd':
-            adventurer.speed.x = 2
-            
+            keys.d.pressed = true 
+            lastKeyPressed()
             break
     }
 })
@@ -97,28 +149,20 @@ window.addEventListener('keydown', (event) => {
 window.addEventListener('keyup', (event) => {
     switch(event.key){
         case 'w':
-            adventurer.speed.y = 0
-            if(adventurer.y < 0){
-                adventurer.y = 0
-            }
+            keys.w.pressed = false 
+            lastKeyPressed()
             break
         case 'a':
-            adventurer.speed.x = 0
-            if(adventurer.x < 0){
-                adventurer.x = 0
-            }
+            keys.a.pressed = false 
+            lastKeyPressed()
             break
         case 's':
-            adventurer.speed.y = 0
-            if(adventurer.y  + adventurer.height > canvas.height){
-                adventurer.y = canvas.height - adventurer.height
-            }
+            keys.s.pressed = false 
+            lastKeyPressed()
             break
         case 'd':
-            adventurer.speed.x = 0
-            if(adventurer.x + adventurer.width > canvas.width){
-                adventurer.x = canvas.width - adventurer.width
-            }
+            keys.d.pressed = false 
+            lastKeyPressed()
             break
     }
 })
