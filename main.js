@@ -50,6 +50,36 @@ function animate(){
     adventurer.spawn()
     levelOne()
 }
-
 animate()
 
+window.addEventListener('keydown', (event) => {
+    const playerSpeed = 10
+    switch(event.key){
+        case 'w':
+            adventurer.y -= playerSpeed
+            if(adventurer.y < 0){
+                adventurer.y = 0
+            }
+            break
+        case 'a':
+            adventurer.x -= playerSpeed
+            if(adventurer.x < 0){
+                adventurer.x = 0
+            }
+            break
+        case 's':
+            adventurer.y += playerSpeed
+            if(adventurer.y  + adventurer.height > canvas.height){
+                adventurer.y = canvas.height - adventurer.height
+            }
+            break
+        case 'd':
+            adventurer.x += playerSpeed
+            if(adventurer.x + adventurer.width > canvas.width){
+                adventurer.x = canvas.width - adventurer.width
+            }
+            break
+
+
+    }
+})
