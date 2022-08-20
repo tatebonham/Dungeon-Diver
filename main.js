@@ -20,6 +20,7 @@ class Entity{
         this.alive = true
         this.health = health
         this.attackBox = {
+            
             position: this.position,
             width: 50,
             height: 5
@@ -34,7 +35,7 @@ class Entity{
     spawn(){
         ctx.fillStyle = this.color
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
-
+        ctx.fillStyle = 'blue',
         ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
     }
 
@@ -73,10 +74,15 @@ const levelOne = ()=>{
     if(goblinA.alive){
         goblinA.update()
     }
-   
-    goblinB.update()
-    goblinC.update()
-    goblinD.update()
+    if(goblinB.alive){
+        goblinB.update()
+    }
+    if(goblinC.alive){
+        goblinC.update()
+    }
+    if(goblinD.alive){
+        goblinD.update()
+    }
 }
 
 const enemyHit = (player, enemy) => {
@@ -155,6 +161,9 @@ function animate(){
     }    
 
     enemyHit(adventurer, goblinA)
+    enemyHit(adventurer, goblinB)
+    enemyHit(adventurer, goblinC)
+    enemyHit(adventurer, goblinD)
     
 }
 animate()
