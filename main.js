@@ -51,10 +51,19 @@ class Entity{
         }
     }
     
-    hitBox(){
+    visualHitBox(){
         if(this.isAttacking === true){
-            ctx.fillStyle = 'blue',
-            ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y+10, this.attackBox.width, this.attackBox.height)
+            ctx.fillStyle = 'blue'
+            if(lastKey === 'w'){  
+                ctx.fillRect(this.attackBox.position.x+10, this.attackBox.position.y-25, 5, 25)
+            } else if (lastKey === 'a') {
+                ctx.fillRect(this.attackBox.position.x-25, this.attackBox.position.y+10, 25, 5)
+            } else if (lastKey === 's') {
+                ctx.fillRect(this.attackBox.position.x+10, this.attackBox.position.y+25, 5, 25)
+            } else if (lastKey === 'd') {
+                ctx.fillRect(this.attackBox.position.x+25, this.attackBox.position.y+10, 25, 5)
+            }
+
         }
     }
 
@@ -95,8 +104,8 @@ const levelOne = ()=>{
 const enemyHit = (player, enemy) => {
     const left = player.attackBox.position.x + player.attackBox.width >=  enemy.position.x
     const right = player.attackBox.position.x <= enemy.position.x + enemy.width
-    const top = player.attackBox.position.y + player.attackBox.height >= enemy.position.y
-    const bottom = player.attackBox.position.y <= enemy.position.y + enemy.height
+    const top = (player.attackBox.position.y + 10) + player.attackBox.height >= enemy.position.y
+    const bottom = (player.attackBox.position.y + 10) <= enemy.position.y + enemy.height
 
     if(right && left && top && bottom && player.isAttacking){
         enemy.health -= 1
@@ -173,9 +182,10 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     // console.log('go')
-    adventurer.hitBox()
+    
     if(adventurer.alive){
        adventurer.update()
+       adventurer.visualHitBox()
     }
     levelOne()
     adventurer.speed.x = 0
@@ -245,7 +255,9 @@ window.addEventListener('keydown', (event) => {
             lastKeyPressed()
             break
         case 'k':
-            adventurer.attack()
+            if(adventurer.alive){
+                adventurer.attack()
+            }
             console.log('k')
             break
     }
