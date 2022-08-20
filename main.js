@@ -20,9 +20,27 @@ class Entity{
         this.alive = true
         this.health = health
         this.attackBox = {
-            position: this.position,
-            width: 50,
-            height: 5
+            up: {
+                position: this.position,
+                width: 5,
+                height: 50
+            },
+            left: {
+                position: this.position,
+                width: 50,
+                height: 5
+            },
+            down: {
+                position: this.position,
+                width: 5,
+                height: 50
+            },
+            right: {
+                position: this.position,
+                width: 50,
+                height: 5
+            }
+          
         }
         this.isAttacking = false
     }
@@ -55,13 +73,13 @@ class Entity{
         if(this.isAttacking === true){
             ctx.fillStyle = 'blue'
             if(lastKey === 'w'){  
-                ctx.fillRect(this.attackBox.position.x+10, this.attackBox.position.y-25, 5, 25)
+                ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
             } else if (lastKey === 'a') {
-                ctx.fillRect(this.attackBox.position.x-25, this.attackBox.position.y+10, 25, 5)
+                ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+10, this.attackBox.left.width -25, this.attackBox.left.height)
             } else if (lastKey === 's') {
-                ctx.fillRect(this.attackBox.position.x+10, this.attackBox.position.y+25, 5, 25)
+                ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
             } else if (lastKey === 'd') {
-                ctx.fillRect(this.attackBox.position.x+25, this.attackBox.position.y+10, 25, 5)
+                ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+10, this.attackBox.right.width - 25, this.attackBox.right.height)
             }
 
         }
@@ -102,29 +120,63 @@ const levelOne = ()=>{
 }
 
 const enemyHit = (player, enemy) => {
-    const left = player.attackBox.position.x + player.attackBox.width >=  enemy.position.x
-    const right = player.attackBox.position.x <= enemy.position.x + enemy.width
-    const top = (player.attackBox.position.y + 10) + player.attackBox.height >= enemy.position.y
-    const bottom = (player.attackBox.position.y + 10) <= enemy.position.y + enemy.height
+    const rLeft = player.attackBox.right.position.x + player.attackBox.right.width >=  enemy.position.x
+    const rRight = player.attackBox.right.position.x <= enemy.position.x + enemy.width
+    const rTop = (player.attackBox.right.position.y + 10) >= enemy.position.y
+    const rBottom = (player.attackBox.right.position.y + 10) + player.attackBox.right.height<= enemy.position.y + enemy.height
 
-    if(right && left && top && bottom && player.isAttacking){
-        enemy.health -= 1
-        if(enemy.health == 1 && lastKey == 'w'){
-            enemy.position.y -= 30
-        } else if (enemy.health == 1 && lastKey == 'a') {
-            enemy.position.x -= 30
-        } else if (enemy.health == 1 && lastKey == 's') {
-            enemy.position.y += 30
-        } else if (enemy.health == 1 && lastKey == 'd') {
-            enemy.position.x += 30
-        } else if (enemy.health == 0){
-            enemy.alive = false
-        }
-    } else{
-        return false
+    const lLeft = (player.attackBox.left.position.x - 25)+ player.attackBox.left.width >=  enemy.position.x
+    const lRight = player.attackBox.left.position.x - 25 <= enemy.position.x + enemy.width
+    const lTop = (player.attackBox.left.position.y + 10) + player.attackBox.left.height >= enemy.position.y
+    const lBottom = (player.attackBox.left.position.y + 10) <= enemy.position.y + enemy.height
+
+    const uLeft = (player.attackBox.up.position.x + 10 )+ player.attackBox.up.width >=  enemy.position.x
+    const uRight = (player.attackBox.up.position.x + 10) <= enemy.position.x + enemy.width
+    const uTop = (player.attackBox.up.position.y - 25) + player.attackBox.up.height >= enemy.position.y
+    const uBottom = (player.attackBox.up.position.y - 25) <= enemy.position.y + enemy.height
+
+    const dLeft = (player.attackBox.down.position.x + 10)+ player.attackBox.down.width >=  enemy.position.x
+    const dRight = player.attackBox.down.position.x + 10 <= enemy.position.x + enemy.width
+    const dTop = player.attackBox.down.position.y + player.attackBox.down.height >= enemy.position.y
+    const dBottom = player.attackBox.down.position.y  <= enemy.position.y + enemy.height
+
+
+    if(player.isAttacking){
+        if(uRight && uLeft && uTop && uBottom && lastKey == 'w'){
+            enemy.health -= 1
+            if(enemy.health == 1){
+                enemy.position.y -= 60
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }   
+        } else if (lRight && lLeft && lTop && lBottom && lastKey == 'a') {
+            enemy.health -= 1
+            if(enemy.health == 1){
+                enemy.position.x -= 60
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }            
+        } else if (dRight && dLeft && dTop && dBottom && lastKey == 's') {
+            enemy.health -= 1
+            if(enemy.health == 1){
+                enemy.position.y += 60
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }          
+        } else if (rRight && rLeft && rTop && rBottom && lastKey == 'd') {
+            enemy.health -= 1
+            if(enemy.health == 1){
+                enemy.position.x += 60
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }         
+       }
+    } else {
+     return false
     }
-
 }
+
+
 const playerHit = (player, enemy) => {
     const left = enemy.position.x + enemy.width >=  player.position.x
     const right = enemy.position.x <= player.position.x + player.width
@@ -181,8 +233,7 @@ function animate(){
     window.requestAnimationFrame(animate)
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
-    // console.log('go')
-    
+ 
     if(adventurer.alive){
        adventurer.update()
        adventurer.visualHitBox()
@@ -211,7 +262,7 @@ function animate(){
     } else if(keys.d.pressed && lastKey == 'd'){
         adventurer.speed.x = 3
     }    
-
+    // console.log(lastKey)
     enemyHit(adventurer, goblinA)
     enemyHit(adventurer, goblinB)
     enemyHit(adventurer, goblinC)
