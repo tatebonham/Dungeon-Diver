@@ -87,7 +87,13 @@ const enemyHit = (player, enemy) => {
 
     if(right && left && top && bottom){
         enemy.health -= 1
-        if(enemy.health == 1){
+        if(enemy.health == 1 && lastKey == 'w'){
+            enemy.position.y -= 30
+        } else if (enemy.health == 1 && lastKey == 'a') {
+            enemy.position.x -= 30
+        } else if (enemy.health == 1 && lastKey == 's') {
+            enemy.position.y += 30
+        } else if (enemy.health == 1 && lastKey == 'd') {
             enemy.position.x += 30
         } else if (enemy.health == 0){
             enemy.alive = false
@@ -95,8 +101,6 @@ const enemyHit = (player, enemy) => {
     } else{
         return false
     }
-
-
 
 }
 
