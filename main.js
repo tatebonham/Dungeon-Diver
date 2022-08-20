@@ -11,45 +11,51 @@ canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 
 class Entity{
-    constructor(x, y, width, height, color, {speed}){
-        this.x = x
-        this.y = y
+    constructor({position}, width, height, color, {speed}){
+        this.position = position
         this.width = width
         this.height = height
         this.color = color
         this.speed = speed
         this.alive = true
+        this.attackBox = {
+            position: this.position,
+            width: 50,
+            height: 5
+        }
     }
 
 
     spawn(){
         ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+
+        ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
     }
 
     update(){
         this.spawn()
-        if(adventurer.x < 0){
-            adventurer.x = 0
-        } else if(adventurer.x + adventurer.width > canvas.width){
-            adventurer.x = canvas.width - adventurer.width
+        if(this.position.x < 0){
+            this.position.x = 0
+        } else if(this.position.x + this.width > canvas.width){
+            this.position.x = canvas.width - this.width
         } else {
-            this.x += this.speed.x
+            this.position.x += this.speed.x
         }
 
-        if(adventurer.y < 0){
-            adventurer.y = 0
-        } else if (adventurer.y  + adventurer.height > canvas.height){
-            adventurer.y = canvas.height - adventurer.height    
+        if(this.position.y < 0){
+            this.position.y = 0
+        } else if (this.position.y  + this.height > canvas.height){
+            this.position.y = canvas.height - this.height    
         } else {
-            this.y += this.speed.y
+            this.position.y += this.speed.y
         }
     }
 
 
 }
 
-const adventurer = new Entity(10, 300, 25, 25, 'green',{speed: {x: 0, y: 0}})
+const adventurer = new Entity({position: {x: 10, y: 300}}, 25, 25, 'green',{speed: {x: 0, y: 0}})
 // adventurer.spawn()
 
 // const levelOne = ()=>{
