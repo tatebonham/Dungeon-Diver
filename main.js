@@ -103,9 +103,26 @@ const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: 
 const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 
+const enemyAttack = (player, enemy)=>{
+    if(enemy.position.x >= player.position.x){
+        enemy.position.x -= .2
+    }
+    if(enemy.position.x <= player.position.x){
+        enemy.position.x += .2
+    }
+    if(enemy.position.y >= player.position.y){
+        enemy.position.y -= .2
+    }
+    if(enemy.position.y <= player.position.y){
+        enemy.position.y += .2
+    }
+    
 
+
+}
 const levelOne = ()=>{
     if(goblinA.alive){
+        enemyAttack(adventurer, goblinA)
         goblinA.update()
     }
     if(goblinB.alive){
@@ -118,6 +135,9 @@ const levelOne = ()=>{
         goblinD.update()
     }
 }
+
+
+
 
 const enemyHit = (player, enemy) => {
     const rLeft = player.attackBox.right.position.x + player.attackBox.right.width >=  enemy.position.x
