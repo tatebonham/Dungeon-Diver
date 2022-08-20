@@ -24,13 +24,9 @@ class Entity{
             width: 50,
             height: 5
         }
+        this.isAttacking = false
     }
 
-    // attack(){
-    //     console.log('working')
-    //     ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-    //     goblinA.alive = false
-    // }
     spawn(){
         ctx.fillStyle = this.color
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
@@ -56,7 +52,14 @@ class Entity{
             this.position.y += this.speed.y
         }
     }
-
+    
+    attack(){
+        this.isAttacking = true
+        console.log(this.isAttacking)
+        setTimeout(()=>{
+            this.isAttacking = false
+        }, 100)
+    }
 
 }
 
@@ -90,7 +93,7 @@ const enemyHit = (player, enemy) => {
     const top = player.attackBox.position.y + player.attackBox.height >= enemy.position.y
     const bottom = player.attackBox.position.y <= enemy.position.y + enemy.height
 
-    if(right && left && top && bottom){
+    if(right && left && top && bottom && player.isAttacking){
         enemy.health -= 1
         if(enemy.health == 1 && lastKey == 'w'){
             enemy.position.y -= 30
@@ -109,22 +112,30 @@ const enemyHit = (player, enemy) => {
 
 }
 const playerHit = (player, enemy) => {
-    const left = enemy.attackBox.position.x + enemy.attackBox.width >=  player.position.x
-    const right = enemy.attackBox.position.x <= player.position.x + player.width
-    const top = enemy.attackBox.position.y + enemy.attackBox.height >= player.position.y
-    const bottom = enemy.attackBox.position.y <= player.position.y + player.height
+    const left = enemy.position.x + enemy.width >=  player.position.x
+    const right = enemy.position.x <= player.position.x + player.width
+    const top = enemy.position.y + enemy.height >= player.position.y
+    const bottom = enemy.position.y <= player.position.y + player.height
 
-    if(right && left && top && bottom){
+    if(right && left && top && bottom && enemy.alive){
         player.health -= 1
-        if(player.health == 1 || player.health == 2 && lastKey == 'w'){
-            player.position.y += 30
-        } else if (player.health == 1 || player.health == 2 && lastKey == 'a') {
-            player.position.x += 30
-        } else if (player.health == 1 || player.health == 2 && lastKey == 's') {
-            player.position.y -= 30
-        } else if (player.health == 1 || player.health == 2 && lastKey == 'd') {
-            player.position.x -= 30
-        } else if (player.health == 0){
+        if(player.health === 2 && lastKey === 'w'){
+            player.position.y += 60
+        } else if (player.health === 2 && lastKey === 'a') {
+            player.position.x += 60
+        } else if (player.health === 2 && lastKey === 's') {
+            player.position.y -= 60
+        } else if (player.health === 2 && lastKey === 'd') {
+            player.position.x -= 60
+        } else if (player.health === 1 && lastKey === 'w') {
+            player.position.y += 60
+        } else if (player.health === 1 && lastKey === 'a') {
+            player.position.x += 60
+        } else if (player.health === 1 && lastKey === 's') {
+            player.position.y -= 60
+        } else if (player.health === 1 && lastKey === 'd') {
+            player.position.x -= 60
+        } else if (player.health === 0){
             player.alive = false
         }
     } else{
