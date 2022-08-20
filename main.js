@@ -30,8 +30,6 @@ class Entity{
     spawn(){
         ctx.fillStyle = this.color
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
-        ctx.fillStyle = 'blue',
-        ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
     }
 
     update(){
@@ -53,12 +51,19 @@ class Entity{
         }
     }
     
+    hitBox(){
+        if(this.isAttacking === true){
+            ctx.fillStyle = 'blue',
+            ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y+10, this.attackBox.width, this.attackBox.height)
+        }
+    }
+
     attack(){
         this.isAttacking = true
         console.log(this.isAttacking)
         setTimeout(()=>{
             this.isAttacking = false
-        }, 100)
+        }, 200)
     }
 
 }
@@ -168,6 +173,7 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     // console.log('go')
+    adventurer.hitBox()
     if(adventurer.alive){
        adventurer.update()
     }
