@@ -25,12 +25,16 @@ class Entity{
         }
     }
 
+    attack(){
+        console.log('working')
+        ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+    }
 
     spawn(){
         ctx.fillStyle = this.color
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
 
-        ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        // ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
     }
 
     update(){
@@ -58,16 +62,16 @@ class Entity{
 const adventurer = new Entity({position: {x: 10, y: 300}}, 25, 25, 'green',{speed: {x: 0, y: 0}})
 // adventurer.spawn()
 
-// const levelOne = ()=>{
-// const goblinA = new Entity(300, 300, 25, 25, 'red')
-// goblinA.spawn()
-// const goblinB = new Entity(200, 230, 25, 25, 'red')
-// goblinB.spawn()
-// const goblinC = new Entity(400, 400, 25, 25, 'red')
-// goblinC.spawn()
-// const goblinD = new Entity(500, 100, 25, 25, 'red')
-// goblinD.spawn()
-// }
+const levelOne = ()=>{
+const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
+goblinA.update()
+const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
+goblinB.update()
+const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
+goblinC.update()
+const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
+goblinD.update()
+}
 
 const keys = {
     w: {
@@ -92,7 +96,7 @@ function animate(){
     ctx.fillRect(0,0, canvas.width, canvas.height)
     // console.log('go')
     adventurer.update()
-    // levelOne()
+    levelOne()
     adventurer.speed.x = 0
     adventurer.speed.y = 0
     if(keys.d.pressed && keys.s.pressed){
@@ -148,6 +152,10 @@ window.addEventListener('keydown', (event) => {
         case 'd':
             keys.d.pressed = true 
             lastKeyPressed()
+            break
+        case 'k':
+            adventurer.attack()
+            console.log('k')
             break
     }
 })
