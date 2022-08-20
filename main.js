@@ -11,13 +11,14 @@ canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 
 class Entity{
-    constructor({position}, width, height, color, {speed}){
+    constructor({position}, width, height, color, {speed}, health){
         this.position = position
         this.width = width
         this.height = height
         this.color = color
         this.speed = speed
         this.alive = true
+        this.health = health
         this.attackBox = {
             position: this.position,
             width: 50,
@@ -25,32 +26,32 @@ class Entity{
         }
     }
 
-    attack(){
-        console.log('working')
-        ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-    }
-
+    // attack(){
+    //     console.log('working')
+    //     ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+    //     goblinA.alive = false
+    // }
     spawn(){
         ctx.fillStyle = this.color
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
 
-        // ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
     }
 
     update(){
         this.spawn()
-        if(this.position.x < 0){
-            this.position.x = 0
-        } else if(this.position.x + this.width > canvas.width){
-            this.position.x = canvas.width - this.width
+        if(this.position.x < 30){
+            this.position.x = 30
+        } else if(this.position.x + this.width > 670){
+            this.position.x = 670 - this.width
         } else {
             this.position.x += this.speed.x
         }
 
-        if(this.position.y < 0){
-            this.position.y = 0
-        } else if (this.position.y  + this.height > canvas.height){
-            this.position.y = canvas.height - this.height    
+        if(this.position.y < 60){
+            this.position.y = 60
+        } else if (this.position.y  + this.height > 460){
+            this.position.y = 460 - this.height    
         } else {
             this.position.y += this.speed.y
         }
@@ -59,19 +60,47 @@ class Entity{
 
 }
 
-const adventurer = new Entity({position: {x: 10, y: 300}}, 25, 25, 'green',{speed: {x: 0, y: 0}})
+const adventurer = new Entity({position: {x: 40, y: 70}}, 25, 25, 'green',{speed: {x: 0, y: 0}}, 3)
 // adventurer.spawn()
 
+const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
+const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
+const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
+const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
+
+
 const levelOne = ()=>{
-const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
-goblinA.update()
-const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
-goblinB.update()
-const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
-goblinC.update()
-const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}})
-goblinD.update()
+    if(goblinA.alive){
+        goblinA.update()
+    }
+   
+    goblinB.update()
+    goblinC.update()
+    goblinD.update()
 }
+
+const enemyHit = (player, enemy) => {
+    const left = player.attackBox.position.x + player.attackBox.width >=  enemy.position.x
+    const right = player.attackBox.position.x <= enemy.position.x + enemy.width
+    const top = player.attackBox.position.y + player.height >= enemy.position.y
+    const bottom = player.attackBox.position.y <= enemy.position.y + enemy.height
+
+    if(right && left && top && bottom){
+        enemy.health -= 1
+        if(enemy.health == 1){
+            enemy.position.x += 30
+        } else if (enemy.health == 0){
+            enemy.alive = false
+        }
+    } else{
+        return false
+    }
+
+
+
+}
+
+
 
 const keys = {
     w: {
@@ -100,26 +129,29 @@ function animate(){
     adventurer.speed.x = 0
     adventurer.speed.y = 0
     if(keys.d.pressed && keys.s.pressed){
-        adventurer.speed.x = 2
-        adventurer.speed.y = 2
+        adventurer.speed.x = 3
+        adventurer.speed.y = 3
     }  else if(keys.a.pressed && keys.s.pressed){
-        adventurer.speed.x = -2
-        adventurer.speed.y = 2
+        adventurer.speed.x = -3
+        adventurer.speed.y = 3
     }  else if(keys.d.pressed && keys.w.pressed){
-        adventurer.speed.x = 2
-        adventurer.speed.y = -2
+        adventurer.speed.x = 3
+        adventurer.speed.y = -3
     }  else if(keys.a.pressed && keys.w.pressed){
-        adventurer.speed.x = -2
-        adventurer.speed.y = -2
+        adventurer.speed.x = -3
+        adventurer.speed.y = -3
     } else if(keys.w.pressed && lastKey == 'w'){
-        adventurer.speed.y = -2
+        adventurer.speed.y = -3
     } else if(keys.a.pressed && lastKey == 'a'){
-        adventurer.speed.x = -2
+        adventurer.speed.x = -3
     } else if(keys.s.pressed && lastKey == 's'){
-        adventurer.speed.y = 2
+        adventurer.speed.y = 3
     } else if(keys.d.pressed && lastKey == 'd'){
-        adventurer.speed.x = 2
+        adventurer.speed.x = 3
     }    
+
+    enemyHit(adventurer, goblinA)
+    
 }
 animate()
 
