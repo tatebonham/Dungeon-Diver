@@ -20,7 +20,6 @@ class Entity{
         this.alive = true
         this.health = health
         this.attackBox = {
-            
             position: this.position,
             width: 50,
             height: 5
@@ -88,7 +87,7 @@ const levelOne = ()=>{
 const enemyHit = (player, enemy) => {
     const left = player.attackBox.position.x + player.attackBox.width >=  enemy.position.x
     const right = player.attackBox.position.x <= enemy.position.x + enemy.width
-    const top = player.attackBox.position.y + player.height >= enemy.position.y
+    const top = player.attackBox.position.y + player.attackBox.height >= enemy.position.y
     const bottom = player.attackBox.position.y <= enemy.position.y + enemy.height
 
     if(right && left && top && bottom){
@@ -103,6 +102,30 @@ const enemyHit = (player, enemy) => {
             enemy.position.x += 30
         } else if (enemy.health == 0){
             enemy.alive = false
+        }
+    } else{
+        return false
+    }
+
+}
+const playerHit = (player, enemy) => {
+    const left = enemy.attackBox.position.x + enemy.attackBox.width >=  player.position.x
+    const right = enemy.attackBox.position.x <= player.position.x + player.width
+    const top = enemy.attackBox.position.y + enemy.attackBox.height >= player.position.y
+    const bottom = enemy.attackBox.position.y <= player.position.y + player.height
+
+    if(right && left && top && bottom){
+        player.health -= 1
+        if(player.health == 1 || player.health == 2 && lastKey == 'w'){
+            player.position.y += 30
+        } else if (player.health == 1 || player.health == 2 && lastKey == 'a') {
+            player.position.x += 30
+        } else if (player.health == 1 || player.health == 2 && lastKey == 's') {
+            player.position.y -= 30
+        } else if (player.health == 1 || player.health == 2 && lastKey == 'd') {
+            player.position.x -= 30
+        } else if (player.health == 0){
+            player.alive = false
         }
     } else{
         return false
@@ -134,7 +157,9 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     // console.log('go')
-    adventurer.update()
+    if(adventurer.alive){
+       adventurer.update()
+    }
     levelOne()
     adventurer.speed.x = 0
     adventurer.speed.y = 0
@@ -164,6 +189,10 @@ function animate(){
     enemyHit(adventurer, goblinB)
     enemyHit(adventurer, goblinC)
     enemyHit(adventurer, goblinD)
+    playerHit(adventurer,goblinA)
+    playerHit(adventurer,goblinB)
+    playerHit(adventurer,goblinC)
+    playerHit(adventurer,goblinD)
     
 }
 animate()
