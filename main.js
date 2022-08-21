@@ -43,6 +43,7 @@ class Entity{
           
         }
         this.isAttacking = false
+        this.notSafe = true
     }
 
     spawn(){
@@ -71,7 +72,7 @@ class Entity{
     
     visualHitBox(){
         if(this.isAttacking === true){
-            ctx.fillStyle = 'blue'
+            ctx.fillStyle = 'black'
             if(lastKey === 'w'){  
                 ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
             } else if (lastKey === 'a') {
@@ -96,7 +97,7 @@ class Entity{
 }
 
 const adventurer = new Entity({position: {x: 40, y: 70}}, 25, 25, 'green',{speed: {x: 0, y: 0}}, 3)
-// adventurer.spawn()
+const survivorRoomOne = new Entity({position: {x: 650, y: 350}}, 25, 25, 'blue', {speed: {x: 0, y:0}})
 
 const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
@@ -119,11 +120,13 @@ const enemyAttack = (player, enemy)=>{
     }
     
 }
+
 const levelOne = ()=>{
     if(goblinA.alive){
         // enemyAttack(adventurer, goblinA)
         goblinA.update()
     } 
+
     if(goblinB.alive){
         // enemyAttack(adventurer, goblinB)
         goblinB.update()
@@ -136,11 +139,49 @@ const levelOne = ()=>{
         // enemyAttack(adventurer, goblinD)
         goblinD.update()
     }
+    if(survivorRoomOne.notSafe){
+        survivorRoomOne.update()
+    }
 }
 
+let scoreCount = 0
+let goldCount = 0
+let arrowCount = 5
+// let healthCount = 0
 
+const keepTrack = () => {
+    if(scoreCount >= 10){
+        score.innerText =  `Score:${scoreCount}`
+    } else {
+        score.innerText =  `Score: ${scoreCount}`
+    }
+    if(goldCount >= 10){
+        gold.innerText = `Gold:${goldCount}`
+    } else {
+        gold.innerText = `Gold: ${goldCount}`
+    }
+    if(arrowCount >= 10){
+        arrows.innerText = `Arrows:${arrowCount}`
+    } else {
+        arrows.innerText = `Arrows: ${arrowCount}`
+    }
+   
+   
+    
+}
 
-
+const saveSurvivor = (survivor, player) => {
+    const left = survivor.position.x + survivor.width >=  player.position.x
+    const right = survivor.position.x <= player.position.x + player.width
+    const top = survivor.position.y + survivor.height >= player.position.y
+    const bottom = survivor.position.y <= player.position.y + player.height
+    
+    if(right && left && top && bottom && survivor.notSafe){
+        survivor.notSafe = false
+    } else {
+        return false
+    }
+}
 
 
 const enemyHit = (player, enemy) => {
@@ -171,6 +212,7 @@ const enemyHit = (player, enemy) => {
             if(enemy.health == 1){
                 enemy.position.y -= 60
             } else if (enemy.health == 0){
+                scoreCount += 1
                 enemy.alive = false
             }   
         } else if (lRight && lLeft && lTop && lBottom && lastKey == 'a') {
@@ -178,6 +220,7 @@ const enemyHit = (player, enemy) => {
             if(enemy.health == 1){
                 enemy.position.x -= 60
             } else if (enemy.health == 0){
+                scoreCount += 1
                 enemy.alive = false
             }            
         } else if (dRight && dLeft && dTop && dBottom && lastKey == 's') {
@@ -185,6 +228,7 @@ const enemyHit = (player, enemy) => {
             if(enemy.health == 1){
                 enemy.position.y += 60
             } else if (enemy.health == 0){
+                scoreCount += 1
                 enemy.alive = false
             }          
         } else if (rRight && rLeft && rTop && rBottom && lastKey == 'd') {
@@ -192,6 +236,7 @@ const enemyHit = (player, enemy) => {
             if(enemy.health == 1){
                 enemy.position.x += 60
             } else if (enemy.health == 0){
+                scoreCount += 1
                 enemy.alive = false
             }         
        }
@@ -264,11 +309,11 @@ const gameBorders = () => {
 
     ctx.fillStyle = 'black'
     //score background
-    ctx.fillRect(0, 1, 150, 29)
+    ctx.fillRect(0, 1, 170, 29)
     //gold background
-    ctx.fillRect(195, 1, 127, 29)
+    ctx.fillRect(195, 1, 146, 29)
     //arrows background
-    ctx.fillRect(55, 490, 168, 26)
+    ctx.fillRect(55, 490, 188, 26)
     //objective background
     ctx.fillRect(275, 490, 420, 26)
 
@@ -294,15 +339,14 @@ const gameBorders = () => {
     
 
     //top left background border
-    ctx.fillRect(150, 4, 45, 26)
+    ctx.fillRect(170, 4, 25, 26)
     //top right background border
-    ctx.fillRect(322, 4, 58, 26)
-    ctx.fillRect(223, 490, 52, 26)
-    // ctx.fillRect()
-    // ctx.fillRect()
-    // ctx.fillRect()
+    ctx.fillRect(341, 4, 39, 26)
+    //bottom background border
+    ctx.fillRect(241, 490, 34, 26)
+ 
 
-    ctx.fillStyle = 'brown'
+    ctx.fillStyle = 'purple'
       //top wall
       ctx.fillRect(0, 35, 700, 24)
       //left wall
@@ -358,7 +402,8 @@ function animate(){
     playerHit(adventurer,goblinB)
     playerHit(adventurer,goblinC)
     playerHit(adventurer,goblinD)
-    
+    keepTrack()
+    saveSurvivor(survivorRoomOne, adventurer)
 }
 animate()
 
