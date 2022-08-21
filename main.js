@@ -200,16 +200,33 @@ const saveSurvivor = (survivor, player) => {
 
 const arrowHit = (arrow, enemy) => {
         // AABB -- axis aligned bounding box collision detection
-        const Left = arrow.x + arrow.width >= enemy.x
+        const Left = arrow.position.x + arrow.width >= enemy.position.x
     
-        const Right = arrow.x <= enemy.x + enemy.width 
+        const Right = arrow.position.x <= enemy.position.x + enemy.width 
     
-        const Top = arrow.y + arrow.height >= enemy.y
+        const Top = arrow.position.y + arrow.height >= enemy.position.y
     
-        const Bottom = arrow.y <= enemy.y + enemy.height
+        const Bottom = arrow.position.y <= enemy.position.y + enemy.height
     
         if(Right && Left && Bottom && Top){
-            enemy.alive = false
+            enemy.health -= 1
+            if(enemy.health >= 1 && arrow.speed.x > 0){
+                enemy.position.x += 60
+                arrow.alive = false
+            } else if(enemy.health >=  1 && arrow.speed.x < 0){
+                enemy.position.x -= 60
+                arrow.alive = false
+            } else if(enemy.health >=  1 && arrow.speed.y < 0){
+                enemy.position.y -= 60
+                arrow.alive = false
+            } else if(enemy.health >=  1 && arrow.speed.y > 0){
+                enemy.position.y += 60
+                arrow.alive = false
+            } else if (enemy.health == 0){
+                scoreCount += 1
+                enemy.alive = false
+                arrow.alive = false
+            }    
         } else {
             return false
         }
@@ -240,7 +257,7 @@ const enemyHit = (player, enemy) => {
     if(player.isAttacking){
         if(uRight && uLeft && uTop && uBottom && lastKey == 'w'){
             enemy.health -= 1
-            if(enemy.health == 1){
+            if(enemy.health >= 1){
                 enemy.position.y -= 60
             } else if (enemy.health == 0){
                 scoreCount += 1
@@ -248,7 +265,7 @@ const enemyHit = (player, enemy) => {
             }   
         } else if (lRight && lLeft && lTop && lBottom && lastKey == 'a') {
             enemy.health -= 1
-            if(enemy.health == 1){
+            if(enemy.health >= 1){
                 enemy.position.x -= 60
             } else if (enemy.health == 0){
                 scoreCount += 1
@@ -256,7 +273,7 @@ const enemyHit = (player, enemy) => {
             }            
         } else if (dRight && dLeft && dTop && dBottom && lastKey == 's') {
             enemy.health -= 1
-            if(enemy.health == 1){
+            if(enemy.health >= 1){
                 enemy.position.y += 60
             } else if (enemy.health == 0){
                 scoreCount += 1
@@ -264,7 +281,7 @@ const enemyHit = (player, enemy) => {
             }          
         } else if (rRight && rLeft && rTop && rBottom && lastKey == 'd') {
             enemy.health -= 1
-            if(enemy.health == 1){
+            if(enemy.health >= 1){
                 enemy.position.x += 60
             } else if (enemy.health == 0){
                 scoreCount += 1
@@ -285,21 +302,13 @@ const playerHit = (player, enemy) => {
 
     if(right && left && top && bottom && enemy.alive){
         player.health -= 1
-        if(player.health === 2 && lastKey === 'w'){
+        if(player.health >= 2 && lastKey === 'w'){
             player.position.y += 60
-        } else if (player.health === 2 && lastKey === 'a') {
+        } else if (player.health >= 1 && lastKey === 'a') {
             player.position.x += 60
-        } else if (player.health === 2 && lastKey === 's') {
+        } else if (player.health >= 1 && lastKey === 's') {
             player.position.y -= 60
-        } else if (player.health === 2 && lastKey === 'd') {
-            player.position.x -= 60
-        } else if (player.health === 1 && lastKey === 'w') {
-            player.position.y += 60
-        } else if (player.health === 1 && lastKey === 'a') {
-            player.position.x += 60
-        } else if (player.health === 1 && lastKey === 's') {
-            player.position.y -= 60
-        } else if (player.health === 1 && lastKey === 'd') {
+        } else if (player.health >= 1 && lastKey === 'd') {
             player.position.x -= 60
         } else if (player.health === 0){
             player.alive = false
@@ -424,12 +433,15 @@ function animate(){
         adventurer.speed.x = 3
     }    
     arrowArr.forEach(projectile =>{
+        if(projectile.alive){
         projectile.position.x += projectile.speed.x
+        projectile.position.y += projectile.speed.y
         projectile.update()
         arrowHit(projectile,goblinA)
         arrowHit(projectile,goblinB)
         arrowHit(projectile,goblinC)
         arrowHit(projectile,goblinD)
+        }
     })
 
     // console.log(lastKey)
