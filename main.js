@@ -149,6 +149,16 @@ let goldCount = 0
 let arrowCount = 5
 // let healthCount = 0
 
+const arrowArr = []
+
+const arrowDirection = () =>{
+   if(lastKey ==='d'){
+    arrowArr.push(new Entity({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 10}}, 20, 3, 'black', {speed: {x: 0, y: 0}}, 0))
+    arrowArr[i].speed.x = 1
+    }
+}
+
+
 const keepTrack = () => {
     if(scoreCount >= 10){
         score.innerText =  `Score:${scoreCount}`
@@ -281,6 +291,7 @@ const playerHit = (player, enemy) => {
 
 
 
+
 const keys = {
     w: {
         pressed: false
@@ -355,8 +366,6 @@ const gameBorders = () => {
       ctx.fillRect(671, 40, 30, 421)
       //bottom wall
       ctx.fillRect(0, 461, 700, 24)
-  
-
 
 }
 function animate(){
@@ -393,6 +402,12 @@ function animate(){
     } else if(keys.d.pressed && lastKey == 'd'){
         adventurer.speed.x = 3
     }    
+    for(let i = 0; i < arrowArr.length; i++){
+        arrowArr[i].position.x += arrowArr[i].speed.x
+        arrowArr[i].position.y += arrowArr[i].speed.y
+        arrowArr[i].update()
+        console.log('go')
+    }
     // console.log(lastKey)
     enemyHit(adventurer, goblinA)
     enemyHit(adventurer, goblinB)
@@ -443,6 +458,11 @@ window.addEventListener('keydown', (event) => {
             }
             console.log('k')
             break
+        case 'l' : 
+        if(adventurer.alive && arrowCount >= 1){
+            arrowDirection()
+        }
+        break
     }
 })
 
