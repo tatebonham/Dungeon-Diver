@@ -97,8 +97,93 @@ class Entity{
     }
 
 }
+class Player{
+    constructor({position}, width, height, color, {speed}, health){
+        this.position = position
+        this.width = width
+        this.height = height
+        this.color = color
+        this.speed = speed
+        this.alive = true
+        this.health = health
+        this.attackBox = {
+            up: {
+                position: this.position,
+                width: 5,
+                height: 50
+            },
+            left: {
+                position: this.position,
+                width: 50,
+                height: 5
+            },
+            down: {
+                position: this.position,
+                width: 5,
+                height: 50
+            },
+            right: {
+                position: this.position,
+                width: 50,
+                height: 5
+            }
+          
+        }
+        this.isAttacking = false
+        this.notSafe = true
+    }
 
-const adventurer = new Entity({position: {x: 40, y: 70}}, 25, 25, 'green',{speed: {x: 0, y: 0}}, 3)
+    spawn(){
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+
+    update(){
+        this.spawn()
+        if(this.position.x < 30){
+            this.position.x = 30
+        } else if(this.position.x + this.width > 670){
+            this.position.x = 670 - this.width
+        } else {
+            this.position.x += this.speed.x
+        }
+
+        if(this.position.y < 60){
+            this.position.y = 60
+        } else if (this.position.y  + this.height > 460){
+            this.position.y = 460 - this.height    
+        } else {
+            this.position.y += this.speed.y
+        }
+    }
+    
+    visualHitBox(){
+        if(this.isAttacking === true){
+            ctx.fillStyle = 'black'
+            if(lastKey === 'w'){  
+                ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
+            } else if (lastKey === 'a') {
+                ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+10, this.attackBox.left.width -25, this.attackBox.left.height)
+            } else if (lastKey === 's') {
+                ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
+            } else if (lastKey === 'd') {
+                ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+10, this.attackBox.right.width - 25, this.attackBox.right.height)
+            }
+
+        }
+    }
+
+    attack(){
+        this.isAttacking = true
+        console.log(this.isAttacking)
+        setTimeout(()=>{
+            this.isAttacking = false
+        }, 200)
+    }
+
+}
+
+const adventurer = new Player({position: {x: 40, y: 70}}, 25, 25, 'green',{speed: {x: 0, y: 0}}, 3)
 const survivorRoomOne = new Entity({position: {x: 650, y: 350}}, 25, 25, 'blue', {speed: {x: 0, y:0}})
 
 const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
@@ -353,18 +438,6 @@ const keys = {
 }
 
 let lastKey = ''
-class Sprite {
-    constructor({position, imageSrc}){
-        this.position = position
-        this.width = 29
-        this.height = 29
-        this.image = new Image()
-        this.image.src = imageSrc
-    }
-    draw(){
-        ctx.drawImage(this.image,this.position.x,this.position.y)
-    }
-}
 const gameBorders = () => {
     //health bar border
     ctx.fillStyle = 'darkgreen'
@@ -403,7 +476,7 @@ const gameBorders = () => {
     ctx.fillRect(695, 485, 5, 31)
     //bottom top border
     ctx.fillRect(0, 485, 700, 5)
-    
+   
 
     //top left background border
     ctx.fillRect(170, 4, 25, 26)
@@ -457,9 +530,9 @@ const gameState=()=>{
 
 animate()
 
-
 function animate(){
     window.requestAnimationFrame(animate)
+   
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     gameBorders()

@@ -135,7 +135,6 @@ canvas {
     margin-top: 58px;
     margin-left: 671px;
     position: absolute;
-    color: olive;
     background-image: url(./images/WallTilePreviewScaled\ \(2\).png);
 
   }
@@ -145,7 +144,6 @@ canvas {
     margin-top: 35px;
     margin-left: 29px;
     position: absolute;
-    color: olive;
     background-image: url(./images/WallTilePreviewScaled\ \(2\).png);
 
   }
@@ -155,6 +153,5 @@ canvas {
     margin-top: 451px;
     margin-left: 0px;
     position: absolute;
-    color: olive;
     background-image: url(./images/WallTilePreviewScaled\ \(2\).png);
   }
