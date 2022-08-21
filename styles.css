@@ -49,17 +49,17 @@ canvas {
 
   
   #score {
-    margin-top: 5px;
-    margin-left: 5px;
+    margin-top: 8px;
+    margin-left: 8px;
     position: absolute;
     color: blueviolet;
   }
   
   #objective {
-    margin-top: 480px;
-    margin-left: 200px;
+    margin-top: 494px;
+    margin-left: 280px;
     position: absolute;
-    color: black;
+    color: white;
   }
   
   #healthBorder{
@@ -68,24 +68,23 @@ canvas {
 
   #health {
     background-color: green;
-    width: 260px;
-    height: 30px;
-    margin-left: 380px;
-    margin-top: 5px;
+    width: 261px;
+    height: 22px;
+    margin-left: 382px;
+    margin-top: 6px;
     position: absolute;
-    color: green;
   }
   
   #gold {
-    margin-top: 5px;
+    margin-top: 8px;
     margin-left: 200px;
     position: absolute;
     color: gold;
   }
 
   #arrows {
-    margin-top: 480px;
-    margin-left: 10px;
+    margin-top: 494px;
+    margin-left: 60px;
     position: absolute;
-    color: brown;
+    color: olive;
   }
