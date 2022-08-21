@@ -153,8 +153,13 @@ const arrowArr = []
 
 const arrowDirection = () =>{
    if(lastKey ==='d'){
-    arrowArr.push(new Entity({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 10}}, 20, 3, 'black', {speed: {x: 0, y: 0}}, 0))
-    arrowArr[i].speed.x = 1
+    arrowArr.push(new Entity({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: 1.5, y: 0}}, 0))
+    } else if(lastKey === 'w'){
+        arrowArr.push(new Entity({position: {x: adventurer.position.x + 12, y: adventurer.position.y - 19}}, 3, 20, 'black', {speed: {x: 0, y: -1.5}}, 0))
+    } else if(lastKey === 'a'){
+        arrowArr.push(new Entity({position: {x: adventurer.position.x - 19, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: -1.5, y: 0}}, 0))
+    } else if(lastKey === 's'){
+        arrowArr.push(new Entity({position: {x: adventurer.position.x + 12, y: adventurer.position.y + adventurer.height}}, 3, 20, 'black', {speed: {x: 0, y: 1.5}}, 0))
     }
 }
 
@@ -193,12 +198,28 @@ const saveSurvivor = (survivor, player) => {
     }
 }
 
+const arrowHit = (arrow, enemy) => {
+        // AABB -- axis aligned bounding box collision detection
+        const Left = arrow.x + arrow.width >= enemy.x
+    
+        const Right = arrow.x <= enemy.x + enemy.width 
+    
+        const Top = arrow.y + arrow.height >= enemy.y
+    
+        const Bottom = arrow.y <= enemy.y + enemy.height
+    
+        if(Right && Left && Bottom && Top){
+            enemy.alive = false
+        } else {
+            return false
+        }
+}
 
 const enemyHit = (player, enemy) => {
     const rLeft = player.attackBox.right.position.x + player.attackBox.right.width >=  enemy.position.x
     const rRight = player.attackBox.right.position.x <= enemy.position.x + enemy.width
-    const rTop = (player.attackBox.right.position.y + 10) >= enemy.position.y
-    const rBottom = (player.attackBox.right.position.y + 10) + player.attackBox.right.height<= enemy.position.y + enemy.height
+    const rTop =  (player.attackBox.right.position.y + 10) + player.attackBox.right.height>= enemy.position.y
+    const rBottom =(player.attackBox.right.position.y + 10) <= enemy.position.y + enemy.height
 
     const lLeft = (player.attackBox.left.position.x - 25)+ player.attackBox.left.width >=  enemy.position.x
     const lRight = player.attackBox.left.position.x - 25 <= enemy.position.x + enemy.width
@@ -402,13 +423,17 @@ function animate(){
     } else if(keys.d.pressed && lastKey == 'd'){
         adventurer.speed.x = 3
     }    
-    for(let i = 0; i < arrowArr.length; i++){
-        arrowArr[i].position.x += arrowArr[i].speed.x
-        arrowArr[i].position.y += arrowArr[i].speed.y
-        arrowArr[i].update()
-        console.log('go')
-    }
+    arrowArr.forEach(projectile =>{
+        projectile.position.x += projectile.speed.x
+        projectile.update()
+        arrowHit(projectile,goblinA)
+        arrowHit(projectile,goblinB)
+        arrowHit(projectile,goblinC)
+        arrowHit(projectile,goblinD)
+    })
+
     // console.log(lastKey)
+    
     enemyHit(adventurer, goblinA)
     enemyHit(adventurer, goblinB)
     enemyHit(adventurer, goblinC)
@@ -461,6 +486,7 @@ window.addEventListener('keydown', (event) => {
         case 'l' : 
         if(adventurer.alive && arrowCount >= 1){
             arrowDirection()
+            
         }
         break
     }
