@@ -95,8 +95,71 @@ class Entity{
             this.isAttacking = false
         }, 200)
     }
-
 }
+class Sprite{
+    constructor({position, imageSrc, scale = 1, framesMax = 1}){
+        this.position = position
+        this.width = 25
+        this.height = 25
+        this.image = new Image()
+        this.image.src = imageSrc
+        this.scale = scale
+        this.framesMax = framesMax
+        this.framesCurrent = 0
+        this.framesElaped = 0
+        this.framesHold = 5
+    }
+
+        draw(){
+            
+            ctx.drawImage(
+                this.image, 
+                this.framesCurrent * (this.image.width / this.framesMax),
+                0,
+                this.image.width / this.framesMax,
+                this.image.height,
+                
+
+                this.position.x, 
+                this.position.y, 
+                (this.image.width / this.framesMax) * this.scale,
+                this.image.height * this.scale
+                
+                )
+                // this.image,
+                // this.framesCurrent * (this.image.width / this.framesMax),
+                // 0,
+                // this.image.width / this.framesMax,
+                // this.image.height,
+                // this.position.x,
+                // this.position.y,
+                // (this.image.width/this.framesMax) * this.scale,
+                // this.image.height * this.scale
+        }
+
+        update(){
+            this.draw()
+            // this.framesElaped++
+
+            // if(this.frames)
+
+        }
+}
+
+const adventurerRunUp = new Sprite({
+    position: {
+        x: 40,
+        y: 200
+    },
+    imageSrc: './images/adventurer/run up.png',
+    scale: 1.5,
+    framesMax: 8
+})
+
+
+
+
+
 class Player{
     constructor({position}, width, height, color, {speed}, health){
         this.position = position
@@ -150,8 +213,8 @@ class Player{
 
         if(this.position.y < 60){
             this.position.y = 60
-        } else if (this.position.y  + this.height > 460){
-            this.position.y = 460 - this.height    
+        } else if (this.position.y  + this.height > 450){
+            this.position.y = 450 - this.height    
         } else {
             this.position.y += this.speed.y
         }
@@ -183,7 +246,7 @@ class Player{
 
 }
 
-const adventurer = new Player({position: {x: 40, y: 70}}, 25, 25, 'green',{speed: {x: 0, y: 0}}, 3)
+const adventurer = new Player({position: {x: 40, y: 70}}, 25, 30, 'green',{speed: {x: 0, y: 0}}, 3)
 const survivorRoomOne = new Entity({position: {x: 650, y: 350}}, 25, 25, 'blue', {speed: {x: 0, y:0}})
 
 const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
@@ -536,6 +599,8 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     gameBorders()
+
+    adventurerRunUp.update()
 
     if(adventurer.alive){
        adventurer.update()
