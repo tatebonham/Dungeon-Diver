@@ -123,20 +123,20 @@ const enemyAttack = (player, enemy)=>{
 
 const levelOne = ()=>{
     if(goblinA.alive){
-        // enemyAttack(adventurer, goblinA)
+        enemyAttack(adventurer, goblinA)
         goblinA.update()
     } 
 
     if(goblinB.alive){
-        // enemyAttack(adventurer, goblinB)
+        enemyAttack(adventurer, goblinB)
         goblinB.update()
     }
     if(goblinC.alive){
-        // enemyAttack(adventurer, goblinC)
+        enemyAttack(adventurer, goblinC)
         goblinC.update()
     }
     if(goblinD.alive){
-        // enemyAttack(adventurer, goblinD)
+        enemyAttack(adventurer, goblinD)
         goblinD.update()
     }
     if(survivorRoomOne.notSafe){
@@ -498,7 +498,7 @@ window.addEventListener('keydown', (event) => {
         case 'l' : 
         if(adventurer.alive && arrowCount >= 1){
             arrowDirection()
-            
+            arrowCount -= 1
         }
         break
     }
