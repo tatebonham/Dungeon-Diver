@@ -123,20 +123,20 @@ const enemyAttack = (player, enemy)=>{
 
 const levelOne = ()=>{
     if(goblinA.alive){
-        enemyAttack(adventurer, goblinA)
+        // enemyAttack(adventurer, goblinA)
         goblinA.update()
     } 
 
     if(goblinB.alive){
-        enemyAttack(adventurer, goblinB)
+        // enemyAttack(adventurer, goblinB)
         goblinB.update()
     }
     if(goblinC.alive){
-        enemyAttack(adventurer, goblinC)
+        // enemyAttack(adventurer, goblinC)
         goblinC.update()
     }
     if(goblinD.alive){
-        enemyAttack(adventurer, goblinD)
+        // enemyAttack(adventurer, goblinD)
         goblinD.update()
     }
     if(survivorRoomOne.notSafe){
@@ -293,6 +293,17 @@ const enemyHit = (player, enemy) => {
     }
 }
 
+const healthChecker = (player) =>{
+    if(player.health == 2){
+        health.style.width = '66%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 1) {
+        health.style.width = '33%'
+        health.style.backgroundColor = 'red'
+    } else if (player.health == 0){
+        health.style.width = '0%'
+    }
+}
 
 const playerHit = (player, enemy) => {
     const left = enemy.position.x + enemy.width >=  player.position.x
@@ -302,7 +313,8 @@ const playerHit = (player, enemy) => {
 
     if(right && left && top && bottom && enemy.alive){
         player.health -= 1
-        if(player.health >= 2 && lastKey === 'w'){
+        healthChecker(player)
+        if(player.health >= 1 && lastKey === 'w'){
             player.position.y += 60
         } else if (player.health >= 1 && lastKey === 'a') {
             player.position.x += 60
@@ -345,7 +357,7 @@ const gameBorders = () => {
     ctx.fillRect(380, 1, 265, 30)
 
     //behind health bar
-    ctx.fillStyle = 'darkgray'
+    ctx.fillStyle = '#3D3D3D'
     ctx.fillRect(383, 6, 259, 22)
 
     ctx.fillStyle = 'black'
