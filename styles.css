@@ -92,3 +92,69 @@ canvas {
     position: absolute;
     color: olive;
   }
+
+  
+  #screenMessage {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    margin-top: 60px;
+    margin-left: 0px;
+    position: absolute;
+    color: black;
+    background-color: yellow;
+  }
+
+  
+  #continueButton {
+    margin-top: 265px;
+    margin-left: 525px;
+    position: absolute;
+    padding: 5px;
+    width:160px;
+    height: 30px;
+    background-color: black;
+  }
+  
+  .hidden {
+    display: none;
+    
+  }
+
+  #rightWall{
+    height: 426px;
+    width: 29px;  
+    margin-top: 35px;
+    margin-left: 0px;
+    position: absolute;
+    background-image: url(./images/WallTilePreviewScaled\ \(2\).png);
+    
+  }
+  #leftWall{
+    height: 426px;
+    width: 29px ; 
+    margin-top: 58px;
+    margin-left: 671px;
+    position: absolute;
+    color: olive;
+    background-image: url(./images/WallTilePreviewScaled\ \(2\).png);
+
+  }
+  #topWall{
+    height: 24px;
+    width: 671px ;  
+    margin-top: 35px;
+    margin-left: 29px;
+    position: absolute;
+    color: olive;
+    background-image: url(./images/WallTilePreviewScaled\ \(2\).png);
+
+  }
+  #bottomWall{
+    height: 34px;
+    width: 700px;
+    margin-top: 451px;
+    margin-left: 0px;
+    position: absolute;
+    color: olive;
+    background-image: url(./images/WallTilePreviewScaled\ \(2\).png);
+  }

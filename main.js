@@ -4,6 +4,8 @@ const health = document.getElementById('health')
 const arrows = document.getElementById('arrows')
 const gold = document.getElementById('gold')
 const canvas = document.getElementById('canvas')
+const continueButton = document.getElementById('continueButton')
+const message = document.getElementById('screenMessage')
 
 const ctx = canvas.getContext('2d')
 
@@ -123,20 +125,20 @@ const enemyAttack = (player, enemy)=>{
 
 const levelOne = ()=>{
     if(goblinA.alive){
-        // enemyAttack(adventurer, goblinA)
+        enemyAttack(adventurer, goblinA)
         goblinA.update()
     } 
 
     if(goblinB.alive){
-        // enemyAttack(adventurer, goblinB)
+        enemyAttack(adventurer, goblinB)
         goblinB.update()
     }
     if(goblinC.alive){
-        // enemyAttack(adventurer, goblinC)
+        enemyAttack(adventurer, goblinC)
         goblinC.update()
     }
     if(goblinD.alive){
-        // enemyAttack(adventurer, goblinD)
+        enemyAttack(adventurer, goblinD)
         goblinD.update()
     }
     if(survivorRoomOne.notSafe){
@@ -324,6 +326,7 @@ const playerHit = (player, enemy) => {
             player.position.x -= 60
         } else if (player.health === 0){
             player.alive = false
+            gameLost = true
         }
     } else{
         return false
@@ -350,7 +353,18 @@ const keys = {
 }
 
 let lastKey = ''
-
+class Sprite {
+    constructor({position, imageSrc}){
+        this.position = position
+        this.width = 29
+        this.height = 29
+        this.image = new Image()
+        this.image.src = imageSrc
+    }
+    draw(){
+        ctx.drawImage(this.image,this.position.x,this.position.y)
+    }
+}
 const gameBorders = () => {
     //health bar border
     ctx.fillStyle = 'darkgreen'
@@ -410,6 +424,40 @@ const gameBorders = () => {
       ctx.fillRect(0, 461, 700, 24)
 
 }
+let gameWon = false
+let gameLost = false
+let gameStart = false
+let level = 1
+let gamePause = false
+
+continueButton.addEventListener('click', ()=>{
+    message.classList.add('hidden')
+    continueButton.classList.add('hidden')
+    gameStart = true
+})
+
+const gameState=()=>{
+    if(gameLost){
+        message.innerText = 'Looks like you weren\'t strong enough this time, try again?'
+        message.classList.remove('hidden')
+        message.style.backgroundColor = 'red'
+        continueButton.classList.remove('hidden')
+        continueButton.innerText = 'Retry?'
+        continueButton.addEventListener('click', ()=>{
+            location.reload()
+        })
+    }
+    if(gameStart){
+        if(level == 1){
+            levelOne()
+        }
+    }  
+
+}
+
+animate()
+
+
 function animate(){
     window.requestAnimationFrame(animate)
     ctx.fillStyle = 'gray'
@@ -420,7 +468,9 @@ function animate(){
        adventurer.update()
        adventurer.visualHitBox()
     }
-    levelOne()
+
+    gameState()
+    
     adventurer.speed.x = 0
     adventurer.speed.y = 0
     if(keys.d.pressed && keys.s.pressed){
@@ -469,7 +519,8 @@ function animate(){
     keepTrack()
     saveSurvivor(survivorRoomOne, adventurer)
 }
-animate()
+
+
 
 const lastKeyPressed = ()=>{
 if(keys.w.pressed){
