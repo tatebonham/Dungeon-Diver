@@ -343,7 +343,7 @@ const heartB = new Entity({
     offset: {x: 1, y: 0}
 })
 const heartC = new Entity({
-    position: {x: 440, y: 350},
+    position: {x: 60, y: 410},
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
@@ -353,7 +353,7 @@ const heartC = new Entity({
     offset: {x: 1, y: 0}
 })
 const heartD = new Entity({
-    position: {x: 440, y: 350},
+    position: {x: 60, y: 70},
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
@@ -406,15 +406,19 @@ const key = new Entity({
     offset: {x: 1, y: 0}
 })
 const door = new Entity({
-    position: {x: 440, y: 350},
-    width: 30,
-    height: 30,
+    position: {x: 667, y: 200},
+    width: 5,
+    height: 65,
     speed: {x: 0, y: 0},
-    health: 3,
-    imageSrc: './images/entities/key.png',
+    imageSrc: './images/entities/door.png',
     scale: 1,
     framesMax: 1,
-    offset: {x: 1, y: 0}
+    offset: {x: 29, y: 15},
+    sprites: {openDoor: {
+        imageSrc: './images/entities/door2.png',
+        offset: {x: 18, y: 15},
+        scale: 1.25
+    }}
 })
 const chest = new Entity({
     position: {x: 440, y: 350},
@@ -878,7 +882,7 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinA)
         goblinA.update()
     }
-
+    door.update()
     if(goblinB.alive){
         goblinAttack(adventurer, goblinB)
         goblinB.update()
@@ -1095,7 +1099,7 @@ const saveSurvivor = (survivor, player) => {
         return false
     }
 }
-
+let doorOpened = false
 const touchDoor = (door, player) => {
     const left = door.position.x + door.width >=  player.position.x
     const right = door.position.x <= player.position.x + player.width
@@ -1105,7 +1109,10 @@ const touchDoor = (door, player) => {
     if(right && left && top && bottom && roomOver){
         player.position.x = 30
         player.position.y = 230
+        door.position.x = 30
+        door.position.y = 200
         door.alive = false
+        doorOpened = true
     } else {
         return false
     }
@@ -1388,7 +1395,7 @@ const gameState=()=>{
             levelTwo()
         } else if (level == 3){
             levelThree()
-        } else if (level == 4){
+        } else if (level == 4 || doorOpened){
             levelFour()
         } else if (level == 5){
             levelFive()
