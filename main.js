@@ -395,7 +395,7 @@ const arrowC = new Entity({
     offset: {x: 2, y: 1}
 })
 const key = new Entity({
-    position: {x: 440, y: 350},
+    position: {x: 200, y: 224},
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
@@ -799,7 +799,6 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinD)
         goblinD.update()
     }
-chest.update()
     door.update()
 
     if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
@@ -881,13 +880,14 @@ const levelFour = () =>{
     }
     if(survivorRoomOne.notSafe == false){
         message.classList.remove('hidden')
-        message.innerText = 'Please leave so I can leave...and I can have all the treasure but mostly for your safety...definetly.'
+        message.innerText = 'Oh my gosh, thank you so much for coming to save me. Here is one gold as a token of my appreciation. Good luck getting that chest full of gold open!'
         continueButton.classList.remove('hidden')
         continueButton.innerText = `Press 'k' to Continue`
         window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
             message.classList.add('hidden')
             continueButton.classList.add('hidden')
             scoreCount = 9
+            goldCount = 1
             level = 5
         }})
     }
@@ -979,17 +979,33 @@ const levelSix = () =>{
         heartD.alive = false
         arrowB.alive = false
         arrowC.alive = false
-       
-    
     }
 }
 const levelSeven = ()=>{
-
     chest.update()
     door.update()
-   
-}
 
+    if(chest.alive == false){
+        message.classList.remove('hidden')
+        message.innerText = '...it\'s empty...'
+        continueButton.classList.remove('hidden')
+        continueButton.innerText = `Press 'k' to Continue`
+        window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
+            message.classList.add('hidden')
+            continueButton.classList.add('hidden')
+            level = 8
+        }})
+    }
+}
+const levelEight = ()=>{
+    // message.classList.add('hidden')
+    // continueButton.classList.add('hidden')
+    chest.imageSrc = 'openChest.png'
+    chest.update()
+
+
+    door.update()
+}
 
 let scoreCount = 0
 let goldCount = 0
@@ -1080,21 +1096,26 @@ const touchDoor = (door, player) => {
     const top = door.position.y + door.height >= player.position.y
     const bottom = door.position.y <= player.position.y + player.height
     
-    if(right && left && top && bottom && level == 3){
-        player.position.x = 40
-        player.position.y = 230
-        door.position.x = 30
-        door.position.y = 200
-        door.image = door.sprites.openDoor.image
-        door.offset = door.sprites.openDoor.offset
-        door.scale = door.sprites.openDoor.scale
-        doorOpened = true
-        level = 4
-        console.log('hi')
+    if(right && left && top && bottom){
+        if(level == 3){
+            player.position.x = 40
+            player.position.y = 230
+            door.position.x = 30
+            door.position.y = 200
+            door.image = door.sprites.openDoor.image
+            door.offset = door.sprites.openDoor.offset
+            door.scale = door.sprites.openDoor.scale
+            doorOpened = true
+            level = 4
+        } else if(level == 8) {
+            gameWon = true
+        }
+     
     } else {
         return false
     }
 }
+
 const touchChest = (chest, player) => {
     const left = chest.position.x + chest.width >=  player.position.x
     const right = chest.position.x <= player.position.x + player.width
@@ -1102,15 +1123,7 @@ const touchChest = (chest, player) => {
     const bottom = chest.position.y <= player.position.y + player.height
     
     if(right && left && top && bottom){
-        message.classList.remove('hidden')
-        message.innerText = 'FINALLY!'
-        continueButton.classList.remove('hidden')
-        window.addEventListener('keydown',(e)=>{if(e.key == 'k'){
-            message.innerText = '...wait...it...it\'s EMPTY????'
-        }})
-        window.addEventListener('keydown',(e)=>{if(e.key == 'k'){
-            gameWon = true
-        }})
+        chest.alive = false
     } else {
         return false
     }
@@ -1362,6 +1375,8 @@ if(!gameStart){
 }
 
 
+
+
 const gameState=()=>{
     if(gameLost){
         message.innerText = 'Looks like you weren\'t strong enough this time, try again?'
@@ -1382,7 +1397,7 @@ const gameState=()=>{
             objective.innerText = 'Careful there\'s bats!'
             levelTwo()
         } else if (level == 3){
-            objective.innerText = 'Go find the suvivor!'
+            objective.innerText = 'Go find Bebo!'
             levelThree()
         } else if (level == 4 && doorOpened){
             objective.innerText = 'Oh, there he is.'
@@ -1396,8 +1411,22 @@ const gameState=()=>{
         } else if (level == 7){
             objective.innerText = 'Collect your prize.'
             levelSeven()
+        } else if(level == 8){
+            levelEight()
+            objective.innerText = 'Leave dissappointed'
         }
     }  
+    if(gameWon){
+        message.innerText = 'Well, you saved Bebo... but you only came out with 1 measely gold. But hey, that\'s 1 more gold than before.'
+        message.classList.remove('hidden')
+        message.style.backgroundColor = 'red'
+        continueButton.classList.remove('hidden')
+        continueButton.innerText = `Press 'k' to Retry?`
+        window.addEventListener('keydown', (e)=>{
+            if(e.key == 'k'){
+            location.reload()
+            }})
+    }
 
 }
 const idleDirection = () => {
@@ -1562,6 +1591,9 @@ function animate(){
         arrowHit(projectile,batI)
         arrowHit(projectile,batJ)
         arrowHit(projectile,batK)
+        arrowHit(projectile, goblinE)
+        arrowHit(projectile, goblinF)
+        arrowHit(projectile, goblinG)
         }
         if(level == 5 || level == 6){
         arrowHit(projectile,head)
@@ -1600,6 +1632,10 @@ function animate(){
     saveSurvivor(survivorRoomOne, adventurer)
     }
     touchDoor(door, adventurer)
+    if(level == 7){
+        touchChest(chest, adventurer)
+    }
+    
     keepTrack()
 }
 
