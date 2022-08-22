@@ -379,7 +379,7 @@ const arrowB = new Entity({
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
-    imageSrc: './images/entities/heart.png',
+    imageSrc: './images/entities/arrow.png',
     scale: .5,
     framesMax: 1,
     offset: {x: 2, y: 1}
@@ -876,13 +876,16 @@ const levelFour = () =>{
         heartB.update()
     }
     if(arrowB.alive){
-        arrowB.update
+        arrowB.update()
     }
     if(survivorRoomOne.notSafe == false){
         message.classList.remove('hidden')
         message.innerText = 'Please leave so I can leave...and I can have all the treasure but mostly for your safety...definetly.'
+        continueButton.classList.remove('hidden')
+        continueButton.innerText = `Press 'k' to Continue`
         window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
             message.classList.add('hidden')
+            continueButton.classList.add('hidden')
             level = 5
         }})
     }
@@ -900,7 +903,7 @@ const levelFive = () =>{
         heartB.update()
     }
     if(arrowB.alive){
-        arrowB.update
+        arrowB.update()
     }
    
 
@@ -939,10 +942,10 @@ const levelSix = () =>{
         heartD.update()
     }
     if(arrowB.alive){
-        arrowB.update
+        arrowB.update()
     }
     if(arrowC.alive){
-        arrowC.update
+        arrowC.update()
     }
    
 
@@ -951,7 +954,7 @@ const levelSix = () =>{
         level = 7
     }
 }
-const levelSeven= ()=>{
+const levelSeven = ()=>{
 
 
 
@@ -1331,7 +1334,7 @@ const gameState=()=>{
         message.classList.remove('hidden')
         message.style.backgroundColor = 'red'
         continueButton.classList.remove('hidden')
-        continueButton.innerText = 'Retry?'
+        continueButton.innerText = `Press 'k' to Retry?`
         window.addEventListener('keydown', (e)=>{
             if(e.key == 'k'){
             location.reload()
