@@ -1317,10 +1317,12 @@ let gameStart = false
 let level = 1
 let gamePause = false
 
-continueButton.addEventListener('click', ()=>{
-    message.classList.add('hidden')
-    continueButton.classList.add('hidden')
-    gameStart = true
+window.addEventListener('keydown', (e)=>{
+    if(e.key == 'k'){
+        message.classList.add('hidden')
+        continueButton.classList.add('hidden')
+        gameStart = true
+    }
 })
 
 const gameState=()=>{
@@ -1330,22 +1332,29 @@ const gameState=()=>{
         message.style.backgroundColor = 'red'
         continueButton.classList.remove('hidden')
         continueButton.innerText = 'Retry?'
-        continueButton.addEventListener('click', ()=>{
+        window.addEventListener('keydown', (e)=>{
+            if(e.key == 'k'){
             location.reload()
-        })
+            }})
     }
     if(gameStart){
         if(level == 1){
+            objective.innerText = 'Slay all the goblins!'
             levelOne()
         } else if (level == 2){
+            objective.innerText = 'Careful there\'s bats!'
             levelTwo()
         } else if (level == 3){
+            objective.innerText = 'Go find the suvivor!'
             levelThree()
         } else if (level == 4 && doorOpened){
+            objective.innerText = 'Oh, there he is.'
             levelFour()
         } else if (level == 5){
+            objective.innerText = 'What\'s that????'
             levelFive()
         } else if (level == 6){
+            objective.innerText = 'Don\'t die...'
             levelSix()
         }
     }  
@@ -1519,8 +1528,8 @@ function animate(){
         }
         }
     })
-    console.log(roomOver)
-    console.log(level)
+    // console.log(roomOver)
+    // console.log(level)
     
     checkEnemyHit()
 
@@ -1598,7 +1607,6 @@ window.addEventListener('keydown', (event) => {
         case 'k':
             if(adventurer.alive){
                 adventurer.attack()
-                moved = true
             }
             console.log('k')
             break
@@ -1606,7 +1614,6 @@ window.addEventListener('keydown', (event) => {
         if(adventurer.alive && arrowCount >= 1){
             arrowDirection()
             arrowCount -= 1
-            moved = true
         }
         break
     }

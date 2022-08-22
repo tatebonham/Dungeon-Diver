@@ -96,23 +96,24 @@ canvas {
   
   #screenMessage {
     padding-top: 150px;
-    padding-bottom: 60px;
+    padding-bottom: 200px;
     margin-top: 60px;
-    margin-left: 0px;
+    margin-left: 30px;
     position: absolute;
     color: black;
-    background-color: yellow;
+    background-color: gray;
   }
 
   
   #continueButton {
     margin-top: 265px;
-    margin-left: 525px;
+    margin-left: 497px;
     position: absolute;
     padding: 5px;
     width:160px;
     height: 30px;
     background-color: black;
+    font-size: 13px;
   }
   
   .hidden {
