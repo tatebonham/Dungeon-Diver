@@ -534,7 +534,7 @@ const goblinE = new Entity({
     position:{x: 30, y: 200},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 3,
+    health: 4,
     imageSrc: '', 
     scale: 1, 
     framesMax: 8, 
@@ -558,7 +558,7 @@ const goblinF = new Entity({
     position:{x: 30, y: 110},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 3,
+    health: 4,
     imageSrc: '', 
     scale: 1, 
     framesMax: 8, 
@@ -582,7 +582,7 @@ const goblinG = new Entity({
     position:{x: 30, y: 310},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 4,
     imageSrc: '', 
     scale: 1, 
     framesMax: 8, 
@@ -687,7 +687,7 @@ const batI = new Entity({
     position:{x: 30, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 1,
+    health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
@@ -697,7 +697,7 @@ const batJ = new Entity({
     position:{x: 30, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 1,
+    health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
@@ -707,7 +707,7 @@ const batK = new Entity({
     position:{x: 660, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 1,
+    health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
@@ -717,7 +717,7 @@ const head = new Entity({
     position:{x: 30, y: 160},
     width: 120, height: 170,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 20,
     imageSrc: './images/entities/head.png', 
     scale: .7, 
     framesMax: 1, 
@@ -753,32 +753,32 @@ const batAttack = (player, enemy)=>{
 }
 const headAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= .2
+        enemy.position.x -= .3
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += .2
+        enemy.position.x += .3
     }
     if(enemy.position.y >= player.position.y){
-        enemy.position.y -= .2
+        enemy.position.y -= .3
     }
     if(enemy.position.y <= player.position.y){
-        enemy.position.y += .2
+        enemy.position.y += .3
     }
 }
 const goblinAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= 0
+        enemy.position.x -= .6
         enemyLeft(enemy)
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += 0
+        enemy.position.x += .6
         enemyRight(enemy)
     }
     if(enemy.position.y >= player.position.y){
-        enemy.position.y -= .5
+        enemy.position.y -= .6
     }
     if(enemy.position.y <= player.position.y){
-        enemy.position.y += .5
+        enemy.position.y += .6
     }
 }
 
