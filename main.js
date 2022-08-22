@@ -49,8 +49,8 @@ class Entity{
             (this.image.width / this.framesMax) * this.scale,
             this.image.height * this.scale
             )
-        ctx.fillStyle = 'red'
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        // ctx.fillStyle = 'red'
+        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -375,7 +375,7 @@ const arrowA = new Entity({
     
 })
 const arrowB = new Entity({
-    position: {x: 60, y: 420},
+    position: {x: 360, y: 220},
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
@@ -739,46 +739,47 @@ const enemyRight = (enemy) =>{
 }
 const batAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x + 6){
-        enemy.position.x -= 1
+        enemy.position.x -= 1.2
     }
     if(enemy.position.x <= player.position.x + 6){
-        enemy.position.x += 1
+        enemy.position.x += 1.2
     }
     if(enemy.position.y >= player.position.y + 12){
-        enemy.position.y -= 1
+        enemy.position.y -= 1.2
     }
     if(enemy.position.y <= player.position.y + 12){
-        enemy.position.y += 1
+        enemy.position.y += 1.2
     }
 }
 const headAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= .3
+        enemy.position.x -= .5
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += .3
+        enemy.position.x += .5
     }
-    if(enemy.position.y >= player.position.y - 75){
-        enemy.position.y -= .3
+    if(enemy.position.y >= player.position.y - (enemy.height/2)){
+        enemy.position.y -= .5
     }
-    if(enemy.position.y <= player.position.y - 75){
-        enemy.position.y += .3
+    if(enemy.position.y <= player.position.y - (enemy.height/2)){
+        enemy.position.y += .5
     }
+   
 }
 const goblinAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= .6
+        enemy.position.x -= .8
         enemyLeft(enemy)
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += .6
+        enemy.position.x += .8
         enemyRight(enemy)
     }
     if(enemy.position.y >= player.position.y - 10){
-        enemy.position.y -= .6
+        enemy.position.y -= .8
     }
     if(enemy.position.y <= player.position.y - 10){
-        enemy.position.y += .6
+        enemy.position.y += .8
     }
 }
 
@@ -911,7 +912,7 @@ const levelFive = () =>{
     }
    
 
-    if(head.health <= 7){
+    if(head.health <= 15){
         level = 6
     }
 
@@ -996,6 +997,7 @@ const levelSeven = ()=>{
         window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
             message.classList.add('hidden')
             continueButton.classList.add('hidden')
+            scoreCount = 29
             level = 8
         }})
     }
@@ -1007,15 +1009,16 @@ const levelEight = ()=>{
     chest.offset.x = 55
     chest.offset.y = 60
     chest.update()
-
-
     door.update()
+    scoreCount = 29
 }
 
 let scoreCount = 0
 let goldCount = 0
 let arrowCount = 5
 const arrowArr = []
+
+
 class Projectile{
     constructor({position}, width, height, color, {speed}, health){
         this.position = position
