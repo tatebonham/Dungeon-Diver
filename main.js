@@ -141,15 +141,6 @@ class Sprite{
         }
 }
 
-const adventurerRunUp = new Sprite({
-    position: {
-        x: 40,
-        y: 200
-    },
-    imageSrc: './images/adventurer/run up.png',
-    scale: 1.5,
-    framesMax: 7
-})
 
 
 
@@ -217,8 +208,8 @@ class Player {
             (this.image.width / this.framesMax) * this.scale,
             this.image.height * this.scale
             )
-            ctx.fillStyle = 'green'
-            ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+            // ctx.fillStyle = 'green'
+            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -283,11 +274,21 @@ class Player {
 //     scale: 1.5,
 //     framesMax: 7
 // })
+const adventurerRunUp = new Sprite({
+    position: {
+        x: 40,
+        y: 200
+    },
+    imageSrc: './images/adventurer/run down.png',
+    scale: 1.5,
+    framesMax: 7
+})
+
 
 const adventurer = new Player({
     position: {x: 40, y: 70},
     width: 25,
-    height: 10,
+    height: 30,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/adventurer/idle.png',
@@ -297,12 +298,56 @@ const adventurer = new Player({
     sprites: {
         idle: {
             imageSrc: './images/adventurer/idle.png',
-            framesMax: 1
+            framesMax: 1,
+            offset: {x: 9, y: 3},
         },
         runUp: {
             imageSrc: './images/adventurer/run up.png',
             framesMax: 7,
-            framesHold: 7
+            framesHold: 7,
+            offset: {x: 10, y:4}
+        },
+        runRight: {
+            imageSrc: './images/adventurer/run right.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 10, y:4}
+        },
+        runLeft: {
+            imageSrc: './images/adventurer/run left.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 12, y:5}
+        },
+        runDown: {
+            imageSrc: './images/adventurer/run down.png',
+            framesMax: 7,
+            framesHold: 7,
+            offset: {x: 12, y:5}
+        },
+        attackUp: {
+            imageSrc: './images/adventurer/attack up.png',
+            framesMax: 7,
+            framesHold: 7,
+            offset: {x: 10, y:2}
+        },
+        attackRight: {
+            imageSrc: './images/adventurer/attack right.png',
+            framesMax: 7,
+            framesHold: 7,
+            offset: {x: 10, y:2}
+        },
+        attackLeft: {
+            imageSrc: './images/adventurer/attack left.png',
+            framesMax: 7,
+            framesHold: 7,
+            offset: {x: 10, y:2}
+        },
+        attackDown: {
+            imageSrc: './images/adventurer/attack down.png',
+            framesMax: 7,
+            framesHold: 7,
+            offset: {x: 10, y:2}
         },
 
     }
@@ -692,12 +737,26 @@ function animate(){
         adventurer.speed.y = -3
         adventurer.image = adventurer.sprites.runUp.image
         adventurer.framesMax = adventurer.sprites.runUp.framesMax
+        adventurer.offset.x = adventurer.sprites.runUp.offset.x
+        adventurer.offset.y = adventurer.sprites.runUp.offset.y
     } else if(keys.a.pressed && lastKey == 'a'){
         adventurer.speed.x = -3
+        adventurer.image = adventurer.sprites.runLeft.image
+        adventurer.framesMax = adventurer.sprites.runLeft.framesMax
+        adventurer.offset.x = adventurer.sprites.runLeft.offset.x
+        adventurer.offset.y = adventurer.sprites.runLeft.offset.y
     } else if(keys.s.pressed && lastKey == 's'){
         adventurer.speed.y = 3
+        adventurer.image = adventurer.sprites.runDown.image
+        adventurer.framesMax = adventurer.sprites.runDown.framesMax
+        adventurer.offset.x = adventurer.sprites.runDown.offset.x
+        adventurer.offset.y = adventurer.sprites.runDown.offset.y
     } else if(keys.d.pressed && lastKey == 'd'){
         adventurer.speed.x = 3
+        adventurer.image = adventurer.sprites.runRight.image
+        adventurer.framesMax = adventurer.sprites.runRight.framesMax
+        adventurer.offset.x = adventurer.sprites.runRight.offset.x
+        adventurer.offset.y = adventurer.sprites.runRight.offset.y
     }    
     arrowArr.forEach(projectile =>{
         if(projectile.alive){
