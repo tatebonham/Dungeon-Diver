@@ -13,14 +13,27 @@ canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 
 class Entity{
-    constructor({position}, width, height, color, {speed}, health){
+    constructor({position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset, sprites}){
         this.position = position
+        this.image = new Image()
+        this.image.src = imageSrc
+        this.scale = scale
+        this.framesMax = framesMax
+        this.framesCurrent = this.framesCurrent
+        this.framesElaped = 0
+        this.framesHold = 9
+        this.sprites = sprites
+        for(const obj in this.sprites){
+            sprites[obj].image = new Image()
+            sprites[obj].image.src = sprites[obj].imageSrc
+        }
+
         this.width = width
         this.height = height
-        this.color = color
         this.speed = speed
         this.alive = true
         this.health = health
+        this.offset = offset
         this.attackBox = {
             up: {
                 position: this.position,
@@ -45,16 +58,28 @@ class Entity{
           
         }
         this.isAttacking = false
-        this.notSafe = true
     }
 
-    spawn(){
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+    draw(){
+        ctx.drawImage(
+            this.image, 
+            this.framesCurrent * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            
+
+            this.position.x - this.offset.x, 
+            this.position.y - this.offset.y, 
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale
+            )
+            // ctx.fillStyle = 'green'
+            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
-        this.spawn()
+        this.draw()
         if(this.position.x < 30){
             this.position.x = 30
         } else if(this.position.x + this.width > 670){
@@ -65,35 +90,20 @@ class Entity{
 
         if(this.position.y < 60){
             this.position.y = 60
-        } else if (this.position.y  + this.height > 460){
-            this.position.y = 460 - this.height    
+        } else if (this.position.y  + this.height > 450){
+            this.position.y = 450 - this.height    
         } else {
             this.position.y += this.speed.y
         }
-    }
-    
-    visualHitBox(){
-        if(this.isAttacking === true){
-            ctx.fillStyle = 'black'
-            if(lastKey === 'w'){  
-                ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
-            } else if (lastKey === 'a') {
-                ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+10, this.attackBox.left.width -25, this.attackBox.left.height)
-            } else if (lastKey === 's') {
-                ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
-            } else if (lastKey === 'd') {
-                ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+10, this.attackBox.right.width - 25, this.attackBox.right.height)
+
+          this.framesElaped++
+            if(this.framesElaped % this.framesHold === 0){  
+                if(this.framesCurrent < this.framesMax - 1){
+                    this.framesCurrent++
+                } else {
+                    this.framesCurrent = 0
+                }
             }
-
-        }
-    }
-
-    attack(){
-        this.isAttacking = true
-        console.log(this.isAttacking)
-        setTimeout(()=>{
-            this.isAttacking = false
-        }, 200)
     }
 }
 class Sprite{
@@ -338,12 +348,42 @@ const adventurer = new Player({
 
 let moving = true
 
-
-const survivorRoomOne = new Entity({position: {x: 650, y: 350}}, 25, 25, 'blue', {speed: {x: 0, y:0}})
+// {position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset}
+const survivorRoomOne = new Entity({
+    position:{x: 650, y: 350},
+    width: 25, height: 25,
+    speed: {x: 0, y: 0},
+    health: 0,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 1, 
+    offset: {x: 0, y: 0}
+})
 
 const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
+const goblinA = new Entity({
+    position:{x: 300, y: 300},
+    width: 25, height: 25,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 1, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+            
+        },
+        right:{
+
+        }
+    }
+})
+const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
+const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
+const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 // const goldPieceOne = new Entity({position: {x: goblinA.position.x,y: goblinA.position.y}}, 10, 10, 'gold', {speed: {x: 0, y: 0}}, 2)
 
@@ -365,20 +405,20 @@ const enemyAttack = (player, enemy)=>{
 
 const levelOne = ()=>{
     if(goblinA.alive){
-        enemyAttack(adventurer, goblinA)
+        // enemyAttack(adventurer, goblinA)
         goblinA.update()
     } 
 
     if(goblinB.alive){
-        enemyAttack(adventurer, goblinB)
+        // enemyAttack(adventurer, goblinB)
         goblinB.update()
     }
     if(goblinC.alive){
-        enemyAttack(adventurer, goblinC)
+        // enemyAttack(adventurer, goblinC)
         goblinC.update()
     }
     if(goblinD.alive){
-        enemyAttack(adventurer, goblinD)
+        // enemyAttack(adventurer, goblinD)
         goblinD.update()
     }
     if(survivorRoomOne.notSafe){
@@ -698,7 +738,7 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     gameBorders()
-    
+
     if(!moved){
         adventurerRunUp.update()
     }
