@@ -155,7 +155,7 @@ class Player {
         this.framesMax = framesMax
         this.framesCurrent = this.framesCurrent
         this.framesElaped = 0
-        this.framesHold = 7
+        this.framesHold = 9
         this.sprites = sprites
         for(const obj in this.sprites){
             sprites[obj].image = new Image()
@@ -248,14 +248,14 @@ class Player {
         if(this.isAttacking === true){
             ctx.fillStyle = 'black'
             if(lastKey === 'w'){  
-
                 ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
             } else if (lastKey === 'a') {
-                ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+10, this.attackBox.left.width -25, this.attackBox.left.height)
+                ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+15, this.attackBox.left.width -25, this.attackBox.left.height)
             } else if (lastKey === 's') {
                 ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
+
             } else if (lastKey === 'd') {
-                ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+10, this.attackBox.right.width - 25, this.attackBox.right.height)
+                ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+15, this.attackBox.right.width - 25, this.attackBox.right.height)
             }
 
         }
@@ -266,20 +266,21 @@ class Player {
         console.log(this.isAttacking)
         setTimeout(()=>{
             this.isAttacking = false
+
         }, 200)
     }
 
 }
 
-// const adventurer = new Sprite({
-//     position: {
-//         x: 40,
-//         y: 200
-//     },
-//     imageSrc: './images/adventurer/run up.png',
-//     scale: 1.5,
-//     framesMax: 7
-// })
+const adventurerTest = new Sprite({
+    position: {
+        x: 40,
+        y: 200
+    },
+    imageSrc: './images/adventurer/attack right.png',
+    scale: 1.5,
+    framesMax: 5
+})
 const adventurerRunUp = new Sprite({
     position: {
         x: 31,
@@ -330,49 +331,7 @@ const adventurer = new Player({
             framesMax: 7,
             framesHold: 7,
             offset: {x: 12, y:5}
-        },
-        attackUp: {
-            imageSrc: './images/adventurer/attack up.png',
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 10, y:2}
-        },
-        attackRight: {
-            imageSrc: './images/adventurer/attack right.png',
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 10, y:2}
-        },
-        attackLeft: {
-            imageSrc: './images/adventurer/attack left.png',
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 10, y:2}
-        },
-        attackDown: {
-            imageSrc: './images/adventurer/attack down.png',
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 10, y:2}
-        },
-        idleUp: {
-            imageSrc: './images/adventurer/idle up.png',
-            framesMax: 1,
-            framesHold: 7,
-            offset: {x: 10, y:2}
-        },
-        idleRight: {
-            imageSrc: './images/adventurer/idle right.png',
-            framesMax: 1,
-            framesHold: 1,
-            offset: {x: 6, y:2}
-        },
-        idleLeft: {
-            imageSrc: './images/adventurer/idle left.png',
-            framesMax: 1,
-            framesHold: 7,
-            offset: {x: 10, y:2}
-        },
+        }
     }
 })
 
@@ -739,6 +698,7 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     gameBorders()
+    
     if(!moved){
         adventurerRunUp.update()
     }
