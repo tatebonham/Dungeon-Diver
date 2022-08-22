@@ -235,15 +235,15 @@ class Player {
 
 }
 
-const adventurerTest = new Sprite({
-    position: {
-        x: 40,
-        y: 200
-    },
-    imageSrc: './images/adventurer/attack right.png',
-    scale: 1.5,
-    framesMax: 5
-})
+// const adventurerTest = new Sprite({
+//     position: {
+//         x: 40,
+//         y: 200
+//     },
+//     imageSrc: './images/adventurer/attack right.png',
+//     scale: 1.5,
+//     framesMax: 5
+// })
 const adventurerRunUp = new Sprite({
     position: {
         x: 31,
@@ -303,7 +303,7 @@ let moving = true
 
 // {position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset}
 const survivorRoomOne = new Entity({
-    position: {x: 440, y: 350},
+    position: {x: 600, y: 250},
     width: 28,
     height: 40,
     speed: {x: 0, y: 0},
@@ -437,7 +437,7 @@ const goblinA = new Entity({
     position:{x: 300, y: 300},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 3,
     imageSrc: '', 
     scale: 1, 
     framesMax: 8, 
@@ -461,7 +461,7 @@ const goblinB = new Entity({
     position:{x: 200, y: 230},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 3,
     imageSrc: '', 
     scale: 1, 
     framesMax: 7, 
@@ -485,7 +485,7 @@ const goblinC = new Entity({
     position:{x: 400, y: 400},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 3,
     imageSrc: '', 
     scale: 1, 
     framesMax: 7, 
@@ -509,7 +509,7 @@ const goblinD = new Entity({
     position:{x: 500, y: 100},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 3,
     imageSrc: '', 
     scale: 1, 
     framesMax: 8, 
@@ -533,7 +533,7 @@ const goblinE = new Entity({
     position:{x: 30, y: 200},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 3,
     imageSrc: '', 
     scale: 1, 
     framesMax: 8, 
@@ -554,10 +554,10 @@ const goblinE = new Entity({
     }
 })
 const goblinF = new Entity({
-    position:{x: 350, y: 60},
+    position:{x: 30, y: 110},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 3,
     imageSrc: '', 
     scale: 1, 
     framesMax: 8, 
@@ -578,31 +578,7 @@ const goblinF = new Entity({
     }
 })
 const goblinG = new Entity({
-    position:{x: 350, y: 410},
-    width: 25, height: 48,
-    speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 8, 
-    offset: {x: 0, y: 0},
-    sprites: {
-        left: {
-                imageSrc: './images/entities/leftGoblin.png',
-                framesMax: 8,
-                framesHold: 7,
-                offset: {x: 25, y:8}
-        },
-        right:{    
-                imageSrc: './images/entities/rightGoblin.png',
-                framesMax: 7,
-                framesHold: 7,
-                offset: {x: 22, y:13}
-        }
-    }
-})
-const goblinH = new Entity({
-    position:{x: 645, y: 200},
+    position:{x: 30, y: 310},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -899,6 +875,17 @@ const levelFour = () =>{
     if(heartB.alive){
         heartB.update()
     }
+    if(arrowB.alive){
+        arrowB.update
+    }
+    if(survivorRoomOne.notSafe == false){
+        message.classList.remove('hidden')
+        message.innerText = 'Please leave so I can leave...and I can have all the treasure but mostly for your safety...definetly.'
+        window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
+            message.classList.add('hidden')
+            level = 5
+        }})
+    }
 }
 const levelFive = () =>{
     if(head.alive){
@@ -908,7 +895,19 @@ const levelFive = () =>{
     door.update()
     if(heartC.alive){
         heartC.update()
+    }   door.update()
+    if(heartB.alive){
+        heartB.update()
     }
+    if(arrowB.alive){
+        arrowB.update
+    }
+   
+
+    if(head.health <= 7){
+        level = 6
+    }
+
 }
 const levelSix = () =>{
 
@@ -916,16 +915,47 @@ const levelSix = () =>{
         headAttack(adventurer, head)
         head.update()
     }
+    if(goblinE.alive){
+        goblinAttack(adventurer, goblinE)
+        goblinE.update()
+    }
+    if(goblinF.alive){
+        goblinAttack(adventurer, goblinF)
+        goblinF.update()
+    }
+    if(goblinG.alive){
+        goblinAttack(adventurer, goblinG)
+        goblinG.update()
+    }
 
     door.update()
-
+    if(heartB.alive){
+        heartB.update()
+    }
+    if(heartC.alive){
+        heartC.update()
+    }
     if(heartD.alive){
         heartD.update()
     }
+    if(arrowB.alive){
+        arrowB.update
+    }
+    if(arrowC.alive){
+        arrowC.update
+    }
+   
 
     if(head.alive == false){
         scoreCount += 20
+        level = 7
     }
+}
+const levelSeven= ()=>{
+
+
+    
+    door.update()
 }
 
 
@@ -1021,7 +1051,7 @@ const touchDoor = (door, player) => {
     const top = door.position.y + door.height >= player.position.y
     const bottom = door.position.y <= player.position.y + player.height
     
-    if(right && left && top && bottom && roomOver){
+    if(right && left && top && bottom && level == 3){
         player.position.x = 40
         player.position.y = 230
         door.position.x = 30
@@ -1030,6 +1060,7 @@ const touchDoor = (door, player) => {
         door.offset = door.sprites.openDoor.offset
         door.scale = door.sprites.openDoor.scale
         doorOpened = true
+        level = 4
         console.log('hi')
     } else {
         return false
@@ -1396,8 +1427,7 @@ function animate(){
     if(!moved){
         adventurerRunUp.update()
     }
-        
-   adventurerTest.update()
+     
     
 
     if(adventurer.alive){
@@ -1513,9 +1543,7 @@ function animate(){
     if(level == 4){
     saveSurvivor(survivorRoomOne, adventurer)
     }
-    if(level == 1){
-        touchDoor(door, adventurer)
-    }
+    touchDoor(door, adventurer)
     keepTrack()
 }
 
