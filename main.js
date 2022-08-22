@@ -954,7 +954,7 @@ const levelSix = () =>{
 const levelSeven= ()=>{
 
 
-    
+
     door.update()
 }
 
@@ -1027,9 +1027,6 @@ const keepTrack = () => {
     } else {
         arrows.innerText = `Arrows: ${arrowCount}`
     }
-   
-   
-    
 }
 
 const saveSurvivor = (survivor, player) => {
@@ -1377,12 +1374,19 @@ const checkEnemyHit = ()=>{
         enemyHit(adventurer,batG)
         enemyHit(adventurer,batH)
         }
-       
+       if(level == 5 || level == 6){
+        enemyHit(adventurer, head)
+       }
         if(level == 6){
         enemyHit(adventurer,batI)
         enemyHit(adventurer,batJ)
         enemyHit(adventurer,batK)
+        enemyHit(adventurer, goblinE)
+        enemyHit(adventurer, goblinF)
+        enemyHit(adventurer, goblinG)
         }
+
+        
 }
 const checkPlayerHit = () => {
     if(level == 1){
@@ -1407,6 +1411,9 @@ const checkPlayerHit = () => {
         playerHit(adventurer,batI)
         playerHit(adventurer,batJ)
         playerHit(adventurer,batK)
+        playerHit(adventurer, goblinE)
+        playerHit(adventurer, goblinF)
+        playerHit(adventurer, goblinG)
         }
     
         if(level == 5 || level == 6){
