@@ -327,7 +327,6 @@ const heartA = new Entity({
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
-    health: 3,
     imageSrc: './images/entities/heart.png',
     scale: 1,
     framesMax: 1,
@@ -338,7 +337,6 @@ const heartB = new Entity({
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
-    health: 3,
     imageSrc: './images/entities/heart.png',
     scale: 1,
     framesMax: 1,
@@ -349,7 +347,6 @@ const heartC = new Entity({
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
-    health: 3,
     imageSrc: './images/entities/heart.png',
     scale: 1,
     framesMax: 1,
@@ -360,7 +357,6 @@ const heartD = new Entity({
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
-    health: 3,
     imageSrc: './images/entities/heart.png',
     scale: 1,
     framesMax: 1,
@@ -530,7 +526,7 @@ const goblinD = new Entity({
     }
 })
 const goblinE = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 200},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -554,7 +550,7 @@ const goblinE = new Entity({
     }
 })
 const goblinF = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 350, y: 60},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -578,7 +574,7 @@ const goblinF = new Entity({
     }
 })
 const goblinG = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 350, y: 410},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -602,7 +598,7 @@ const goblinG = new Entity({
     }
 })
 const goblinH = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 665, y: 200},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -626,7 +622,7 @@ const goblinH = new Entity({
     }
 })
 const goblinI = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 200},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -650,7 +646,7 @@ const goblinI = new Entity({
     }
 })
 const goblinJ = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 100},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -674,7 +670,7 @@ const goblinJ = new Entity({
     }
 })
 const goblinK = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 300},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -769,7 +765,7 @@ const batG = new Entity({
     offset: {x: 2, y: 1}
 })
 const batH = new Entity({
-    position:{x: 70, y: 100},
+    position:{x: 30, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -779,7 +775,7 @@ const batH = new Entity({
     offset: {x: 2, y: 1}
 })
 const batI = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -789,7 +785,7 @@ const batI = new Entity({
     offset: {x: 2, y: 1}
 })
 const batJ = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -799,7 +795,7 @@ const batJ = new Entity({
     offset: {x: 2, y: 1}
 })
 const batK = new Entity({
-    position:{x: 30, y: 100},
+    position:{x: 660, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -809,14 +805,14 @@ const batK = new Entity({
     offset: {x: 2, y: 1}
 })
 const head = new Entity({
-    position:{x: 500, y: 100},
-    width: 25, height: 5,
+    position:{x: 30, y: 160},
+    width: 120, height: 170,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/head.png', 
-    scale: 1, 
+    scale: .7, 
     framesMax: 1, 
-    offset: {x: 0, y: 0}
+    offset: {x: 12, y: 2}
 })
 
 
@@ -986,15 +982,31 @@ const levelThree = () =>{
 
 }
 const levelFour = () =>{
-  // if(survivorRoomOne.notSafe){
-    //     survivorRoomOne.update()
-    // }
-    // if(heartA.alive){
-    //     heartA.update()
-    // }
+  if(survivorRoomOne.notSafe){
+        survivorRoomOne.update()
+    }
+    if(heartB.alive){
+        heartB.update()
+    }
 }
 const levelFive = () =>{
+    if(head.alive){
+        head.update()
+    }
 
+    if(heartC.alive){
+        heartC.update()
+    }
+}
+const levelSix = () =>{
+
+    if(head.alive){
+        head.update()
+    }
+
+    if(heartD.alive){
+        heartD.update()
+    }
 }
 
 
