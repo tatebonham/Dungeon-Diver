@@ -677,114 +677,114 @@ const goblinK = new Entity({
 })
 
 const batA = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 50, y: 420},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
     offset: {x: 2, y: 1}
 })
 const batB = new Entity({
-    position:{x: 500, y: 100},
-    width: 5, height: 5,
+    position:{x: 50, y: 420},
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: '', 
+    health: 1,
+    imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batC = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batD = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batE = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batF = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batG = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batH = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batI = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batJ = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const batK = new Entity({
     position:{x: 500, y: 100},
-    width: 5, height: 5,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
-    health: 2,
+    health: 1,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
     framesMax: 5, 
-    offset: {x: 0, y: 0}
+    offset: {x: 2, y: 1}
 })
 const head = new Entity({
     position:{x: 500, y: 100},
@@ -895,6 +895,8 @@ const levelOne = ()=>{
     }    
 
 
+
+
     if(goblinA.alive == false && goblinB.alive == false && goblinB.alive == false && goblinD.alive == false){
         level = 2
     }
@@ -902,6 +904,27 @@ const levelOne = ()=>{
 
 const levelTwo = () =>{
    
+    // if(batA.alive){
+    //     // batAttack(adventurer, batA)
+    //     batA.update()
+    // }    
+
+    if(batB.alive){
+        batAttack(adventurer, batB)
+        batB.update()
+    }    
+    if(batC.alive){
+        batAttack(adventurer, batC)
+        batC.update()
+    }    
+    if(batD.alive){
+        batAttack(adventurer, batD)
+        batD.update()
+    }    
+
+
+
+
     if(arrowA.alive){
         arrowA.update()
     }
@@ -1367,6 +1390,29 @@ function animate(){
         arrowHit(projectile,goblinB)
         arrowHit(projectile,goblinC)
         arrowHit(projectile,goblinD)
+        arrowHit(projectile, goblinA)
+        arrowHit(projectile, goblinB)
+        arrowHit(projectile, goblinC)
+        arrowHit(projectile, goblinD)
+        arrowHit(projectile, goblinE)
+        arrowHit(projectile, goblinF)
+        arrowHit(projectile, goblinG)
+        arrowHit(projectile, goblinH)
+        arrowHit(projectile, goblinI)
+        arrowHit(projectile, goblinJ)
+        arrowHit(projectile, goblinK)
+        arrowHit(projectile,batA)
+        arrowHit(projectile,batB)
+        arrowHit(projectile,batC)
+        arrowHit(projectile,batD)
+        arrowHit(projectile,batE)
+        arrowHit(projectile,batF)
+        arrowHit(projectile,batG)
+        arrowHit(projectile,batH)
+        arrowHit(projectile,batI)
+        arrowHit(projectile,batJ)
+        arrowHit(projectile,batK)
+        arrowHit(projectile,head)
         }
     })
 
@@ -1376,10 +1422,50 @@ function animate(){
     enemyHit(adventurer, goblinB)
     enemyHit(adventurer, goblinC)
     enemyHit(adventurer, goblinD)
+    enemyHit(adventurer, goblinE)
+    enemyHit(adventurer, goblinF)
+    enemyHit(adventurer, goblinG)
+    enemyHit(adventurer, goblinH)
+    enemyHit(adventurer, goblinI)
+    enemyHit(adventurer, goblinJ)
+    enemyHit(adventurer, goblinK)
+    
+    enemyHit(adventurer,batA)
+    enemyHit(adventurer,batB)
+    enemyHit(adventurer,batC)
+    enemyHit(adventurer,batD)
+    enemyHit(adventurer,batE)
+    enemyHit(adventurer,batF)
+    enemyHit(adventurer,batG)
+    enemyHit(adventurer,batH)
+    enemyHit(adventurer,batI)
+    enemyHit(adventurer,batJ)
+    enemyHit(adventurer,batK)
+
     playerHit(adventurer,goblinA)
     playerHit(adventurer,goblinB)
     playerHit(adventurer,goblinC)
     playerHit(adventurer,goblinD)
+    playerHit(adventurer,goblinE)
+    playerHit(adventurer,goblinF)
+    playerHit(adventurer,goblinG)
+    playerHit(adventurer,goblinH)
+    playerHit(adventurer,goblinI)
+    playerHit(adventurer,goblinJ)
+    playerHit(adventurer,goblinK)
+
+    playerHit(adventurer,batA)
+    playerHit(adventurer,batB)
+    playerHit(adventurer,batC)
+    playerHit(adventurer,batD)
+    playerHit(adventurer,batE)
+    playerHit(adventurer,batF)
+    playerHit(adventurer,batG)
+    playerHit(adventurer,batH)
+    playerHit(adventurer,batI)
+    playerHit(adventurer,batJ)
+    playerHit(adventurer,batK)
+
     collectHeart(heartA, adventurer)
     collectHeart(heartB, adventurer)
     collectHeart(heartC, adventurer)
@@ -1389,6 +1475,7 @@ function animate(){
     collectArrow(arrowB, adventurer)
     collectArrow(arrowC, adventurer)
     saveSurvivor(survivorRoomOne, adventurer)
+
 }
 
 
