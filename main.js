@@ -677,7 +677,7 @@ const goblinK = new Entity({
 })
 
 const batA = new Entity({
-    position:{x: 50, y: 420},
+    position:{x: 660, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -687,7 +687,7 @@ const batA = new Entity({
     offset: {x: 2, y: 1}
 })
 const batB = new Entity({
-    position:{x: 50, y: 420},
+    position:{x: 30, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -697,7 +697,7 @@ const batB = new Entity({
     offset: {x: 2, y: 1}
 })
 const batC = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 660, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -707,7 +707,7 @@ const batC = new Entity({
     offset: {x: 2, y: 1}
 })
 const batD = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 660, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -717,7 +717,7 @@ const batD = new Entity({
     offset: {x: 2, y: 1}
 })
 const batE = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 660, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -727,7 +727,7 @@ const batE = new Entity({
     offset: {x: 2, y: 1}
 })
 const batF = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 660, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -737,7 +737,7 @@ const batF = new Entity({
     offset: {x: 2, y: 1}
 })
 const batG = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -747,7 +747,7 @@ const batG = new Entity({
     offset: {x: 2, y: 1}
 })
 const batH = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 70, y: 100},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -777,7 +777,7 @@ const batJ = new Entity({
     offset: {x: 2, y: 1}
 })
 const batK = new Entity({
-    position:{x: 500, y: 100},
+    position:{x: 30, y: 100},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -889,13 +889,6 @@ const levelOne = ()=>{
         goblinD.update()
     }
 
-    if(batA.alive){
-        // batAttack(adventurer, batA)
-        batA.update()
-    }    
-
-
-
 
     if(goblinA.alive == false && goblinB.alive == false && goblinB.alive == false && goblinD.alive == false){
         level = 2
@@ -904,10 +897,10 @@ const levelOne = ()=>{
 
 const levelTwo = () =>{
    
-    // if(batA.alive){
-    //     // batAttack(adventurer, batA)
-    //     batA.update()
-    // }    
+    if(batA.alive){
+        // batAttack(adventurer, batA)
+        batA.update()
+    }    
 
     if(batB.alive){
         batAttack(adventurer, batB)
@@ -921,9 +914,6 @@ const levelTwo = () =>{
         batAttack(adventurer, batD)
         batD.update()
     }    
-
-
-
 
     if(arrowA.alive){
         arrowA.update()
@@ -1386,96 +1376,145 @@ function animate(){
         projectile.position.x += projectile.speed.x
         projectile.position.y += projectile.speed.y
         projectile.update()
-        arrowHit(projectile,goblinA)
-        arrowHit(projectile,goblinB)
-        arrowHit(projectile,goblinC)
-        arrowHit(projectile,goblinD)
+        if(level == 1){
         arrowHit(projectile, goblinA)
         arrowHit(projectile, goblinB)
         arrowHit(projectile, goblinC)
         arrowHit(projectile, goblinD)
+        }
+        if(level == 3){
         arrowHit(projectile, goblinE)
         arrowHit(projectile, goblinF)
         arrowHit(projectile, goblinG)
         arrowHit(projectile, goblinH)
+        }
+        if(level == 6){
         arrowHit(projectile, goblinI)
         arrowHit(projectile, goblinJ)
         arrowHit(projectile, goblinK)
+        }
+        if(level == 2){
         arrowHit(projectile,batA)
         arrowHit(projectile,batB)
         arrowHit(projectile,batC)
         arrowHit(projectile,batD)
+        }
+        if(level == 3){
         arrowHit(projectile,batE)
         arrowHit(projectile,batF)
         arrowHit(projectile,batG)
         arrowHit(projectile,batH)
+        }
+        if(level == 6){
         arrowHit(projectile,batI)
         arrowHit(projectile,batJ)
         arrowHit(projectile,batK)
+        }
+        if(level == 5 || level == 6){
         arrowHit(projectile,head)
+        }
         }
     })
 
-    // console.log(lastKey)
     
+    if(level == 1){
     enemyHit(adventurer, goblinA)
     enemyHit(adventurer, goblinB)
     enemyHit(adventurer, goblinC)
     enemyHit(adventurer, goblinD)
+    }
+    if(level == 3){
     enemyHit(adventurer, goblinE)
     enemyHit(adventurer, goblinF)
     enemyHit(adventurer, goblinG)
     enemyHit(adventurer, goblinH)
+    }
+    if(level == 6){
     enemyHit(adventurer, goblinI)
     enemyHit(adventurer, goblinJ)
     enemyHit(adventurer, goblinK)
-    
+    }
+    if(level == 2){
     enemyHit(adventurer,batA)
     enemyHit(adventurer,batB)
     enemyHit(adventurer,batC)
     enemyHit(adventurer,batD)
+    }
+    if(level == 3){
     enemyHit(adventurer,batE)
     enemyHit(adventurer,batF)
     enemyHit(adventurer,batG)
     enemyHit(adventurer,batH)
+    }
+    if(level == 6){
     enemyHit(adventurer,batI)
     enemyHit(adventurer,batJ)
     enemyHit(adventurer,batK)
+    }
 
+    if(level == 1){
     playerHit(adventurer,goblinA)
     playerHit(adventurer,goblinB)
     playerHit(adventurer,goblinC)
     playerHit(adventurer,goblinD)
+    }
+    if(level == 3){
     playerHit(adventurer,goblinE)
     playerHit(adventurer,goblinF)
     playerHit(adventurer,goblinG)
     playerHit(adventurer,goblinH)
+    }
+    if(level == 6){
     playerHit(adventurer,goblinI)
     playerHit(adventurer,goblinJ)
     playerHit(adventurer,goblinK)
+    }
 
+    if(level == 2){
     playerHit(adventurer,batA)
     playerHit(adventurer,batB)
     playerHit(adventurer,batC)
     playerHit(adventurer,batD)
+    }
+    if(level == 3){
     playerHit(adventurer,batE)
     playerHit(adventurer,batF)
     playerHit(adventurer,batG)
     playerHit(adventurer,batH)
+    }
+
+    if(level == 6){
     playerHit(adventurer,batI)
     playerHit(adventurer,batJ)
     playerHit(adventurer,batK)
+    }
 
+    if(level == 2){
     collectHeart(heartA, adventurer)
+    }
+    if(level == 3){
     collectHeart(heartB, adventurer)
+    }
+    if(level == 5){
     collectHeart(heartC, adventurer)
+    }
+    if(level == 6){
     collectHeart(heartD, adventurer)
-    keepTrack()
-    collectArrow(arrowA, adventurer)
-    collectArrow(arrowB, adventurer)
-    collectArrow(arrowC, adventurer)
-    saveSurvivor(survivorRoomOne, adventurer)
+    }
 
+    keepTrack()
+    if(level == 2){
+    collectArrow(arrowA, adventurer)
+    }
+    if(level == 4){
+    collectArrow(arrowB, adventurer)
+    }
+    if(level == 5){
+    collectArrow(arrowC, adventurer)
+    }
+    if(level == 4){
+    saveSurvivor(survivorRoomOne, adventurer)
+    }
 }
 
 
