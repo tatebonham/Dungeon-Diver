@@ -632,16 +632,50 @@ let arrowCount = 5
 // let healthCount = 0
 
 const arrowArr = []
+class Projectile{
+    constructor({position}, width, height, color, {speed}, health){
+        this.position = position
+        this.width = width
+        this.height = height
+        this.alive = true
+        this.health = health
+        this.color = color
+        this.speed = speed
+    }
 
+    draw(){
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+
+    update(){
+        this.draw()
+        if(this.position.x < 30){
+            this.position.x = 30
+        } else if(this.position.x + this.width > 670){
+            this.position.x = 670 - this.width
+        } else {
+            this.position.x += this.speed.x
+        }
+
+        if(this.position.y < 60){
+            this.position.y = 60
+        } else if (this.position.y  + this.height > 450){
+            this.position.y = 450 - this.height    
+        } else {
+            this.position.y += this.speed.y
+        }
+    }
+}
 const arrowDirection = () =>{
    if(lastKey ==='d'){
-    arrowArr.push(new Entity({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: 1.5, y: 0}}, 0))
+    arrowArr.push(new Projectile({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: 2.5, y: 0}}, 0))
     } else if(lastKey === 'w'){
-        arrowArr.push(new Entity({position: {x: adventurer.position.x + 12, y: adventurer.position.y - 19}}, 3, 20, 'black', {speed: {x: 0, y: -1.5}}, 0))
+        arrowArr.push(new Projectile({position: {x: adventurer.position.x + 12, y: adventurer.position.y - 19}}, 3, 20, 'black', {speed: {x: 0, y: -2.5}}, 0))
     } else if(lastKey === 'a'){
-        arrowArr.push(new Entity({position: {x: adventurer.position.x - 19, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: -1.5, y: 0}}, 0))
+        arrowArr.push(new Projectile({position: {x: adventurer.position.x - 19, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: -2.5, y: 0}}, 0))
     } else if(lastKey === 's'){
-        arrowArr.push(new Entity({position: {x: adventurer.position.x + 12, y: adventurer.position.y + adventurer.height}}, 3, 20, 'black', {speed: {x: 0, y: 1.5}}, 0))
+        arrowArr.push(new Projectile({position: {x: adventurer.position.x + 12, y: adventurer.position.y + adventurer.height}}, 3, 20, 'black', {speed: {x: 0, y: 2.5}}, 0))
     }
 }
 
@@ -692,9 +726,6 @@ const collectArrow = (arrow, player) => {
         return false
     }
 }
-
-
-
 const arrowHit = (arrow, enemy) => {
         // AABB -- axis aligned bounding box collision detection
         const Left = arrow.position.x + arrow.width >= enemy.position.x
@@ -728,7 +759,6 @@ const arrowHit = (arrow, enemy) => {
             return false
         }
 }
-
 const enemyHit = (player, enemy) => {
     const rLeft = player.attackBox.right.position.x + player.attackBox.right.width >=  enemy.position.x
     const rRight = player.attackBox.right.position.x <= enemy.position.x + enemy.width
@@ -789,7 +819,6 @@ const enemyHit = (player, enemy) => {
      return false
     }
 }
-
 const healthChecker = (player) =>{
     if(player.health == 2){
         health.style.width = '66%'
@@ -816,7 +845,6 @@ const collectHeart = (heart, player) => {
         return false
     }
 }
-
 const playerHit = (player, enemy) => {
     const left = enemy.position.x + enemy.width >=  player.position.x
     const right = enemy.position.x <= player.position.x + player.width
@@ -844,9 +872,6 @@ const playerHit = (player, enemy) => {
 
 }
 
-
-
-
 const keys = {
     w: {
         pressed: false
@@ -861,7 +886,6 @@ const keys = {
         pressed: false
     }
 }
-
 let lastKey = ''
 const gameBorders = () => {
     //health bar border
