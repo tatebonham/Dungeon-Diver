@@ -375,7 +375,7 @@ const arrowA = new Entity({
     
 })
 const arrowB = new Entity({
-    position: {x: 440, y: 350},
+    position: {x: 60, y: 420},
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
@@ -385,7 +385,7 @@ const arrowB = new Entity({
     offset: {x: 2, y: 1}
 })
 const arrowC = new Entity({
-    position: {x: 440, y: 350},
+    position: {x: 620, y: 420},
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
@@ -401,7 +401,7 @@ const key = new Entity({
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/entities/key.png',
-    scale: 1,
+    scale: .1,
     framesMax: 1,
     offset: {x: 1, y: 0}
 })
@@ -848,10 +848,10 @@ const batAttack = (player, enemy)=>{
 }
 const headAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= 0
+        enemy.position.x -= .2
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += 0
+        enemy.position.x += .2
     }
     if(enemy.position.y >= player.position.y){
         enemy.position.y -= .2
@@ -882,7 +882,7 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinA)
         goblinA.update()
     }
-    door.update()
+   
     if(goblinB.alive){
         goblinAttack(adventurer, goblinB)
         goblinB.update()
@@ -896,6 +896,7 @@ const levelOne = ()=>{
         goblinD.update()
     }
 
+    door.update()
 
     if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
         level = 2
@@ -927,6 +928,7 @@ const levelTwo = () =>{
     if(heartA.alive){
         heartA.update()
     }
+    door.update()
 
     if(batE.alive == false && batF.alive == false && batG.alive == false && batH.alive == false){
         level = 3
@@ -977,6 +979,8 @@ const levelThree = () =>{
         heartA.update()
     }
 
+    door.update()
+
     if((batE.alive == false && batF.alive == false && batG.alive == false && batH.alive == false &&
         goblinE.alive == false && goblinF.alive == false && goblinG.alive == false && goblinH.alive == false)){
             level = 4
@@ -989,15 +993,17 @@ const levelFour = () =>{
   if(survivorRoomOne.notSafe){
         survivorRoomOne.update()
     }
+    door.update()
     if(heartB.alive){
         heartB.update()
     }
 }
 const levelFive = () =>{
     if(head.alive){
+        headAttack(adventurer, head)
         head.update()
     }
-
+    door.update()
     if(heartC.alive){
         heartC.update()
     }
@@ -1005,8 +1011,11 @@ const levelFive = () =>{
 const levelSix = () =>{
 
     if(head.alive){
+        headAttack(adventurer, head)
         head.update()
     }
+
+    door.update()
 
     if(heartD.alive){
         heartD.update()
