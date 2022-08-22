@@ -677,7 +677,7 @@ const goblinK = new Entity({
 })
 
 const batA = new Entity({
-    position:{x: 660, y: 60},
+    position:{x: 30, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -874,7 +874,7 @@ const levelOne = ()=>{
     if(goblinA.alive){
         goblinAttack(adventurer, goblinA)
         goblinA.update()
-    } 
+    }
 
     if(goblinB.alive){
         goblinAttack(adventurer, goblinB)
@@ -890,15 +890,16 @@ const levelOne = ()=>{
     }
 
 
-    if(goblinA.alive == false && goblinB.alive == false && goblinB.alive == false && goblinD.alive == false){
+    if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
         level = 2
+        score += 4
     }
 }
 
 const levelTwo = () =>{
    
     if(batA.alive){
-        // batAttack(adventurer, batA)
+        batAttack(adventurer, batA)
         batA.update()
     }    
 
@@ -921,18 +922,31 @@ const levelTwo = () =>{
     if(heartA.alive){
         heartA.update()
     }
+
+    if(batA.alive == false && batB.alive == false && batC.alive == false && batD.alive == false){
+        level = 3
+        score += 4
+    }
+
 }
 const levelThree = () =>{
-    // if(survivorRoomOne.notSafe){
+
+
+    if(arrowA.alive){
+        arrowA.update()
+    }
+    if(heartA.alive){
+        heartA.update()
+    }
+
+}
+const levelFour = () =>{
+  // if(survivorRoomOne.notSafe){
     //     survivorRoomOne.update()
     // }
     // if(heartA.alive){
     //     heartA.update()
     // }
-
-}
-const levelFour = () =>{
-
 }
 const levelFive = () =>{
 
@@ -1062,7 +1076,6 @@ const arrowHit = (arrow, enemy) => {
                 enemy.position.y += 60
                 arrow.alive = false
             } else if (enemy.health == 0){
-                scoreCount += 1
                 enemy.alive = false
                 arrow.alive = false
             }    
@@ -1098,7 +1111,6 @@ const enemyHit = (player, enemy) => {
             if(enemy.health >= 1){
                 enemy.position.y -= 60
             } else if (enemy.health == 0){
-                scoreCount += 1
                 enemy.alive = false
             }   
         } else if (lRight && lLeft && lTop && lBottom && lastKey == 'a') {
@@ -1106,7 +1118,6 @@ const enemyHit = (player, enemy) => {
             if(enemy.health >= 1){
                 enemy.position.x -= 60
             } else if (enemy.health == 0){
-                scoreCount += 1
                 enemy.alive = false
             }            
         } else if (dRight && dLeft && dTop && dBottom && lastKey == 's') {
@@ -1114,7 +1125,6 @@ const enemyHit = (player, enemy) => {
             if(enemy.health >= 1){
                 enemy.position.y += 60
             } else if (enemy.health == 0){
-                scoreCount += 1
                 enemy.alive = false
             }          
         } else if (rRight && rLeft && rTop && rBottom && lastKey == 'd') {
@@ -1122,7 +1132,6 @@ const enemyHit = (player, enemy) => {
             if(enemy.health >= 1){
                 enemy.position.x += 60
             } else if (enemy.health == 0){
-                scoreCount += 1
                 enemy.alive = false
             }         
        }
@@ -1293,7 +1302,7 @@ const gameState=()=>{
         } else if (level == 5){
             levelFive()
         } else if (level == 6){
-        
+            levelSix()
         }
     }  
 
@@ -1489,32 +1498,35 @@ function animate(){
     playerHit(adventurer,batK)
     }
 
-    if(level == 2){
+    if(level == 5 || level == 6){
+        playerHit(adventurer, head)
+    }
+
+    if(level == 2 || level == 3){
     collectHeart(heartA, adventurer)
     }
-    if(level == 3){
+    if(level >= 4){
     collectHeart(heartB, adventurer)
     }
-    if(level == 5){
+    if(level >= 5){
     collectHeart(heartC, adventurer)
     }
     if(level == 6){
     collectHeart(heartD, adventurer)
     }
-
-    keepTrack()
-    if(level == 2){
+    if(level == 2 || level == 3){
     collectArrow(arrowA, adventurer)
     }
-    if(level == 4){
+    if(level >= 4){
     collectArrow(arrowB, adventurer)
     }
-    if(level == 5){
+    if(level >= 5){
     collectArrow(arrowC, adventurer)
     }
     if(level == 4){
     saveSurvivor(survivorRoomOne, adventurer)
     }
+    keepTrack()
 }
 
 
