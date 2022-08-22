@@ -555,7 +555,7 @@ const goblinE = new Entity({
     }
 })
 const goblinF = new Entity({
-    position:{x: 30, y: 110},
+    position:{x: 320, y: 410},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 4,
@@ -579,7 +579,7 @@ const goblinF = new Entity({
     }
 })
 const goblinG = new Entity({
-    position:{x: 30, y: 310},
+    position:{x: 320, y: 60},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 4,
@@ -758,10 +758,10 @@ const headAttack = (player, enemy)=>{
     if(enemy.position.x <= player.position.x){
         enemy.position.x += .3
     }
-    if(enemy.position.y >= player.position.y){
+    if(enemy.position.y >= player.position.y - 75){
         enemy.position.y -= .3
     }
-    if(enemy.position.y <= player.position.y){
+    if(enemy.position.y <= player.position.y - 75){
         enemy.position.y += .3
     }
 }
@@ -774,10 +774,10 @@ const goblinAttack = (player, enemy)=>{
         enemy.position.x += .6
         enemyRight(enemy)
     }
-    if(enemy.position.y >= player.position.y){
+    if(enemy.position.y >= player.position.y - 10){
         enemy.position.y -= .6
     }
-    if(enemy.position.y <= player.position.y){
+    if(enemy.position.y <= player.position.y - 10){
         enemy.position.y += .6
     }
 }
@@ -800,7 +800,6 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinD)
         goblinD.update()
     }
-    chest.update()
     door.update()
 
     if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
