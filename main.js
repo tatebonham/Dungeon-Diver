@@ -372,7 +372,6 @@ const arrowA = new Entity({
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
-    health: 3,
     imageSrc: './images/entities/arrow.png',
     scale: .5,
     framesMax: 1,
@@ -384,23 +383,33 @@ const arrowB = new Entity({
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
-    health: 3,
     imageSrc: './images/entities/heart.png',
-    scale: 1,
+    scale: .5,
     framesMax: 1,
     offset: {x: 2, y: 1}
 })
 const arrowC = new Entity({
     position: {x: 440, y: 350},
+    width: 5,
+    height: 30,
+    speed: {x: 0, y: 0},
+    imageSrc: './images/entities/arrow.png',
+    scale: .5,
+    framesMax: 1,
+    offset: {x: 2, y: 1}
+})
+const key = new Entity({
+    position: {x: 440, y: 350},
     width: 30,
     height: 30,
     speed: {x: 0, y: 0},
     health: 3,
-    imageSrc: './images/entities/heart.png',
+    imageSrc: './images/entities/key.png',
     scale: 1,
     framesMax: 1,
     offset: {x: 1, y: 0}
 })
+
 
 const goblinA = new Entity({
     position:{x: 300, y: 300},
@@ -669,114 +678,125 @@ const goblinK = new Entity({
 
 const batA = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
-    offset: {x: 0, y: 0}
+    framesMax: 5, 
+    offset: {x: 2, y: 1}
 })
 const batB = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: '', 
     scale: 1, 
-    framesMax: 8, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batC = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batD = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batE = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batF = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batG = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batH = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batI = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batJ = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
 const batK = new Entity({
     position:{x: 500, y: 100},
-    width: 25, height: 48,
+    width: 5, height: 5,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: './images/entities/bat.png', 
     scale: 1, 
-    framesMax: 3, 
+    framesMax: 5, 
     offset: {x: 0, y: 0}
 })
+const head = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 5,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/head.png', 
+    scale: 1, 
+    framesMax: 1, 
+    offset: {x: 0, y: 0}
+})
+
 
 const enemyLeft = (enemy) =>{
     enemy.image = enemy.sprites.left.image
@@ -791,17 +811,17 @@ const enemyRight = (enemy) =>{
         enemy.offset.y = enemy.sprites.right.offset.y
 }
 const batAttack = (player, enemy)=>{
-    if(enemy.position.x >= player.position.x){
-        enemy.position.x -= 0
+    if(enemy.position.x >= player.position.x + 6){
+        enemy.position.x -= 1
     }
-    if(enemy.position.x <= player.position.x){
-        enemy.position.x += 0
+    if(enemy.position.x <= player.position.x + 6){
+        enemy.position.x += 1
     }
-    if(enemy.position.y >= player.position.y){
-        enemy.position.y -= .2
+    if(enemy.position.y >= player.position.y + 12){
+        enemy.position.y -= 1
     }
-    if(enemy.position.y <= player.position.y){
-        enemy.position.y += .2
+    if(enemy.position.y <= player.position.y + 12){
+        enemy.position.y += 1
     }
 }
 const headAttack = (player, enemy)=>{
@@ -828,10 +848,10 @@ const goblinAttack = (player, enemy)=>{
         enemyRight(enemy)
     }
     if(enemy.position.y >= player.position.y){
-        enemy.position.y -= .2
+        enemy.position.y -= .5
     }
     if(enemy.position.y <= player.position.y){
-        enemy.position.y += .2
+        enemy.position.y += .5
     }
 }
 // const enemyAttack = (player, enemy)=>{
@@ -868,29 +888,34 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinD)
         goblinD.update()
     }
-   
-    if(heartA.alive){
-        heartA.update()
-    }
-    if(arrowA.alive){
-        arrowA.update()
-    }
+
+    if(batA.alive){
+        // batAttack(adventurer, batA)
+        batA.update()
+    }    
+
+
     if(goblinA.alive == false && goblinB.alive == false && goblinB.alive == false && goblinD.alive == false){
         level = 2
     }
 }
 
 const levelTwo = () =>{
-    
-
-}
-const levelThree = () =>{
-    if(survivorRoomOne.notSafe){
-        survivorRoomOne.update()
+   
+    if(arrowA.alive){
+        arrowA.update()
     }
     if(heartA.alive){
         heartA.update()
     }
+}
+const levelThree = () =>{
+    // if(survivorRoomOne.notSafe){
+    //     survivorRoomOne.update()
+    // }
+    // if(heartA.alive){
+    //     heartA.update()
+    // }
 
 }
 const levelFour = () =>{
@@ -923,7 +948,7 @@ class Projectile{
 
     update(){
         this.draw()
-        if(this.position.x < 30){
+        if(this.position.x < 50){
             this.position.x = 30
         } else if(this.position.x + this.width > 670){
             this.position.x = 670 - this.width
@@ -1246,6 +1271,16 @@ const gameState=()=>{
     if(gameStart){
         if(level == 1){
             levelOne()
+        } else if (level == 2){
+            levelTwo()
+        } else if (level == 3){
+            levelThree()
+        } else if (level == 4){
+            levelFour()
+        } else if (level == 5){
+            levelFive()
+        } else if (level == 6){
+        
         }
     }  
 
