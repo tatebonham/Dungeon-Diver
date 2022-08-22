@@ -155,7 +155,7 @@ class Player {
         this.framesMax = framesMax
         this.framesCurrent = this.framesCurrent
         this.framesElaped = 0
-        this.framesHold = 8
+        this.framesHold = 7
         this.sprites = sprites
         for(const obj in this.sprites){
             sprites[obj].image = new Image()
@@ -229,7 +229,11 @@ class Player {
         } else {
             this.position.y += this.speed.y
         }
-        this.framesElaped++
+
+        
+    if(moving){
+
+            this.framesElaped++
             if(this.framesElaped % this.framesHold === 0){  
                 if(this.framesCurrent < this.framesMax - 1){
                     this.framesCurrent++
@@ -237,6 +241,7 @@ class Player {
                     this.framesCurrent = 0
                 }
             }
+        }
     }
     
     visualHitBox(){
@@ -277,12 +282,12 @@ class Player {
 // })
 const adventurerRunUp = new Sprite({
     position: {
-        x: 40,
-        y: 200
+        x: 31,
+        y: 67
     },
-    imageSrc: './images/adventurer/run down.png',
+    imageSrc: './images/adventurer/idle.png',
     scale: 1.5,
-    framesMax: 7
+    framesMax: 1
 })
 
 
@@ -359,8 +364,8 @@ const adventurer = new Player({
         idleRight: {
             imageSrc: './images/adventurer/idle right.png',
             framesMax: 1,
-            framesHold: 7,
-            offset: {x: 10, y:2}
+            framesHold: 1,
+            offset: {x: 6, y:2}
         },
         idleLeft: {
             imageSrc: './images/adventurer/idle left.png',
@@ -372,7 +377,7 @@ const adventurer = new Player({
 })
 
 
-
+let moving = true
 
 
 const survivorRoomOne = new Entity({position: {x: 650, y: 350}}, 25, 25, 'blue', {speed: {x: 0, y:0}})
@@ -720,30 +725,12 @@ const gameState=()=>{
 }
 const idleDirection = () => {
     if(adventurer.speed.x == 0 && adventurer.speed.y == 0){
-        if(lastKey == 'w'){
-            adventurer.image = adventurer.sprites.idleUp.image
-            adventurer.framesMax = adventurer.sprites.idleUp.framesMax
-            adventurer.offset.x = adventurer.sprites.idleUp.offset.x
-            adventurer.offset.y = adventurer.sprites.idleUp.offset.y
-        } else if (lastKey == 'a') {
-            adventurer.image = adventurer.sprites.idleLeft.image
-            adventurer.framesMax = adventurer.sprites.idleLeft.framesMax
-            adventurer.offset.x = adventurer.sprites.idleLeft.offset.x
-            adventurer.offset.y = adventurer.sprites.idleLeft.offset.y
-        } else if (lastKey == 's') {
-            adventurer.image = adventurer.sprites.idle.image
-            adventurer.framesMax = adventurer.sprites.idle.framesMax
-            adventurer.offset.x = adventurer.sprites.idle.offset.x
-            adventurer.offset.y = adventurer.sprites.idle.offset.y
-        } else if (lastKey == 'd') {
-            adventurer.image = adventurer.sprites.idleRight.image
-            adventurer.framesMax = adventurer.sprites.idleRight.framesMax
-            adventurer.offset.x = adventurer.sprites.idleRight.offset.x
-            adventurer.offset.y = adventurer.sprites.idleRight.offset.y
-        }
-
+        moving = false
     }
 }
+
+let moved = false
+
 animate()
 
 function animate(){
@@ -752,18 +739,22 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     gameBorders()
-
-    adventurerRunUp.update()
+    if(!moved){
+        adventurerRunUp.update()
+    }
+        
+   
+    
 
     if(adventurer.alive){
        adventurer.update()
        adventurer.visualHitBox()
     }
 
-    gameState()
-    
-    idleDirection()
 
+
+    gameState()
+   
     adventurer.speed.x = 0
     adventurer.speed.y = 0
     if(keys.d.pressed && keys.s.pressed){
@@ -803,6 +794,7 @@ function animate(){
         adventurer.offset.x = adventurer.sprites.runRight.offset.x
         adventurer.offset.y = adventurer.sprites.runRight.offset.y
     }    
+    idleDirection()
     arrowArr.forEach(projectile =>{
         if(projectile.alive){
         projectile.position.x += projectile.speed.x
@@ -842,28 +834,38 @@ if(keys.w.pressed){
     lastKey = 'd'
 }
 
+
 }
 window.addEventListener('keydown', (event) => {
     switch(event.key){
         case 'w':
             keys.w.pressed = true
             lastKeyPressed()
+            moving = true
+            moved = true
             break
         case 'a':
             keys.a.pressed = true  
             lastKeyPressed()  
+            moving = true
+            moved = true
             break
         case 's':
             keys.s.pressed = true
             lastKeyPressed()
+            moving = true
+            moved = true
             break
         case 'd':
             keys.d.pressed = true 
             lastKeyPressed()
+            moving = true
+            moved = true
             break
         case 'k':
             if(adventurer.alive){
                 adventurer.attack()
+                moved = true
             }
             console.log('k')
             break
@@ -871,6 +873,7 @@ window.addEventListener('keydown', (event) => {
         if(adventurer.alive && arrowCount >= 1){
             arrowDirection()
             arrowCount -= 1
+            moved = true
         }
         break
     }
