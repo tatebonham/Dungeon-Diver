@@ -474,7 +474,6 @@ const goblinC = new Entity({
         }
     }
 })
-
 const goblinD = new Entity({
     position:{x: 500, y: 100},
     width: 25, height: 48,
@@ -498,6 +497,285 @@ const goblinD = new Entity({
                 offset: {x: 22, y:13}
         }
     }
+})
+const goblinE = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+const goblinF = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+const goblinG = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+const goblinH = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+const goblinI = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+const goblinJ = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+const goblinK = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+
+const batA = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batB = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0}
+})
+const batC = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batD = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batE = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batF = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batG = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batH = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batI = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batJ = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
+})
+const batK = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: './images/entities/bat.png', 
+    scale: 1, 
+    framesMax: 3, 
+    offset: {x: 0, y: 0}
 })
 
 const enemyLeft = (enemy) =>{
@@ -556,8 +834,6 @@ const goblinAttack = (player, enemy)=>{
         enemy.position.y += .2
     }
 }
-// const goldPieceOne = new Entity({position: {x: goblinA.position.x,y: goblinA.position.y}}, 10, 10, 'gold', {speed: {x: 0, y: 0}}, 2)
-
 // const enemyAttack = (player, enemy)=>{
 //     if(enemy.position.x >= player.position.x){
 //         enemy.position.x -= .2
@@ -602,7 +878,6 @@ const levelOne = ()=>{
     if(goblinA.alive == false && goblinB.alive == false && goblinB.alive == false && goblinD.alive == false){
         level = 2
     }
-
 }
 
 const levelTwo = () =>{
@@ -629,8 +904,6 @@ const levelFive = () =>{
 let scoreCount = 0
 let goldCount = 0
 let arrowCount = 5
-// let healthCount = 0
-
 const arrowArr = []
 class Projectile{
     constructor({position}, width, height, color, {speed}, health){
