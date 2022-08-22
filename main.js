@@ -406,8 +406,8 @@ const key = new Entity({
     offset: {x: 1, y: 0}
 })
 const door = new Entity({
-    position: {x: 667, y: 200},
-    width: 5,
+    position: {x: 665, y: 200},
+    width: 10,
     height: 65,
     speed: {x: 0, y: 0},
     imageSrc: './images/entities/door.png',
@@ -602,79 +602,7 @@ const goblinG = new Entity({
     }
 })
 const goblinH = new Entity({
-    position:{x: 665, y: 200},
-    width: 25, height: 48,
-    speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 8, 
-    offset: {x: 0, y: 0},
-    sprites: {
-        left: {
-                imageSrc: './images/entities/leftGoblin.png',
-                framesMax: 8,
-                framesHold: 7,
-                offset: {x: 25, y:8}
-        },
-        right:{    
-                imageSrc: './images/entities/rightGoblin.png',
-                framesMax: 7,
-                framesHold: 7,
-                offset: {x: 22, y:13}
-        }
-    }
-})
-const goblinI = new Entity({
-    position:{x: 30, y: 200},
-    width: 25, height: 48,
-    speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 8, 
-    offset: {x: 0, y: 0},
-    sprites: {
-        left: {
-                imageSrc: './images/entities/leftGoblin.png',
-                framesMax: 8,
-                framesHold: 7,
-                offset: {x: 25, y:8}
-        },
-        right:{    
-                imageSrc: './images/entities/rightGoblin.png',
-                framesMax: 7,
-                framesHold: 7,
-                offset: {x: 22, y:13}
-        }
-    }
-})
-const goblinJ = new Entity({
-    position:{x: 30, y: 100},
-    width: 25, height: 48,
-    speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 8, 
-    offset: {x: 0, y: 0},
-    sprites: {
-        left: {
-                imageSrc: './images/entities/leftGoblin.png',
-                framesMax: 8,
-                framesHold: 7,
-                offset: {x: 25, y:8}
-        },
-        right:{    
-                imageSrc: './images/entities/rightGoblin.png',
-                framesMax: 7,
-                framesHold: 7,
-                offset: {x: 22, y:13}
-        }
-    }
-})
-const goblinK = new Entity({
-    position:{x: 30, y: 300},
+    position:{x: 645, y: 200},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
@@ -739,7 +667,7 @@ const batD = new Entity({
     offset: {x: 2, y: 1}
 })
 const batE = new Entity({
-    position:{x: 660, y: 60},
+    position:{x: 350, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -749,7 +677,7 @@ const batE = new Entity({
     offset: {x: 2, y: 1}
 })
 const batF = new Entity({
-    position:{x: 660, y: 440},
+    position:{x: 350, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -759,7 +687,7 @@ const batF = new Entity({
     offset: {x: 2, y: 1}
 })
 const batG = new Entity({
-    position:{x: 30, y: 440},
+    position:{x: 30, y: 215},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -769,7 +697,7 @@ const batG = new Entity({
     offset: {x: 2, y: 1}
 })
 const batH = new Entity({
-    position:{x: 30, y: 60},
+    position:{x: 655, y: 220},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -900,7 +828,7 @@ const levelOne = ()=>{
 
     if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
         level = 2
-        score += 4
+        scoreCount += 4
     }
 }
 
@@ -922,39 +850,6 @@ const levelTwo = () =>{
         batD.update()
     }    
 
-    if(arrowA.alive){
-        arrowA.update()
-    }
-    if(heartA.alive){
-        heartA.update()
-    }
-    door.update()
-
-    if(batE.alive == false && batF.alive == false && batG.alive == false && batH.alive == false){
-        level = 3
-        score += 4
-    }
-}
-let roomOver = false
-const levelThree = () =>{
-    if(goblinE.alive){
-        goblinAttack(adventurer, goblinE)
-        goblinE.update()
-    }
-
-    if(goblinF.alive){
-        goblinAttack(adventurer, goblinF)
-        goblinF.update()
-    }
-    if(goblinG.alive){
-        goblinAttack(adventurer, goblinG)
-        goblinG.update()
-    }
-    if(goblinH.alive){
-        goblinAttack(adventurer, goblinH)
-        goblinH.update()
-    }
-
     if(batE.alive){
         batAttack(adventurer, batE)
         batE.update()
@@ -972,22 +867,29 @@ const levelThree = () =>{
         batH.update()
     }    
 
+
     if(arrowA.alive){
         arrowA.update()
     }
     if(heartA.alive){
         heartA.update()
     }
-
     door.update()
 
-    if((batE.alive == false && batF.alive == false && batG.alive == false && batH.alive == false &&
-        goblinE.alive == false && goblinF.alive == false && goblinG.alive == false && goblinH.alive == false)){
-            level = 4
-            score += 8
-            roomOver = true
-        }
-
+    if(batA.alive == false && batB.alive == false && batC.alive == false && batD.alive == false && batF.alive == false && batG.alive == false && batE.alive == false && batH.alive == false){
+        level = 3
+        scoreCount += 4
+    }
+}
+let roomOver = false
+const levelThree = () =>{
+    if(arrowA.alive){
+        arrowA.update()
+    }
+    if(heartA.alive){
+        heartA.update()
+    }
+    door.update()
 }
 const levelFour = () =>{
   if(survivorRoomOne.notSafe){
@@ -1019,6 +921,10 @@ const levelSix = () =>{
 
     if(heartD.alive){
         heartD.update()
+    }
+
+    if(head.alive == false){
+        scoreCount += 20
     }
 }
 
@@ -1116,12 +1022,15 @@ const touchDoor = (door, player) => {
     const bottom = door.position.y <= player.position.y + player.height
     
     if(right && left && top && bottom && roomOver){
-        player.position.x = 30
+        player.position.x = 40
         player.position.y = 230
         door.position.x = 30
         door.position.y = 200
-        door.alive = false
+        door.image = door.sprites.openDoor.image
+        door.offset = door.sprites.openDoor.offset
+        door.scale = door.sprites.openDoor.scale
         doorOpened = true
+        console.log('hi')
     } else {
         return false
     }
@@ -1404,7 +1313,7 @@ const gameState=()=>{
             levelTwo()
         } else if (level == 3){
             levelThree()
-        } else if (level == 4 || doorOpened){
+        } else if (level == 4 && doorOpened){
             levelFour()
         } else if (level == 5){
             levelFive()
@@ -1420,6 +1329,59 @@ const idleDirection = () => {
     }
 }
 
+const checkEnemyHit = ()=>{
+    if(level == 1){
+        enemyHit(adventurer, goblinA)
+        enemyHit(adventurer, goblinB)
+        enemyHit(adventurer, goblinC)
+        enemyHit(adventurer, goblinD)
+        }
+        if(level == 2){
+        enemyHit(adventurer,batA)
+        enemyHit(adventurer,batB)
+        enemyHit(adventurer,batC)
+        enemyHit(adventurer,batD)
+        enemyHit(adventurer,batE)
+        enemyHit(adventurer,batF)
+        enemyHit(adventurer,batG)
+        enemyHit(adventurer,batH)
+        }
+       
+        if(level == 6){
+        enemyHit(adventurer,batI)
+        enemyHit(adventurer,batJ)
+        enemyHit(adventurer,batK)
+        }
+}
+const checkPlayerHit = () => {
+    if(level == 1){
+        playerHit(adventurer,goblinA)
+        playerHit(adventurer,goblinB)
+        playerHit(adventurer,goblinC)
+        playerHit(adventurer,goblinD)
+        }
+        if(level == 2){
+        playerHit(adventurer,batA)
+        playerHit(adventurer,batB)
+        playerHit(adventurer,batC)
+        playerHit(adventurer,batD)
+        playerHit(adventurer,batE)
+        playerHit(adventurer,batF)
+        playerHit(adventurer,batG)
+        playerHit(adventurer,batH)
+        
+        }
+
+        if(level == 6){
+        playerHit(adventurer,batI)
+        playerHit(adventurer,batJ)
+        playerHit(adventurer,batK)
+        }
+    
+        if(level == 5 || level == 6){
+            playerHit(adventurer, head)
+        }
+ }
 let moved = false
 
 animate()
@@ -1443,6 +1405,7 @@ function animate(){
        adventurer.visualHitBox()
     }
 
+ 
 
 
     gameState()
@@ -1498,28 +1461,16 @@ function animate(){
         arrowHit(projectile, goblinC)
         arrowHit(projectile, goblinD)
         }
-        if(level == 3){
-        arrowHit(projectile, goblinE)
-        arrowHit(projectile, goblinF)
-        arrowHit(projectile, goblinG)
-        arrowHit(projectile, goblinH)
-        }
-        if(level == 6){
-        arrowHit(projectile, goblinI)
-        arrowHit(projectile, goblinJ)
-        arrowHit(projectile, goblinK)
-        }
         if(level == 2){
         arrowHit(projectile,batA)
         arrowHit(projectile,batB)
         arrowHit(projectile,batC)
         arrowHit(projectile,batD)
-        }
-        if(level == 3){
         arrowHit(projectile,batE)
         arrowHit(projectile,batF)
         arrowHit(projectile,batG)
         arrowHit(projectile,batH)
+        
         }
         if(level == 6){
         arrowHit(projectile,batI)
@@ -1531,83 +1482,12 @@ function animate(){
         }
         }
     })
-
+    console.log(roomOver)
+    console.log(level)
     
-    if(level == 1){
-    enemyHit(adventurer, goblinA)
-    enemyHit(adventurer, goblinB)
-    enemyHit(adventurer, goblinC)
-    enemyHit(adventurer, goblinD)
-    }
-    if(level == 3){
-    enemyHit(adventurer, goblinE)
-    enemyHit(adventurer, goblinF)
-    enemyHit(adventurer, goblinG)
-    enemyHit(adventurer, goblinH)
-    }
-    if(level == 6){
-    enemyHit(adventurer, goblinI)
-    enemyHit(adventurer, goblinJ)
-    enemyHit(adventurer, goblinK)
-    }
-    if(level == 2){
-    enemyHit(adventurer,batA)
-    enemyHit(adventurer,batB)
-    enemyHit(adventurer,batC)
-    enemyHit(adventurer,batD)
-    }
-    if(level == 3){
-    enemyHit(adventurer,batE)
-    enemyHit(adventurer,batF)
-    enemyHit(adventurer,batG)
-    enemyHit(adventurer,batH)
-    }
-    if(level == 6){
-    enemyHit(adventurer,batI)
-    enemyHit(adventurer,batJ)
-    enemyHit(adventurer,batK)
-    }
+    checkEnemyHit()
 
-    if(level == 1){
-    playerHit(adventurer,goblinA)
-    playerHit(adventurer,goblinB)
-    playerHit(adventurer,goblinC)
-    playerHit(adventurer,goblinD)
-    }
-    if(level == 3){
-    playerHit(adventurer,goblinE)
-    playerHit(adventurer,goblinF)
-    playerHit(adventurer,goblinG)
-    playerHit(adventurer,goblinH)
-    }
-    if(level == 6){
-    playerHit(adventurer,goblinI)
-    playerHit(adventurer,goblinJ)
-    playerHit(adventurer,goblinK)
-    }
-
-    if(level == 2){
-    playerHit(adventurer,batA)
-    playerHit(adventurer,batB)
-    playerHit(adventurer,batC)
-    playerHit(adventurer,batD)
-    }
-    if(level == 3){
-    playerHit(adventurer,batE)
-    playerHit(adventurer,batF)
-    playerHit(adventurer,batG)
-    playerHit(adventurer,batH)
-    }
-
-    if(level == 6){
-    playerHit(adventurer,batI)
-    playerHit(adventurer,batJ)
-    playerHit(adventurer,batK)
-    }
-
-    if(level == 5 || level == 6){
-        playerHit(adventurer, head)
-    }
+    checkPlayerHit()
 
     if(level == 2 || level == 3){
     collectHeart(heartA, adventurer)
@@ -1632,6 +1512,9 @@ function animate(){
     }
     if(level == 4){
     saveSurvivor(survivorRoomOne, adventurer)
+    }
+    if(level == 1){
+        touchDoor(door, adventurer)
     }
     keepTrack()
 }
