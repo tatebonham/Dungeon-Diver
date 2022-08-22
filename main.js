@@ -321,6 +321,83 @@ const survivorRoomOne = new Entity({
         }
     }
 })
+const heartA = new Entity({
+    position: {x: 600, y: 350},
+    width: 28,
+    height: 40,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/heart.png',
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 3, y: 9},
+    sprites: {
+        idle: {
+            imageSrc: './images/entities/heart.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 22, y:10}
+        }
+    }
+})
+
+const heartB = new Entity({
+    position: {x: 440, y: 350},
+    width: 28,
+    height: 40,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/heart.png',
+    scale: 1.5,
+    framesMax: 4,
+    offset: {x: 9, y: 9},
+    sprites: {
+        idle: {
+            imageSrc: './images/entities/heart.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 22, y:10}
+        }
+    }
+})
+const heartC = new Entity({
+    position: {x: 440, y: 350},
+    width: 28,
+    height: 40,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/heart.png',
+    scale: 1.5,
+    framesMax: 4,
+    offset: {x: 9, y: 9},
+    sprites: {
+        idle: {
+            imageSrc: './images/entities/heart.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 22, y:10}
+        }
+    }
+})
+const heartD = new Entity({
+    position: {x: 440, y: 350},
+    width: 28,
+    height: 40,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/heart.png',
+    scale: 1.5,
+    framesMax: 4,
+    offset: {x: 9, y: 9},
+    sprites: {
+        idle: {
+            imageSrc: './images/entities/heart.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 22, y:10}
+        }
+    }
+})
 
 const goblinA = new Entity({
     position:{x: 300, y: 300},
@@ -489,6 +566,9 @@ const levelOne = ()=>{
     if(survivorRoomOne.notSafe){
         survivorRoomOne.update()
     }
+    if(heartA.alive){
+        heartA.update()
+    }
 }
 
 let scoreCount = 0
@@ -540,6 +620,20 @@ const saveSurvivor = (survivor, player) => {
     
     if(right && left && top && bottom && survivor.notSafe){
         survivor.notSafe = false
+    } else {
+        return false
+    }
+}
+
+const collectHeart = (heart, player) => {
+    const left = heart.position.x + heart.width >=  player.position.x
+    const right = heart.position.x <= player.position.x + player.width
+    const top = heart.position.y + heart.height >= player.position.y
+    const bottom = heart.position.y <= player.position.y + player.height
+    
+    if(right && left && top && bottom && heart.alive){
+        player.health = 3
+        heart.alive = false
     } else {
         return false
     }
@@ -757,6 +851,7 @@ const gameBorders = () => {
       ctx.fillRect(0, 461, 700, 24)
 
 }
+
 let gameWon = false
 let gameLost = false
 let gameStart = false
@@ -883,6 +978,10 @@ function animate(){
     playerHit(adventurer,goblinC)
     playerHit(adventurer,goblinD)
     keepTrack()
+    collectHeart(heartA, adventurer)
+    collectHeart(heartB, adventurer)
+    collectHeart(heartC, adventurer)
+    collectHeart(heartD, adventurer)
     saveSurvivor(survivorRoomOne, adventurer)
 }
 
