@@ -105,37 +105,27 @@ class Sprite{
         this.image.src = imageSrc
         this.scale = scale
         this.framesMax = framesMax
-        this.framesCurrent = 0
+        this.framesCurrent = this.framesCurrent
         this.framesElaped = 0
         this.framesHold = 10
     }
 
-        draw(){
+    draw(){
+        ctx.drawImage(
+            this.image, 
+            this.framesCurrent * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
             
-            ctx.drawImage(
-                this.image, 
-                this.framesCurrent * (this.image.width / this.framesMax),
-                0,
-                this.image.width / this.framesMax,
-                this.image.height,
-                
 
-                this.position.x, 
-                this.position.y, 
-                (this.image.width / this.framesMax) * this.scale,
-                this.image.height * this.scale
-                
-                )
-                // this.image,
-                // this.framesCurrent * (this.image.width / this.framesMax),
-                // 0,
-                // this.image.width / this.framesMax,
-                // this.image.height,
-                // this.position.x,
-                // this.position.y,
-                // (this.image.width/this.framesMax) * this.scale,
-                // this.image.height * this.scale
-        }
+            this.position.x, 
+            this.position.y, 
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale
+            
+            )
+    }
 
         update(){
             this.draw()
@@ -144,7 +134,7 @@ class Sprite{
                 if(this.framesCurrent < this.framesMax - 1){
                     this.framesCurrent++
                 } else {
-                    this.framesCurrent = 
+                    this.framesCurrent = 0
                 }
             }
                 
@@ -158,22 +148,35 @@ const adventurerRunUp = new Sprite({
     },
     imageSrc: './images/adventurer/run up.png',
     scale: 1.5,
-    framesMax: 8
+    framesMax: 7
 })
 
 
 
 
 
-class Player{
-    constructor({position}, width, height, color, {speed}, health){
+class Player {
+    constructor({position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset, sprites}){
         this.position = position
+        this.image = new Image()
+        this.image.src = imageSrc
+        this.scale = scale
+        this.framesMax = framesMax
+        this.framesCurrent = this.framesCurrent
+        this.framesElaped = 0
+        this.framesHold = 8
+        this.sprites = sprites
+        for(const obj in this.sprites){
+            sprites[obj].image = new Image()
+            sprites[obj].image.src = sprites[obj].imageSrc
+        }
+
         this.width = width
         this.height = height
-        this.color = color
         this.speed = speed
         this.alive = true
         this.health = health
+        this.offset = offset
         this.attackBox = {
             up: {
                 position: this.position,
@@ -198,16 +201,28 @@ class Player{
           
         }
         this.isAttacking = false
-        this.notSafe = true
     }
 
-    spawn(){
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+    draw(){
+        ctx.drawImage(
+            this.image, 
+            this.framesCurrent * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            
+
+            this.position.x - this.offset.x, 
+            this.position.y - this.offset.y, 
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale
+            )
+            ctx.fillStyle = 'green'
+            ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
-        this.spawn()
+        this.draw()
         if(this.position.x < 30){
             this.position.x = 30
         } else if(this.position.x + this.width > 670){
@@ -223,6 +238,14 @@ class Player{
         } else {
             this.position.y += this.speed.y
         }
+        this.framesElaped++
+            if(this.framesElaped % this.framesHold === 0){  
+                if(this.framesCurrent < this.framesMax - 1){
+                    this.framesCurrent++
+                } else {
+                    this.framesCurrent = 0
+                }
+            }
     }
     
     visualHitBox(){
@@ -251,7 +274,44 @@ class Player{
 
 }
 
-const adventurer = new Player({position: {x: 40, y: 70}}, 25, 30, 'green',{speed: {x: 0, y: 0}}, 3)
+// const adventurer = new Sprite({
+//     position: {
+//         x: 40,
+//         y: 200
+//     },
+//     imageSrc: './images/adventurer/run up.png',
+//     scale: 1.5,
+//     framesMax: 7
+// })
+
+const adventurer = new Player({
+    position: {x: 40, y: 70},
+    width: 25,
+    height: 10,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/adventurer/idle.png',
+    scale: 1.5,
+    framesMax: 1,
+    offset: {x: 9, y: 3},
+    sprites: {
+        idle: {
+            imageSrc: './images/adventurer/idle.png',
+            framesMax: 1
+        },
+        runUp: {
+            imageSrc: './images/adventurer/run up.png',
+            framesMax: 7,
+            framesHold: 7
+        },
+
+    }
+})
+
+
+
+
+
 const survivorRoomOne = new Entity({position: {x: 650, y: 350}}, 25, 25, 'blue', {speed: {x: 0, y:0}})
 
 const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
@@ -630,6 +690,8 @@ function animate(){
         adventurer.speed.y = -3
     } else if(keys.w.pressed && lastKey == 'w'){
         adventurer.speed.y = -3
+        adventurer.image = adventurer.sprites.runUp.image
+        adventurer.framesMax = adventurer.sprites.runUp.framesMax
     } else if(keys.a.pressed && lastKey == 'a'){
         adventurer.speed.x = -3
     } else if(keys.s.pressed && lastKey == 's'){
