@@ -243,6 +243,7 @@ class Player {
         if(this.isAttacking === true){
             ctx.fillStyle = 'black'
             if(lastKey === 'w'){  
+
                 ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
             } else if (lastKey === 'a') {
                 ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+10, this.attackBox.left.width -25, this.attackBox.left.height)
@@ -349,7 +350,24 @@ const adventurer = new Player({
             framesHold: 7,
             offset: {x: 10, y:2}
         },
-
+        idleUp: {
+            imageSrc: './images/adventurer/idle up.png',
+            framesMax: 1,
+            framesHold: 7,
+            offset: {x: 10, y:2}
+        },
+        idleRight: {
+            imageSrc: './images/adventurer/idle right.png',
+            framesMax: 1,
+            framesHold: 7,
+            offset: {x: 10, y:2}
+        },
+        idleLeft: {
+            imageSrc: './images/adventurer/idle left.png',
+            framesMax: 1,
+            framesHold: 7,
+            offset: {x: 10, y:2}
+        },
     }
 })
 
@@ -700,7 +718,32 @@ const gameState=()=>{
     }  
 
 }
+const idleDirection = () => {
+    if(adventurer.speed.x == 0 && adventurer.speed.y == 0){
+        if(lastKey == 'w'){
+            adventurer.image = adventurer.sprites.idleUp.image
+            adventurer.framesMax = adventurer.sprites.idleUp.framesMax
+            adventurer.offset.x = adventurer.sprites.idleUp.offset.x
+            adventurer.offset.y = adventurer.sprites.idleUp.offset.y
+        } else if (lastKey == 'a') {
+            adventurer.image = adventurer.sprites.idleLeft.image
+            adventurer.framesMax = adventurer.sprites.idleLeft.framesMax
+            adventurer.offset.x = adventurer.sprites.idleLeft.offset.x
+            adventurer.offset.y = adventurer.sprites.idleLeft.offset.y
+        } else if (lastKey == 's') {
+            adventurer.image = adventurer.sprites.idle.image
+            adventurer.framesMax = adventurer.sprites.idle.framesMax
+            adventurer.offset.x = adventurer.sprites.idle.offset.x
+            adventurer.offset.y = adventurer.sprites.idle.offset.y
+        } else if (lastKey == 'd') {
+            adventurer.image = adventurer.sprites.idleRight.image
+            adventurer.framesMax = adventurer.sprites.idleRight.framesMax
+            adventurer.offset.x = adventurer.sprites.idleRight.offset.x
+            adventurer.offset.y = adventurer.sprites.idleRight.offset.y
+        }
 
+    }
+}
 animate()
 
 function animate(){
@@ -719,6 +762,8 @@ function animate(){
 
     gameState()
     
+    idleDirection()
+
     adventurer.speed.x = 0
     adventurer.speed.y = 0
     if(keys.d.pressed && keys.s.pressed){
