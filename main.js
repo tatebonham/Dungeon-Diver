@@ -1175,16 +1175,16 @@ const arrowHit = (arrow, enemy) => {
         if(Right && Left && Bottom && Top){
             enemy.health -= 1
             if(enemy.health >= 1 && arrow.speed.x > 0){
-                enemy.position.x += 60
+                enemy.position.x += 30
                 arrow.alive = false
             } else if(enemy.health >=  1 && arrow.speed.x < 0){
-                enemy.position.x -= 60
+                enemy.position.x -= 30
                 arrow.alive = false
             } else if(enemy.health >=  1 && arrow.speed.y < 0){
-                enemy.position.y -= 60
+                enemy.position.y -= 30
                 arrow.alive = false
             } else if(enemy.health >=  1 && arrow.speed.y > 0){
-                enemy.position.y += 60
+                enemy.position.y += 30
                 arrow.alive = false
             } else if (enemy.health == 0){
                 enemy.alive = false
@@ -1220,28 +1220,84 @@ const enemyHit = (player, enemy) => {
         if(uRight && uLeft && uTop && uBottom && lastKey == 'w'){
             enemy.health -= 1
             if(enemy.health >= 1){
-                enemy.position.y -= 60
+                enemy.position.y -= 50
             } else if (enemy.health == 0){
                 enemy.alive = false
             }   
         } else if (lRight && lLeft && lTop && lBottom && lastKey == 'a') {
             enemy.health -= 1
             if(enemy.health >= 1){
-                enemy.position.x -= 60
+                enemy.position.x -= 50
             } else if (enemy.health == 0){
                 enemy.alive = false
             }            
         } else if (dRight && dLeft && dTop && dBottom && lastKey == 's') {
             enemy.health -= 1
             if(enemy.health >= 1){
-                enemy.position.y += 60
+                enemy.position.y += 50
             } else if (enemy.health == 0){
                 enemy.alive = false
             }          
         } else if (rRight && rLeft && rTop && rBottom && lastKey == 'd') {
             enemy.health -= 1
             if(enemy.health >= 1){
-                enemy.position.x += 60
+                enemy.position.x += 50
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }         
+       }
+    } else {
+     return false
+    }
+}
+const headHit = (player, enemy) => {
+    const rLeft = player.attackBox.right.position.x + player.attackBox.right.width >=  enemy.position.x
+    const rRight = player.attackBox.right.position.x <= enemy.position.x + enemy.width
+    const rTop =  (player.attackBox.right.position.y + 10) + player.attackBox.right.height>= enemy.position.y
+    const rBottom =(player.attackBox.right.position.y + 10) <= enemy.position.y + enemy.height
+
+    const lLeft = (player.attackBox.left.position.x - 25)+ player.attackBox.left.width >=  enemy.position.x
+    const lRight = player.attackBox.left.position.x - 25 <= enemy.position.x + enemy.width
+    const lTop = (player.attackBox.left.position.y + 10) + player.attackBox.left.height >= enemy.position.y
+    const lBottom = (player.attackBox.left.position.y + 10) <= enemy.position.y + enemy.height
+
+    const uLeft = (player.attackBox.up.position.x + 10 )+ player.attackBox.up.width >=  enemy.position.x
+    const uRight = (player.attackBox.up.position.x + 10) <= enemy.position.x + enemy.width
+    const uTop = (player.attackBox.up.position.y - 25) + player.attackBox.up.height >= enemy.position.y
+    const uBottom = (player.attackBox.up.position.y - 25) <= enemy.position.y + enemy.height
+
+    const dLeft = (player.attackBox.down.position.x + 10)+ player.attackBox.down.width >=  enemy.position.x
+    const dRight = player.attackBox.down.position.x + 10 <= enemy.position.x + enemy.width
+    const dTop = player.attackBox.down.position.y + player.attackBox.down.height >= enemy.position.y
+    const dBottom = player.attackBox.down.position.y  <= enemy.position.y + enemy.height
+
+
+    if(player.isAttacking){
+        if(uRight && uLeft && uTop && uBottom && lastKey == 'w'){
+            enemy.health -= 1
+            if(enemy.health >= 1){
+                enemy.position.y -= 40
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }   
+        } else if (lRight && lLeft && lTop && lBottom && lastKey == 'a') {
+            enemy.health -= 1
+            if(enemy.health >= 1){
+                enemy.position.x -= 40
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }            
+        } else if (dRight && dLeft && dTop && dBottom && lastKey == 's') {
+            enemy.health -= 1
+            if(enemy.health >= 1){
+                enemy.position.y += 40
+            } else if (enemy.health == 0){
+                enemy.alive = false
+            }          
+        } else if (rRight && rLeft && rTop && rBottom && lastKey == 'd') {
+            enemy.health -= 1
+            if(enemy.health >= 1){
+                enemy.position.x += 40
             } else if (enemy.health == 0){
                 enemy.alive = false
             }         
@@ -1473,7 +1529,7 @@ const checkEnemyHit = ()=>{
         enemyHit(adventurer,batH)
         }
        if(level == 5 || level == 6){
-        enemyHit(adventurer, head)
+        headHit(adventurer, head)
        }
         if(level == 6){
         enemyHit(adventurer,batI)
