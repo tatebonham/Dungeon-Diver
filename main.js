@@ -409,6 +409,28 @@ const key = new Entity({
     framesMax: 1,
     offset: {x: 1, y: 0}
 })
+const door = new Entity({
+    position: {x: 440, y: 350},
+    width: 30,
+    height: 30,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/key.png',
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 1, y: 0}
+})
+const chest = new Entity({
+    position: {x: 440, y: 350},
+    width: 30,
+    height: 30,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/chest.png',
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 1, y: 0}
+})
 
 
 const goblinA = new Entity({
@@ -854,21 +876,6 @@ const goblinAttack = (player, enemy)=>{
         enemy.position.y += .5
     }
 }
-// const enemyAttack = (player, enemy)=>{
-//     if(enemy.position.x >= player.position.x){
-//         enemy.position.x -= .2
-//     }
-//     if(enemy.position.x <= player.position.x){
-//         enemy.position.x += .2
-//     }
-//     if(enemy.position.y >= player.position.y){
-//         enemy.position.y -= .2
-//     }
-//     if(enemy.position.y <= player.position.y){
-//         enemy.position.y += .2
-//     }
-    
-// }
 
 const levelOne = ()=>{
     if(goblinA.alive){
@@ -897,12 +904,10 @@ const levelOne = ()=>{
 }
 
 const levelTwo = () =>{
-   
     if(batA.alive){
         batAttack(adventurer, batA)
         batA.update()
     }    
-
     if(batB.alive){
         batAttack(adventurer, batB)
         batB.update()
@@ -923,14 +928,47 @@ const levelTwo = () =>{
         heartA.update()
     }
 
-    if(batA.alive == false && batB.alive == false && batC.alive == false && batD.alive == false){
+    if(batE.alive == false && batF.alive == false && batG.alive == false && batH.alive == false){
         level = 3
         score += 4
     }
-
 }
+let roomOver = false
 const levelThree = () =>{
+    if(goblinE.alive){
+        goblinAttack(adventurer, goblinE)
+        goblinE.update()
+    }
 
+    if(goblinF.alive){
+        goblinAttack(adventurer, goblinF)
+        goblinF.update()
+    }
+    if(goblinG.alive){
+        goblinAttack(adventurer, goblinG)
+        goblinG.update()
+    }
+    if(goblinH.alive){
+        goblinAttack(adventurer, goblinH)
+        goblinH.update()
+    }
+
+    if(batE.alive){
+        batAttack(adventurer, batE)
+        batE.update()
+    }    
+    if(batF.alive){
+        batAttack(adventurer, batF)
+        batF.update()
+    }    
+    if(batG.alive){
+        batAttack(adventurer, batG)
+        batG.update()
+    }    
+    if(batH.alive){
+        batAttack(adventurer, batH)
+        batH.update()
+    }    
 
     if(arrowA.alive){
         arrowA.update()
@@ -938,6 +976,13 @@ const levelThree = () =>{
     if(heartA.alive){
         heartA.update()
     }
+
+    if((batE.alive == false && batF.alive == false && batG.alive == false && batH.alive == false &&
+        goblinE.alive == false && goblinF.alive == false && goblinG.alive == false && goblinH.alive == false)){
+            level = 4
+            score += 8
+            roomOver = true
+        }
 
 }
 const levelFour = () =>{
@@ -1038,6 +1083,40 @@ const saveSurvivor = (survivor, player) => {
         return false
     }
 }
+
+const touchDoor = (door, player) => {
+    const left = door.position.x + door.width >=  player.position.x
+    const right = door.position.x <= player.position.x + player.width
+    const top = door.position.y + door.height >= player.position.y
+    const bottom = door.position.y <= player.position.y + player.height
+    
+    if(right && left && top && bottom && roomOver){
+        player.position.x = 30
+        player.position.y = 230
+        door.alive = false
+    } else {
+        return false
+    }
+}
+const touchChest = (chest, player) => {
+    const left = chest.position.x + chest.width >=  player.position.x
+    const right = chest.position.x <= player.position.x + player.width
+    const top = chest.position.y + chest.height >= player.position.y
+    const bottom = chest.position.y <= player.position.y + player.height
+    
+    if(right && left && top && bottom){
+        message.innerText = 'FINALLY!'
+        window.addEventListener('keydown',(e)=>{if(e.key == 'k'){
+            message.innerText = '...wait...it...it\'s EMPTY????'
+        }})
+        window.addEventListener('keydown',(e)=>{if(e.key == 'k'){
+            gameWon = true
+        }})
+    } else {
+        return false
+    }
+}
+
 const collectArrow = (arrow, player) => {
     const left = arrow.position.x + arrow.width >=  player.position.x
     const right = arrow.position.x <= player.position.x + player.width
