@@ -58,3 +58,17 @@ Delve deep into the dungeons! ...why? To save the survivors of the last party th
 - setting up the sword stabbing forward animation
 - making the second room load after hitting the door
 - how to set the spawns along the way
+
+---
+
+## Art Credit
+
+- Doors: https://opengameart.org/content/lpc-animated-doors
+- Chest: Twitter@pixelpooper
+- Bats: https://www.gamedevmarket.net/member/elthens-pixel-art-shop/
+- Arrow: https://www.kindpng.com/imgv/Txoxmib_pixel-arrow-png-picture-arrow-pixel-png-transparent/
+- Boss Mob: https://opengameart.org/content/bosses-and-monsters-spritesheets-ars-notoria
+- Heart: https://opengameart.org/content/heart-pixel-art
+- Player Character and Key: Legend of Zelda a Link to the Past
+- Bebo the True Hero of the Story: https://craftpix.net/freebies/free-pixel-art-tiny-hero-sprites/
+- Goblins: https://opengameart.org/content/lpc-goblin
