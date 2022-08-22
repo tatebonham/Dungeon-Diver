@@ -421,15 +421,15 @@ const door = new Entity({
     }}
 })
 const chest = new Entity({
-    position: {x: 440, y: 350},
-    width: 30,
-    height: 30,
+    position: {x: 400, y: 70},
+    width: 50,
+    height: 40,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/entities/chest.png',
     scale: 1,
     framesMax: 1,
-    offset: {x: 1, y: 0}
+    offset: {x: 48, y: 46}
 })
 
 
@@ -799,7 +799,7 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinD)
         goblinD.update()
     }
-
+chest.update()
     door.update()
 
     if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
@@ -871,6 +871,7 @@ const levelFour = () =>{
   if(survivorRoomOne.notSafe){
         survivorRoomOne.update()
     }
+    chest.update()
     door.update()
     if(heartB.alive){
         heartB.update()
@@ -886,6 +887,7 @@ const levelFour = () =>{
         window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
             message.classList.add('hidden')
             continueButton.classList.add('hidden')
+            scoreCount = 9
             level = 5
         }})
     }
@@ -895,6 +897,7 @@ const levelFive = () =>{
         headAttack(adventurer, head)
         head.update()
     }
+    chest.update()
     door.update()
     if(heartC.alive){
         heartC.update()
@@ -930,7 +933,19 @@ const levelSix = () =>{
         goblinAttack(adventurer, goblinG)
         goblinG.update()
     }
-
+    if(batI.alive){
+        batAttack(adventurer,batI)
+        batI.update()
+    }
+    if(batJ.alive){
+        batAttack(adventurer,batJ)
+        batJ.update()
+    }
+    if(batK.alive){
+        batAttack(adventurer,batK)
+        batK.update()
+    }
+    chest.update()
     door.update()
     if(heartB.alive){
         heartB.update()
@@ -950,15 +965,29 @@ const levelSix = () =>{
    
 
     if(head.alive == false){
-        scoreCount += 20
+        bossDead = true
+        scoreCount = 29
         level = 7
+        goblinE.alive = false
+        goblinF.alive = false
+        goblinG.alive = false
+        batI.alive = false
+        batJ.alive = false
+        batK.alive = false
+        heartB.alive = false
+        heartC.alive = false
+        heartD.alive = false
+        arrowB.alive = false
+        arrowC.alive = false
+       
+    
     }
 }
 const levelSeven = ()=>{
 
-
-
+    chest.update()
     door.update()
+   
 }
 
 
@@ -1073,7 +1102,9 @@ const touchChest = (chest, player) => {
     const bottom = chest.position.y <= player.position.y + player.height
     
     if(right && left && top && bottom){
+        message.classList.remove('hidden')
         message.innerText = 'FINALLY!'
+        continueButton.classList.remove('hidden')
         window.addEventListener('keydown',(e)=>{if(e.key == 'k'){
             message.innerText = '...wait...it...it\'s EMPTY????'
         }})
@@ -1319,14 +1350,17 @@ let gameLost = false
 let gameStart = false
 let level = 1
 let gamePause = false
+let bossDead = false
+if(!gameStart){
+    window.addEventListener('keydown', (e)=>{
+        if(e.key == 'k'){
+            message.classList.add('hidden')
+            continueButton.classList.add('hidden')
+            gameStart = true
+        }
+    })
+}
 
-window.addEventListener('keydown', (e)=>{
-    if(e.key == 'k'){
-        message.classList.add('hidden')
-        continueButton.classList.add('hidden')
-        gameStart = true
-    }
-})
 
 const gameState=()=>{
     if(gameLost){
@@ -1359,6 +1393,9 @@ const gameState=()=>{
         } else if (level == 6){
             objective.innerText = 'Don\'t die...'
             levelSix()
+        } else if (level == 7){
+            objective.innerText = 'Collect your prize.'
+            levelSeven()
         }
     }  
 
@@ -1608,10 +1645,9 @@ window.addEventListener('keydown', (event) => {
             moved = true
             break
         case 'k':
-            if(adventurer.alive){
+            if(adventurer.alive &&  !bossDead){
                 adventurer.attack()
             }
-            console.log('k')
             break
         case 'l' : 
         if(adventurer.alive && arrowCount >= 1){
