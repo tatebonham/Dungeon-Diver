@@ -321,82 +321,85 @@ const survivorRoomOne = new Entity({
         }
     }
 })
+
 const heartA = new Entity({
-    position: {x: 600, y: 350},
-    width: 28,
-    height: 40,
+    position: {x: 350, y: 350},
+    width: 30,
+    height: 30,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/entities/heart.png',
     scale: 1,
     framesMax: 1,
-    offset: {x: 3, y: 9},
-    sprites: {
-        idle: {
-            imageSrc: './images/entities/heart.png',
-            framesMax: 4,
-            framesHold: 7,
-            offset: {x: 22, y:10}
-        }
-    }
+    offset: {x: 1, y: 0}
 })
-
 const heartB = new Entity({
     position: {x: 440, y: 350},
-    width: 28,
-    height: 40,
+    width: 30,
+    height: 30,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/entities/heart.png',
-    scale: 1.5,
-    framesMax: 4,
-    offset: {x: 9, y: 9},
-    sprites: {
-        idle: {
-            imageSrc: './images/entities/heart.png',
-            framesMax: 4,
-            framesHold: 7,
-            offset: {x: 22, y:10}
-        }
-    }
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 1, y: 0}
 })
 const heartC = new Entity({
     position: {x: 440, y: 350},
-    width: 28,
-    height: 40,
+    width: 30,
+    height: 30,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/entities/heart.png',
-    scale: 1.5,
-    framesMax: 4,
-    offset: {x: 9, y: 9},
-    sprites: {
-        idle: {
-            imageSrc: './images/entities/heart.png',
-            framesMax: 4,
-            framesHold: 7,
-            offset: {x: 22, y:10}
-        }
-    }
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 1, y: 0}
 })
 const heartD = new Entity({
     position: {x: 440, y: 350},
-    width: 28,
-    height: 40,
+    width: 30,
+    height: 30,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/entities/heart.png',
-    scale: 1.5,
-    framesMax: 4,
-    offset: {x: 9, y: 9},
-    sprites: {
-        idle: {
-            imageSrc: './images/entities/heart.png',
-            framesMax: 4,
-            framesHold: 7,
-            offset: {x: 22, y:10}
-        }
-    }
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 1, y: 0}
+})
+
+const arrowA = new Entity({
+    position: {x: 650, y: 80},
+    width: 5,
+    height: 30,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/arrow.png',
+    scale: .5,
+    framesMax: 1,
+    offset: {x: 2, y: 1}
+    
+})
+const arrowB = new Entity({
+    position: {x: 440, y: 350},
+    width: 5,
+    height: 30,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/heart.png',
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 2, y: 1}
+})
+const arrowC = new Entity({
+    position: {x: 440, y: 350},
+    width: 30,
+    height: 30,
+    speed: {x: 0, y: 0},
+    health: 3,
+    imageSrc: './images/entities/heart.png',
+    scale: 1,
+    framesMax: 1,
+    offset: {x: 1, y: 0}
 })
 
 const goblinA = new Entity({
@@ -509,8 +512,35 @@ const enemyRight = (enemy) =>{
         enemy.offset.x = enemy.sprites.right.offset.x
         enemy.offset.y = enemy.sprites.right.offset.y
 }
-
-const enemyAttack = (player, enemy)=>{
+const batAttack = (player, enemy)=>{
+    if(enemy.position.x >= player.position.x){
+        enemy.position.x -= 0
+    }
+    if(enemy.position.x <= player.position.x){
+        enemy.position.x += 0
+    }
+    if(enemy.position.y >= player.position.y){
+        enemy.position.y -= .2
+    }
+    if(enemy.position.y <= player.position.y){
+        enemy.position.y += .2
+    }
+}
+const headAttack = (player, enemy)=>{
+    if(enemy.position.x >= player.position.x){
+        enemy.position.x -= 0
+    }
+    if(enemy.position.x <= player.position.x){
+        enemy.position.x += 0
+    }
+    if(enemy.position.y >= player.position.y){
+        enemy.position.y -= .2
+    }
+    if(enemy.position.y <= player.position.y){
+        enemy.position.y += .2
+    }
+}
+const goblinAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
         enemy.position.x -= 0
         enemyLeft(enemy)
@@ -525,7 +555,6 @@ const enemyAttack = (player, enemy)=>{
     if(enemy.position.y <= player.position.y){
         enemy.position.y += .2
     }
-    
 }
 // const goldPieceOne = new Entity({position: {x: goblinA.position.x,y: goblinA.position.y}}, 10, 10, 'gold', {speed: {x: 0, y: 0}}, 2)
 
@@ -547,29 +576,55 @@ const enemyAttack = (player, enemy)=>{
 
 const levelOne = ()=>{
     if(goblinA.alive){
-        enemyAttack(adventurer, goblinA)
+        goblinAttack(adventurer, goblinA)
         goblinA.update()
     } 
 
     if(goblinB.alive){
-        enemyAttack(adventurer, goblinB)
+        goblinAttack(adventurer, goblinB)
         goblinB.update()
     }
     if(goblinC.alive){
-        enemyAttack(adventurer, goblinC)
+        goblinAttack(adventurer, goblinC)
         goblinC.update()
     }
     if(goblinD.alive){
-        enemyAttack(adventurer, goblinD)
+        goblinAttack(adventurer, goblinD)
         goblinD.update()
     }
+   
+    if(heartA.alive){
+        heartA.update()
+    }
+    if(arrowA.alive){
+        arrowA.update()
+    }
+    if(goblinA.alive == false && goblinB.alive == false && goblinB.alive == false && goblinD.alive == false){
+        level = 2
+    }
+
+}
+
+const levelTwo = () =>{
+    
+
+}
+const levelThree = () =>{
     if(survivorRoomOne.notSafe){
         survivorRoomOne.update()
     }
     if(heartA.alive){
         heartA.update()
     }
+
 }
+const levelFour = () =>{
+
+}
+const levelFive = () =>{
+
+}
+
 
 let scoreCount = 0
 let goldCount = 0
@@ -624,20 +679,21 @@ const saveSurvivor = (survivor, player) => {
         return false
     }
 }
-
-const collectHeart = (heart, player) => {
-    const left = heart.position.x + heart.width >=  player.position.x
-    const right = heart.position.x <= player.position.x + player.width
-    const top = heart.position.y + heart.height >= player.position.y
-    const bottom = heart.position.y <= player.position.y + player.height
+const collectArrow = (arrow, player) => {
+    const left = arrow.position.x + arrow.width >=  player.position.x
+    const right = arrow.position.x <= player.position.x + player.width
+    const top = arrow.position.y + arrow.height >= player.position.y
+    const bottom = arrow.position.y <= player.position.y + player.height
     
-    if(right && left && top && bottom && heart.alive){
-        player.health = 3
-        heart.alive = false
+    if(right && left && top && bottom && arrow.alive){
+        arrowCount += 5
+        arrow.alive = false
     } else {
         return false
     }
 }
+
+
 
 const arrowHit = (arrow, enemy) => {
         // AABB -- axis aligned bounding box collision detection
@@ -743,6 +799,21 @@ const healthChecker = (player) =>{
         health.style.backgroundColor = 'red'
     } else if (player.health == 0){
         health.style.width = '0%'
+    }   
+}
+const collectHeart = (heart, player) => {
+    const left = heart.position.x + heart.width >=  player.position.x
+    const right = heart.position.x <= player.position.x + player.width
+    const top = heart.position.y + heart.height >= player.position.y
+    const bottom = heart.position.y <= player.position.y + player.height
+    
+    if(right && left && top && bottom && heart.alive){
+        player.health = 3
+        heart.alive = false
+        health.style.width = '100%'
+        health.style.backgroundColor = 'green'
+    } else {
+        return false
     }
 }
 
@@ -977,11 +1048,14 @@ function animate(){
     playerHit(adventurer,goblinB)
     playerHit(adventurer,goblinC)
     playerHit(adventurer,goblinD)
-    keepTrack()
     collectHeart(heartA, adventurer)
     collectHeart(heartB, adventurer)
     collectHeart(heartC, adventurer)
     collectHeart(heartD, adventurer)
+    keepTrack()
+    collectArrow(arrowA, adventurer)
+    collectArrow(arrowB, adventurer)
+    collectArrow(arrowC, adventurer)
     saveSurvivor(survivorRoomOne, adventurer)
 }
 
