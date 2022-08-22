@@ -396,12 +396,12 @@ const arrowC = new Entity({
 })
 const key = new Entity({
     position: {x: 200, y: 224},
-    width: 30,
-    height: 30,
+    width: 28,
+    height: 28,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: './images/entities/key.png',
-    scale: .1,
+    scale: .05,
     framesMax: 1,
     offset: {x: 1, y: 0}
 })
@@ -799,6 +799,7 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinD)
         goblinD.update()
     }
+    
     door.update()
 
     if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
@@ -984,7 +985,9 @@ const levelSix = () =>{
 const levelSeven = ()=>{
     chest.update()
     door.update()
-
+    if(key.alive){
+        key.update()
+    }
     if(chest.alive == false){
         message.classList.remove('hidden')
         message.innerText = '...it\'s empty...'
@@ -1089,6 +1092,20 @@ const saveSurvivor = (survivor, player) => {
         return false
     }
 }
+let hasKey = false
+const touchKey = (key, player) => {
+    const left = key.position.x + key.width >=  player.position.x
+    const right = key.position.x <= player.position.x + player.width
+    const top = key.position.y + key.height >= player.position.y
+    const bottom = key.position.y <= player.position.y + player.height
+    
+    if(right && left && top && bottom){
+        key.alive = false
+        hasKey = true
+    } else {
+        return false
+    }
+}
 let doorOpened = false
 const touchDoor = (door, player) => {
     const left = door.position.x + door.width >=  player.position.x
@@ -1122,7 +1139,7 @@ const touchChest = (chest, player) => {
     const top = chest.position.y + chest.height >= player.position.y
     const bottom = chest.position.y <= player.position.y + player.height
     
-    if(right && left && top && bottom){
+    if(right && left && top && bottom && hasKey){
         chest.alive = false
     } else {
         return false
@@ -1634,7 +1651,9 @@ function animate(){
     touchDoor(door, adventurer)
     if(level == 7){
         touchChest(chest, adventurer)
+        touchKey(key, adventurer)
     }
+    
     
     keepTrack()
 }
