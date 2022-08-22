@@ -429,7 +429,8 @@ const chest = new Entity({
     imageSrc: './images/entities/chest.png',
     scale: 1,
     framesMax: 1,
-    offset: {x: 48, y: 46}
+    offset: {x: 48, y: 46},
+    sprites:{open:{imageSrc: './images/entities/openChest.png'}}
 })
 
 
@@ -799,7 +800,7 @@ const levelOne = ()=>{
         goblinAttack(adventurer, goblinD)
         goblinD.update()
     }
-    
+    chest.update()
     door.update()
 
     if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
@@ -1003,7 +1004,9 @@ const levelSeven = ()=>{
 const levelEight = ()=>{
     // message.classList.add('hidden')
     // continueButton.classList.add('hidden')
-    chest.imageSrc = 'openChest.png'
+    chest.image = chest.sprites.open.image
+    chest.offset.x = 55
+    chest.offset.y = 60
     chest.update()
 
 
