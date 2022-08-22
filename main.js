@@ -13,7 +13,7 @@ canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 
 class Entity{
-    constructor({position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset, sprites}){
+    constructor({position, width, height, health, imageSrc, scale = 1, framesMax, offset, sprites}){
         this.position = position
         this.image = new Image()
         this.image.src = imageSrc
@@ -27,37 +27,12 @@ class Entity{
             sprites[obj].image = new Image()
             sprites[obj].image.src = sprites[obj].imageSrc
         }
-
         this.width = width
         this.height = height
-        this.speed = speed
         this.alive = true
         this.health = health
         this.offset = offset
-        this.attackBox = {
-            up: {
-                position: this.position,
-                width: 5,
-                height: 50
-            },
-            left: {
-                position: this.position,
-                width: 50,
-                height: 5
-            },
-            down: {
-                position: this.position,
-                width: 5,
-                height: 50
-            },
-            right: {
-                position: this.position,
-                width: 50,
-                height: 5
-            }
-          
-        }
-        this.isAttacking = false
+        this.notSafe = true
     }
 
     draw(){
@@ -74,36 +49,20 @@ class Entity{
             (this.image.width / this.framesMax) * this.scale,
             this.image.height * this.scale
             )
-            // ctx.fillStyle = 'green'
-            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        ctx.fillStyle = 'red'
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
         this.draw()
-        if(this.position.x < 30){
-            this.position.x = 30
-        } else if(this.position.x + this.width > 670){
-            this.position.x = 670 - this.width
-        } else {
-            this.position.x += this.speed.x
-        }
-
-        if(this.position.y < 60){
-            this.position.y = 60
-        } else if (this.position.y  + this.height > 450){
-            this.position.y = 450 - this.height    
-        } else {
-            this.position.y += this.speed.y
-        }
-
-          this.framesElaped++
-            if(this.framesElaped % this.framesHold === 0){  
-                if(this.framesCurrent < this.framesMax - 1){
-                    this.framesCurrent++
-                } else {
-                    this.framesCurrent = 0
-                }
+        this.framesElaped++
+        if(this.framesElaped % this.framesHold === 0){  
+            if(this.framesCurrent < this.framesMax - 1){
+                this.framesCurrent++
+            } else {
+                this.framesCurrent = 0
             }
+        }
     }
 }
 class Sprite{
@@ -146,15 +105,11 @@ class Sprite{
                 } else {
                     this.framesCurrent = 0
                 }
-            }
-                
+            }       
         }
+        
+       
 }
-
-
-
-
-
 
 class Player {
     constructor({position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset, sprites}){
@@ -165,13 +120,12 @@ class Player {
         this.framesMax = framesMax
         this.framesCurrent = this.framesCurrent
         this.framesElaped = 0
-        this.framesHold = 9
+        this.framesHold = 7
         this.sprites = sprites
         for(const obj in this.sprites){
             sprites[obj].image = new Image()
             sprites[obj].image.src = sprites[obj].imageSrc
         }
-
         this.width = width
         this.height = height
         this.speed = speed
@@ -263,7 +217,6 @@ class Player {
                 ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+15, this.attackBox.left.width -25, this.attackBox.left.height)
             } else if (lastKey === 's') {
                 ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
-
             } else if (lastKey === 'd') {
                 ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+15, this.attackBox.right.width - 25, this.attackBox.right.height)
             }
@@ -350,49 +303,144 @@ let moving = true
 
 // {position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset}
 const survivorRoomOne = new Entity({
-    position:{x: 650, y: 350},
-    width: 25, height: 25,
+    position: {x: 440, y: 350},
+    width: 28,
+    height: 40,
     speed: {x: 0, y: 0},
-    health: 0,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 1, 
-    offset: {x: 0, y: 0}
+    health: 3,
+    imageSrc: './images/entities/survivor.png',
+    scale: 1.5,
+    framesMax: 4,
+    offset: {x: 9, y: 9},
+    sprites: {
+        idle: {
+            imageSrc: './images/entities/survivor.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 22, y:10}
+        }
+    }
 })
 
-const goblinA = new Entity({position: {x: 300,y: 300}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
 const goblinA = new Entity({
     position:{x: 300, y: 300},
-    width: 25, height: 25,
+    width: 25, height: 48,
     speed: {x: 0, y: 0},
     health: 2,
     imageSrc: '', 
     scale: 1, 
-    framesMax: 1, 
+    framesMax: 8, 
     offset: {x: 0, y: 0},
     sprites: {
         left: {
-            
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
         },
-        right:{
-
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
         }
     }
 })
-const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
-const goblinB = new Entity({position: {x: 200, y: 230}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
-const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
-const goblinC = new Entity({position: {x: 400, y: 400}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
-const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
-const goblinD = new Entity({position: {x: 500,y: 100}}, 25, 25, 'red', {speed: {x: 0, y: 0}}, 2)
-// const goldPieceOne = new Entity({position: {x: goblinA.position.x,y: goblinA.position.y}}, 10, 10, 'gold', {speed: {x: 0, y: 0}}, 2)
+const goblinB = new Entity({
+    position:{x: 200, y: 230},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 7, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+const goblinC = new Entity({
+    position:{x: 400, y: 400},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 7, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+
+const goblinD = new Entity({
+    position:{x: 500, y: 100},
+    width: 25, height: 48,
+    speed: {x: 0, y: 0},
+    health: 2,
+    imageSrc: '', 
+    scale: 1, 
+    framesMax: 8, 
+    offset: {x: 0, y: 0},
+    sprites: {
+        left: {
+                imageSrc: './images/entities/leftGoblin.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 25, y:8}
+        },
+        right:{    
+                imageSrc: './images/entities/rightGoblin.png',
+                framesMax: 7,
+                framesHold: 7,
+                offset: {x: 22, y:13}
+        }
+    }
+})
+
+const enemyLeft = (enemy) =>{
+    enemy.image = enemy.sprites.left.image
+        enemy.framesMax = enemy.sprites.left.framesMax
+        enemy.offset.x = enemy.sprites.left.offset.x
+        enemy.offset.y = enemy.sprites.left.offset.y
+}
+const enemyRight = (enemy) =>{
+    enemy.image = enemy.sprites.right.image
+        enemy.framesMax = enemy.sprites.right.framesMax
+        enemy.offset.x = enemy.sprites.right.offset.x
+        enemy.offset.y = enemy.sprites.right.offset.y
+}
 
 const enemyAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= .2
+        enemy.position.x -= 0
+        enemyLeft(enemy)
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += .2
+        enemy.position.x += 0
+        enemyRight(enemy)
     }
     if(enemy.position.y >= player.position.y){
         enemy.position.y -= .2
@@ -402,23 +450,40 @@ const enemyAttack = (player, enemy)=>{
     }
     
 }
+// const goldPieceOne = new Entity({position: {x: goblinA.position.x,y: goblinA.position.y}}, 10, 10, 'gold', {speed: {x: 0, y: 0}}, 2)
+
+// const enemyAttack = (player, enemy)=>{
+//     if(enemy.position.x >= player.position.x){
+//         enemy.position.x -= .2
+//     }
+//     if(enemy.position.x <= player.position.x){
+//         enemy.position.x += .2
+//     }
+//     if(enemy.position.y >= player.position.y){
+//         enemy.position.y -= .2
+//     }
+//     if(enemy.position.y <= player.position.y){
+//         enemy.position.y += .2
+//     }
+    
+// }
 
 const levelOne = ()=>{
     if(goblinA.alive){
-        // enemyAttack(adventurer, goblinA)
+        enemyAttack(adventurer, goblinA)
         goblinA.update()
     } 
 
     if(goblinB.alive){
-        // enemyAttack(adventurer, goblinB)
+        enemyAttack(adventurer, goblinB)
         goblinB.update()
     }
     if(goblinC.alive){
-        // enemyAttack(adventurer, goblinC)
+        enemyAttack(adventurer, goblinC)
         goblinC.update()
     }
     if(goblinD.alive){
-        // enemyAttack(adventurer, goblinD)
+        enemyAttack(adventurer, goblinD)
         goblinD.update()
     }
     if(survivorRoomOne.notSafe){
@@ -738,12 +803,12 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     gameBorders()
-
+    
     if(!moved){
         adventurerRunUp.update()
     }
         
-   
+   adventurerTest.update()
     
 
     if(adventurer.alive){
