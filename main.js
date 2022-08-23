@@ -122,10 +122,7 @@ class Player {
         this.framesElaped = 0
         this.framesHold = 7
         this.sprites = sprites
-        for(const obj in this.sprites){
-            sprites[obj].image = new Image()
-            sprites[obj].image.src = sprites[obj].imageSrc
-        }
+      
         this.width = width
         this.height = height
         this.speed = speed
@@ -283,25 +280,21 @@ const adventurer = new Player({
     offset: {x: 35, y: 4},
     sprites: {
         run: {
-            imageSrc: '',
             framesMax: 6,
             framesHold: 6,
             offset: {x: 35, y:4}
         },
         idle: {
-            imageSrc: '',
             framesMax: 5,
             framesHold: 5,
             offset: {x: 35, y:4}
         },
-        runLeft: {
-            imageSrc: './images/adventurer/run left.png',
-            framesMax: 6,
+        attack: {
+            framesMax: 7,
             framesHold: 7,
             offset: {x: 12, y:5}
         },
         runDown: {
-            imageSrc: './images/adventurer/run down.png',
             framesMax: 7,
             framesHold: 7,
             offset: {x: 12, y:5}
@@ -1526,7 +1519,27 @@ const gameState=()=>{
 const idleDirection = () => {
     if(adventurer.speed.x == 0 && adventurer.speed.y == 0){
         moving = false
-       
+       if(lastKey == 'w'){
+        adventurer.image.src =  `./images/adventurer/idleUp/golem-idle-t-0${currentFrame}.png`
+        framesMax = adventurer.sprites.idle.framesMax
+        adventurer.offset.x = adventurer.sprites.idle.offset.x
+        adventurer.offset.y = adventurer.sprites.idle.offset.y
+       } else if(lastKey == 'a'){
+        adventurer.image.src =  `./images/adventurer/idleLeft/golem-idle-l-0${currentFrame}.png`
+        framesMax = adventurer.sprites.idle.framesMax
+        adventurer.offset.x = adventurer.sprites.idle.offset.x
+        adventurer.offset.y = adventurer.sprites.idle.offset.y
+       } else if(lastKey == 's'){
+        adventurer.image.src =  `./images/adventurer/idleDown/golem-idle-d-0${currentFrame}.png`
+        framesMax = adventurer.sprites.idle.framesMax
+        adventurer.offset.x = adventurer.sprites.idle.offset.x
+        adventurer.offset.y = adventurer.sprites.idle.offset.y
+       } else if(lastKey == 'd'){
+        adventurer.image.src =  `./images/adventurer/idleRight/golem-idle-r-0${currentFrame}.png`
+        framesMax = adventurer.sprites.idle.framesMax
+        adventurer.offset.x = adventurer.sprites.idle.offset.x
+        adventurer.offset.y = adventurer.sprites.idle.offset.y
+       }
     }
 }
 
