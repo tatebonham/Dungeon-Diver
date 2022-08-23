@@ -147,7 +147,7 @@ class Player {
             },
             right: {
                 position: this.position,
-                width: 50,
+                width: 45,
                 height: 5
             }
           
@@ -190,19 +190,6 @@ class Player {
         } else {
             this.position.y += this.speed.y
         }
-
-        
-    if(moving){
-
-            this.framesElaped++
-            if(this.framesElaped % this.framesHold === 0){  
-                if(this.framesCurrent < this.framesMax - 1){
-                    this.framesCurrent++
-                } else {
-                    this.framesCurrent = 0
-                }
-            }
-        }
     }
     
     visualHitBox(){
@@ -222,12 +209,13 @@ class Player {
     }
 
     attack(){
-        this.isAttacking = true
+        setTimeout(()=>{
+            this.isAttacking = true
+        }, 200)       
         console.log(this.isAttacking)
         setTimeout(()=>{
-            this.isAttacking = false
-
-        }, 200)
+          this.isAttacking = false
+        }, 500)
     }
 
 }
@@ -251,21 +239,7 @@ const adventurerRunUp = new Sprite({
     framesMax: 5
 })
 
-let framesElaped = 0
-let currentFrame = 0
-let framesMax = 6
-let framesHold = 6
 
-const changeFrame = ()=>{
-            framesElaped++
-            if(framesElaped % framesHold === 0){  
-                if(currentFrame < framesMax - 1){
-                    currentFrame++
-                } else {
-                    currentFrame = 0
-                }
-            }
-}
 
 
 const adventurer = new Player({
@@ -281,7 +255,7 @@ const adventurer = new Player({
     sprites: {
         run: {
             framesMax: 6,
-            framesHold: 6,
+            framesHold: 8,
             offset: {x: 35, y:4}
         },
         idle: {
@@ -302,9 +276,97 @@ const adventurer = new Player({
     }
 })
 
-
-
+let framesElaped = 0
+let currentFrame = 0
+let framesMax = 0
+let framesHold = 6
 let moving = true
+
+const movementFrames = ()=>{
+            framesElaped++
+            if(framesElaped % framesHold === 0){  
+                if(currentFrame < framesMax - 1){
+                    currentFrame++
+                } else {
+                    currentFrame = 0
+                }
+            }
+
+            adventurer.speed.x = 0
+            adventurer.speed.y = 0
+            if(keys.d.pressed && keys.s.pressed){
+                adventurer.speed.x = 3
+                adventurer.speed.y = 3
+                adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+            }  else if(keys.a.pressed && keys.s.pressed){
+                adventurer.speed.x = -3
+                adventurer.speed.y = 3
+                adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+            }  else if(keys.d.pressed && keys.w.pressed){
+                adventurer.speed.x = 3
+                adventurer.speed.y = -3
+                adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+            }  else if(keys.a.pressed && keys.w.pressed){
+                adventurer.speed.x = -3
+                adventurer.speed.y = -3
+                adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+            } else if(keys.w.pressed && lastKey == 'w'){
+                adventurer.speed.y = -3
+                adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${currentFrame}.png`
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+            } else if(keys.a.pressed && lastKey == 'a'){
+                adventurer.speed.x = -3
+                adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+            } else if(keys.s.pressed && lastKey == 's'){
+                adventurer.speed.y = 3
+                adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${currentFrame}.png`
+              adventurer.framesMax = adventurer.sprites.run.framesMax
+            } else if(keys.d.pressed && lastKey == 'd'){
+                adventurer.speed.x = 3
+                adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+            }    
+}
+let attacking = false  
+let direction = 'down'
+
+const attack= () => {
+    attacking = true
+    console.log(attacking)
+
+    if(attacking == true){
+    framesElaped++
+            if(framesElaped % framesHold === 0){  
+                if(currentFrame < framesMax - 1){
+                    currentFrame++
+                } else {
+                    currentFrame = 0
+                    attacking = false
+            }
+        }
+
+    if(direction === 'up' && lastKey == 'w'){
+        adventurer.image.src = `./images/adventurer/attUp/golem-attack-t-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+    } else if(direction === 'left' && lastKey == 'a'){
+        adventurer.image.src =  `./images/adventurer/attLeft/golem-attack-l-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+    } else if(direction === 'down' && lastKey == 's'){
+        adventurer.image.src = `./images/adventurer/attDown/golem-attack-d-0${currentFrame}.png`
+      adventurer.framesMax = adventurer.sprites.run.framesMax
+    } else if(direction === 'right' && lastKey == 'd'){
+        adventurer.image.src = `./images/adventurer/attRight/golem-attack-r-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+    }    
+  }
+}
+
+
 
 // {position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset}
 const survivorRoomOne = new Entity({
@@ -1634,64 +1696,18 @@ function animate(){
     }
 
     gameState()
-    changeFrame()
+    if(attacking){
+        attack()
+        adventurer.speed.x = 0
+        adventurer.speed.y = 0
+    } else {
+        movementFrames()
+        idleDirection()
+    }
+  
 
-    adventurer.speed.x = 0
-    adventurer.speed.y = 0
-    if(keys.d.pressed && keys.s.pressed){
-        adventurer.speed.x = 3
-        adventurer.speed.y = 3
-        adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    }  else if(keys.a.pressed && keys.s.pressed){
-        adventurer.speed.x = -3
-        adventurer.speed.y = 3
-        adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    }  else if(keys.d.pressed && keys.w.pressed){
-        adventurer.speed.x = 3
-        adventurer.speed.y = -3
-        adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    }  else if(keys.a.pressed && keys.w.pressed){
-        adventurer.speed.x = -3
-        adventurer.speed.y = -3
-        adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    } else if(keys.w.pressed && lastKey == 'w'){
-        adventurer.speed.y = -3
-        adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    } else if(keys.a.pressed && lastKey == 'a'){
-        adventurer.speed.x = -3
-        adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    } else if(keys.s.pressed && lastKey == 's'){
-        adventurer.speed.y = 3
-        adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${currentFrame}.png`
-      adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    } else if(keys.d.pressed && lastKey == 'd'){
-        adventurer.speed.x = 3
-        adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.offset.x = adventurer.sprites.run.offset.x
-        adventurer.offset.y = adventurer.sprites.run.offset.y
-    }    
-    idleDirection()
+ 
+    
     arrowArr.forEach(projectile =>{
         if(projectile.alive){
         projectile.position.x += projectile.speed.x
@@ -1791,28 +1807,34 @@ window.addEventListener('keydown', (event) => {
             lastKeyPressed()
             moving = true
             moved = true
+            direction = 'up'
             break
         case 'a':
             keys.a.pressed = true  
             lastKeyPressed()  
             moving = true
             moved = true
+            direction = 'left'
             break
         case 's':
             keys.s.pressed = true
             lastKeyPressed()
             moving = true
             moved = true
+            direction = 'down'
             break
         case 'd':
             keys.d.pressed = true 
             lastKeyPressed()
             moving = true
             moved = true
+            direction = 'right'
             break
         case 'k':
             if(adventurer.alive &&  !bossDead){
                 adventurer.attack()
+                currentFrame = 0
+                attack()
             }
             break
         case 'l' : 
