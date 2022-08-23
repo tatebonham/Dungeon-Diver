@@ -294,7 +294,28 @@ const movementFrames = ()=>{
 
             adventurer.speed.x = 0
             adventurer.speed.y = 0
-            if(keys.d.pressed && keys.s.pressed){
+            if(keys.w.pressed && keys.a.pressed && keys.d.pressed){
+                adventurer.speed.x = 0
+                adventurer.speed.y = -3
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+                adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${currentFrame}.png`
+            } else if (keys.s.pressed && keys.a.pressed && keys.d.pressed){
+                adventurer.speed.x = 0
+                adventurer.speed.y = 3
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+                adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${currentFrame}.png`
+            } else if (keys.d.pressed && keys.w.pressed && keys.s.pressed){
+                adventurer.speed.x = 3
+                adventurer.speed.y = 0
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+                adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
+            } else if (keys.a.pressed && keys.s.pressed && keys.w.pressed) {
+                adventurer.speed.x = -3
+                adventurer.speed.y = 0
+                adventurer.framesMax = adventurer.sprites.run.framesMax
+                adventurer.image.src = `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
+                //
+            } else if(keys.d.pressed && keys.s.pressed){
                 adventurer.speed.x = 3
                 adventurer.speed.y = 3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
@@ -319,14 +340,12 @@ const movementFrames = ()=>{
                 adventurer.speed.y = 0
                 adventurer.framesMax = adventurer.sprites.run.framesMax
                 adventurer.image.src =  `./images/adventurer/idleDown/golem-idle-d-0${currentFrame}.png`
-            }  
-            else if(keys.w.pressed && keys.s.pressed){
-                adventurer.speed.x = 3
-                adventurer.speed.y = -3
+            }  else if(keys.w.pressed && keys.s.pressed){
+                adventurer.speed.x = 0
+                adventurer.speed.y = 0
                 adventurer.framesMax = adventurer.sprites.run.framesMax
-                adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
-            }  
-            else if(keys.w.pressed){
+                adventurer.image.src = `./images/adventurer/idleDown/golem-idle-d-0${currentFrame}.png`
+            } else if(keys.w.pressed){
                 adventurer.speed.y = -3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
                 adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${currentFrame}.png`
@@ -380,17 +399,17 @@ const attack= () => {
     //     adventurer.framesMax = adventurer.sprites.run.framesMax
     // }  
     } else if (direction === 'up' && lastKey == 'w'){
+        adventurer.framesMax = adventurer.sprites.run.framesMax
         adventurer.image.src = `./images/adventurer/attUp/golem-attack-t-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
     } else if(direction === 'left' && lastKey == 'a'){
+        adventurer.framesMax = adventurer.sprites.run.framesMax
         adventurer.image.src =  `./images/adventurer/attLeft/golem-attack-l-0${currentFrame}.png`
-        adventurer.framesMax = adventurer.sprites.run.framesMax
     } else if(direction === 'down' && lastKey == 's'){
-        adventurer.image.src = `./images/adventurer/attDown/golem-attack-d-0${currentFrame}.png`
-      adventurer.framesMax = adventurer.sprites.run.framesMax
-    } else if(direction === 'right' && lastKey == 'd'){
-        adventurer.image.src = `./images/adventurer/attRight/golem-attack-r-0${currentFrame}.png`
         adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.image.src = `./images/adventurer/attDown/golem-attack-d-0${currentFrame}.png`
+    } else if(direction === 'right' && lastKey == 'd'){
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.image.src = `./images/adventurer/attRight/golem-attack-r-0${currentFrame}.png`
     }    
   }
 }
