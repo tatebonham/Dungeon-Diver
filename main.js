@@ -169,8 +169,8 @@ class Player {
             this.image.width  * this.scale,
             this.image.height * this.scale
             )
-            ctx.fillStyle = 'green'
-            ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+            // ctx.fillStyle = 'green'
+            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -193,19 +193,19 @@ class Player {
     }
     
     visualHitBox(){
-        if(this.isAttacking === true){
-            ctx.fillStyle = 'black'
-            if(lastKey === 'w'){  
-                ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
-            } else if (lastKey === 'a') {
-                ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+15, this.attackBox.left.width -25, this.attackBox.left.height)
-            } else if (lastKey === 's') {
-                ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
-            } else if (lastKey === 'd') {
-                ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+15, this.attackBox.right.width - 25, this.attackBox.right.height)
-            }
+        // if(this.isAttacking === true){
+        //     ctx.fillStyle = 'black'
+        //     if(lastKey === 'w'){  
+        //         ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
+        //     } else if (lastKey === 'a') {
+        //         ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+15, this.attackBox.left.width -25, this.attackBox.left.height)
+        //     } else if (lastKey === 's') {
+        //         ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
+        //     } else if (lastKey === 'd') {
+        //         ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+15, this.attackBox.right.width - 25, this.attackBox.right.height)
+        //     }
 
-        }
+        // }
     }
 
     attack(){
@@ -255,12 +255,12 @@ const adventurer = new Player({
     sprites: {
         run: {
             framesMax: 6,
-            framesHold: 8,
+            framesHold: 7,
             offset: {x: 35, y:4}
         },
         idle: {
             framesMax: 5,
-            framesHold: 5,
+            framesHold: 8,
             offset: {x: 35, y:4}
         },
         attack: {
@@ -298,47 +298,56 @@ const movementFrames = ()=>{
                 adventurer.speed.x = 0
                 adventurer.speed.y = -3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${currentFrame}.png`
             } else if (keys.s.pressed && keys.a.pressed && keys.d.pressed){
                 adventurer.speed.x = 0
                 adventurer.speed.y = 3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${currentFrame}.png`
             } else if (keys.d.pressed && keys.w.pressed && keys.s.pressed){
                 adventurer.speed.x = 3
                 adventurer.speed.y = 0
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
             } else if (keys.a.pressed && keys.s.pressed && keys.w.pressed) {
                 adventurer.speed.x = -3
                 adventurer.speed.y = 0
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
                 //
             } else if(keys.d.pressed && keys.s.pressed){
                 adventurer.speed.x = 3
                 adventurer.speed.y = 3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
             }  else if(keys.a.pressed && keys.s.pressed){
                 adventurer.speed.x = -3
                 adventurer.speed.y = 3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
             }  else if(keys.d.pressed && keys.w.pressed){
                 adventurer.speed.x = 3
                 adventurer.speed.y = -3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
             }  else if(keys.a.pressed && keys.w.pressed){
                 adventurer.speed.x = -3
                 adventurer.speed.y = -3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
             }   else if(keys.a.pressed && keys.d.pressed){
                 adventurer.speed.x = 0
                 adventurer.speed.y = 0
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src =  `./images/adventurer/idleDown/golem-idle-d-0${currentFrame}.png`
             }  else if(keys.w.pressed && keys.s.pressed){
                 adventurer.speed.x = 0
@@ -348,18 +357,22 @@ const movementFrames = ()=>{
             } else if(keys.w.pressed){
                 adventurer.speed.y = -3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${currentFrame}.png`
             } else if(keys.a.pressed){
                 adventurer.speed.x = -3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
             } else if(keys.s.pressed){
                 adventurer.speed.y = 3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${currentFrame}.png`
             } else if(keys.d.pressed){
                 adventurer.speed.x = 3
                 adventurer.framesMax = adventurer.sprites.run.framesMax
+                framesHold = adventurer.sprites.idle.framesHold
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
             }    else {
                 currentFrame = 0
@@ -372,7 +385,8 @@ let direction = 'down'
 const attack= () => {
     attacking = true
     console.log(attacking)
-
+    console.log(lastKey)
+    console.log()
     if(attacking == true){
     framesElaped++
             if(framesElaped % framesHold === 0){  
@@ -383,32 +397,21 @@ const attack= () => {
                     attacking = false
             }
         }
-
-    if(keys.w.pressed && lastKey == 'd'){
+    if (lastKey == 'w'){
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        framesHold = adventurer.sprites.idle.framesHold
         adventurer.image.src = `./images/adventurer/attUp/golem-attack-t-0${currentFrame}.png`
+    } else if(lastKey == 'a'){
         adventurer.framesMax = adventurer.sprites.run.framesMax
-    
-    // else if(direction === 'left' && lastKey == 'a'){
-    //     adventurer.image.src =  `./images/adventurer/attLeft/golem-attack-l-0${currentFrame}.png`
-    //     adventurer.framesMax = adventurer.sprites.run.framesMax
-    // } else if(direction === 'down' && lastKey == 's'){
-    //     adventurer.image.src = `./images/adventurer/attDown/golem-attack-d-0${currentFrame}.png`
-    //   adventurer.framesMax = adventurer.sprites.run.framesMax
-    // } else if(direction === 'right' && lastKey == 'd'){
-    //     adventurer.image.src = `./images/adventurer/attRight/golem-attack-r-0${currentFrame}.png`
-    //     adventurer.framesMax = adventurer.sprites.run.framesMax
-    // }  
-    } else if (direction === 'up' && lastKey == 'w'){
-        adventurer.framesMax = adventurer.sprites.run.framesMax
-        adventurer.image.src = `./images/adventurer/attUp/golem-attack-t-0${currentFrame}.png`
-    } else if(direction === 'left' && lastKey == 'a'){
-        adventurer.framesMax = adventurer.sprites.run.framesMax
+        framesHold = adventurer.sprites.idle.framesHold
         adventurer.image.src =  `./images/adventurer/attLeft/golem-attack-l-0${currentFrame}.png`
-    } else if(direction === 'down' && lastKey == 's'){
+    } else if(lastKey == 's'){
         adventurer.framesMax = adventurer.sprites.run.framesMax
+        framesHold = adventurer.sprites.idle.framesHold
         adventurer.image.src = `./images/adventurer/attDown/golem-attack-d-0${currentFrame}.png`
-    } else if(direction === 'right' && lastKey == 'd'){
+    } else if(lastKey == 'd'){
         adventurer.framesMax = adventurer.sprites.run.framesMax
+        framesHold = adventurer.sprites.idle.framesHold
         adventurer.image.src = `./images/adventurer/attRight/golem-attack-r-0${currentFrame}.png`
     }    
   }
@@ -427,21 +430,25 @@ const idleDirection = () => {
 
     if(lastKey == 'w'){
         framesMax = adventurer.sprites.idle.framesMax
+        framesHold = adventurer.sprites.idle.framesHold
         adventurer.image.src =  `./images/adventurer/idleUp/golem-idle-t-0${currentFrame}.png`
         adventurer.offset.x = adventurer.sprites.idle.offset.x
         adventurer.offset.y = adventurer.sprites.idle.offset.y
        } else if(lastKey == 'a'){
            framesMax = adventurer.sprites.idle.framesMax
+           framesHold = adventurer.sprites.idle.framesHold
            adventurer.image.src =  `./images/adventurer/idleLeft/golem-idle-l-0${currentFrame}.png`
         adventurer.offset.x = adventurer.sprites.idle.offset.x
         adventurer.offset.y = adventurer.sprites.idle.offset.y
        } else if(lastKey == 's'){
            framesMax = adventurer.sprites.idle.framesMax
+           framesHold = adventurer.sprites.idle.framesHold
            adventurer.image.src =  `./images/adventurer/idleDown/golem-idle-d-0${currentFrame}.png`
         adventurer.offset.x = adventurer.sprites.idle.offset.x
         adventurer.offset.y = adventurer.sprites.idle.offset.y
        } else if(lastKey == 'd'){
            framesMax = adventurer.sprites.idle.framesMax
+           framesHold = adventurer.sprites.idle.framesHold
            adventurer.image.src =  `./images/adventurer/idleRight/golem-idle-r-0${currentFrame}.png`
         adventurer.offset.x = adventurer.sprites.idle.offset.x
         adventurer.offset.y = adventurer.sprites.idle.offset.y
@@ -1597,20 +1604,21 @@ let gameStart = false
 let level = 1
 let gamePause = false
 let bossDead = false
-if(!gameStart){
-    window.addEventListener('keydown', (e)=>{
-        if(e.key == 'k'){
-            message.classList.add('hidden')
-            continueButton.classList.add('hidden')
-            gameStart = true
-        }
-    })
-}
+
 
 
 
 
 const gameState=()=>{
+    if(!gameStart){
+        window.addEventListener('keydown', (e)=>{
+            if(e.key == 'k'){
+                message.classList.add('hidden')
+                continueButton.classList.add('hidden')
+                gameStart = true
+            }
+        })
+    }
     if(gameLost){
         message.innerText = 'Looks like you weren\'t strong enough this time, try again?'
         message.classList.remove('hidden')
@@ -1791,12 +1799,12 @@ function animate(){
         
         }
         if(level == 6){
-        arrowHit(projectile,batI)
-        arrowHit(projectile,batJ)
-        arrowHit(projectile,batK)
-        arrowHit(projectile, goblinE)
-        arrowHit(projectile, goblinF)
-        arrowHit(projectile, goblinG)
+            arrowHit(projectile,batA)
+            arrowHit(projectile,batB)
+            arrowHit(projectile,batC)
+            arrowHit(projectile, goblinA)
+            arrowHit(projectile, goblinB)
+            arrowHit(projectile, goblinC)
         }
         if(level == 5 || level == 6){
         arrowHit(projectile,head)
@@ -1840,7 +1848,6 @@ function animate(){
         touchKey(key, adventurer)
     }
     
-    // console.log(moving)
     keepTrack()
 }
 
@@ -1848,22 +1855,22 @@ animate()
 
 
 const lastKeyPressed = ()=>{
-if(keys.w.pressed){
+    if(!attacking){
+    if(keys.a.pressed){
+        lastKey = 'a'
+    } else if(keys.d.pressed){
+        lastKey = 'd'
+    }else if(keys.w.pressed){
         lastKey = 'w'
-}  else if(keys.a.pressed){
-    lastKey = 'a'
-} else if (keys.s.pressed){
-    lastKey = 's'
-} else if(keys.d.pressed){
-    lastKey = 'd'
-}
-
-
+    }  else if (keys.s.pressed){
+        lastKey = 's'
+    }
+    }
 }
 window.addEventListener('keydown', (event) => {
     switch(event.key){
         case 'w':
-            if(!attacking){
+            if(!attacking && !dialogue){
                 keys.w.pressed = true
                 lastKeyPressed()
                 moving = true
@@ -1872,7 +1879,7 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'a':
-            if(!attacking){
+            if(!attacking && !dialogue){
                 keys.a.pressed = true  
                 lastKeyPressed()  
                 moving = true
@@ -1881,7 +1888,7 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 's':
-            if(!attacking){
+            if(!attacking && !dialogue){
                 keys.s.pressed = true
                 lastKeyPressed()
                 moving = true
@@ -1890,7 +1897,7 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'd':
-            if(!attacking){
+            if(!attacking && !dialogue){
                 keys.d.pressed = true 
                 lastKeyPressed()
                 moving = true
