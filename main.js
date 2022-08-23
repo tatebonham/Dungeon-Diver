@@ -49,8 +49,8 @@ class Entity{
             (this.image.width / this.framesMax) * this.scale,
             this.image.height * this.scale
             )
-        // ctx.fillStyle = 'red'
-        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        ctx.fillStyle = 'red'
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -112,17 +112,12 @@ class Sprite{
 }
 
 class Player {
-    constructor({position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset, sprites}){
+    constructor({position, width, height, speed, health, imageSrc, scale = 1, offset, sprites}){
         this.position = position
         this.image = new Image()
         this.image.src = imageSrc
         this.scale = scale
-        this.framesMax = framesMax
-        this.framesCurrent = this.framesCurrent
-        this.framesElaped = 0
-        this.framesHold = 7
         this.sprites = sprites
-      
         this.width = width
         this.height = height
         this.speed = speed
@@ -169,8 +164,8 @@ class Player {
             this.image.width  * this.scale,
             this.image.height * this.scale
             )
-            // ctx.fillStyle = 'green'
-            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+            ctx.fillStyle = 'green'
+            ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -211,11 +206,10 @@ class Player {
     attack(){
         setTimeout(()=>{
             this.isAttacking = true
-        }, 100)       
-        console.log(this.isAttacking)
+        }, 250)       
         setTimeout(()=>{
           this.isAttacking = false
-        }, 300)
+        }, 600)
     }
 
 }
@@ -229,50 +223,80 @@ const adventurerTest = new Sprite({
     scale: 1,
     framesMax: 5
 })
-const adventurerRunUp = new Sprite({
-    position: {
-        x: 31,
-        y: 67
-    },
-    imageSrc: '',
-    scale: .7,
-    framesMax: 5
-})
-
 
 
 
 const adventurer = new Player({
     position: {x: 40, y: 70},
-    width: 25,
-    height: 30,
+    width: 40,
+    height: 55,
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: '',
     scale: 1,
-    framesMax: 5,
-    offset: {x: 35, y: 4},
+    offset: {x: 30, y:9},
     sprites: {
-        run: {
-            framesMax: 6,
-            framesHold: 7,
-            offset: {x: 35, y:4}
+        idleLeft:{
+            offset: {x: 30 ,y: 9},
+            width: 40,
+            height: 55
         },
-        idle: {
-            framesMax: 5,
-            framesHold: 10,
-            offset: {x: 35, y:4}
+        idleRight:{
+            offset: {x: 22 ,y: 9},
+            width: 40,
+            height: 55
         },
-        attack: {
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 12, y:5}
+        idleDown:{
+            offset: {x:30, y: 10},
+            width: 40,
+            height: 55
         },
-        runDown: {
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 12, y:5}
-        }
+        idleUp:{
+            offset: {x: 30 ,y: 10},
+            width: 40,
+            height: 55
+        },
+        attRight:{
+            offset: {x: 22 ,y: 9},
+            width: 40,
+            height: 55,
+        },
+        attLeft:{
+            offset: {x: 22 ,y: 9},
+            width: 40,
+            height: 55
+        },
+        attUp:{
+            offset: {x: 30 ,y: 15},
+            width: 40,
+            height: 50
+        },
+        attDown:{
+            offset: {x: 22 ,y: 9},
+            width: 40,
+            height: 45
+        },
+        runUp:{
+            offset: {x: 30 ,y: 9},
+            width: 40,
+            height: 55
+        },
+        runDown:{
+            offset: {x: 30 ,y: 9},
+            width: 40,
+            height: 55
+        },
+        runRight:{
+            offset: {x: 22 ,y: 9},
+            width: 40,
+            height: 55
+        },
+        runLeft:{
+            offset: {x: 30 ,y: 9},
+            width: 40,
+            height: 55
+        },
+
     }
 })
 
@@ -311,55 +335,110 @@ const movementFrames = ()=>{
             if(keys.w.pressed && keys.a.pressed && keys.d.pressed){
                 adventurer.speed.x = 0
                 adventurer.speed.y = -3
+                adventurer.width = adventurer.sprites.runUp.width
+                adventurer.height = adventurer.sprites.runUp.height
+                adventurer.offset.x = adventurer.sprites.runUp.offset.x
+                adventurer.offset.y = adventurer.sprites.runUp.offset.y
                 adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${runCurrentFrame}.png`
             } else if (keys.s.pressed && keys.a.pressed && keys.d.pressed){
                 adventurer.speed.x = 0
                 adventurer.speed.y = 3
+                adventurer.width = adventurer.sprites.runDown.width
+                adventurer.height = adventurer.sprites.runDown.height
+                adventurer.offset.x = adventurer.sprites.runDown.offset.x
+                adventurer.offset.y = adventurer.sprites.runDown.offset.y
                 adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${runCurrentFrame}.png`
             } else if (keys.d.pressed && keys.w.pressed && keys.s.pressed){
                 adventurer.speed.x = 3
                 adventurer.speed.y = 0
+                adventurer.width = adventurer.sprites.runRight.width
+                adventurer.height = adventurer.sprites.runRight.height
+                adventurer.offset.x = adventurer.sprites.runRight.offset.x
+                adventurer.offset.y = adventurer.sprites.runRight.offset.y
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${runCurrentFrame}.png`
             } else if (keys.a.pressed && keys.s.pressed && keys.w.pressed) {
                 adventurer.speed.x = -3
                 adventurer.speed.y = 0
+                adventurer.width = adventurer.sprites.runLeft.width
+                adventurer.height = adventurer.sprites.runLeft.height
+                adventurer.offset.x = adventurer.sprites.runLeft.offset.x
+                adventurer.offset.y = adventurer.sprites.runLeft.offset.y
                 adventurer.image.src = `./images/adventurer/runLeft/golem-run-l-0${runCurrentFrame}.png`
-                //
             } else if(keys.d.pressed && keys.s.pressed){
                 adventurer.speed.x = 3
                 adventurer.speed.y = 3
+                adventurer.width = adventurer.sprites.runRight.width
+                adventurer.height = adventurer.sprites.runRight.height
+                adventurer.offset.x = adventurer.sprites.runRight.offset.x
+                adventurer.offset.y = adventurer.sprites.runRight.offset.y
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${runCurrentFrame}.png`
             }  else if(keys.a.pressed && keys.s.pressed){
                 adventurer.speed.x = -3
                 adventurer.speed.y = 3
+                adventurer.width = adventurer.sprites.runUp.width
+                adventurer.height = adventurer.sprites.runUp.height
+                adventurer.offset.x = adventurer.sprites.runUp.offset.x
+                adventurer.offset.y = adventurer.sprites.runUp.offset.y
                 adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${runCurrentFrame}.png`
             }  else if(keys.d.pressed && keys.w.pressed){
                 adventurer.speed.x = 3
                 adventurer.speed.y = -3
+                adventurer.width = adventurer.sprites.runRight.width
+                adventurer.height = adventurer.sprites.runRight.height
+                adventurer.offset.x = adventurer.sprites.runRight.offset.x
+                adventurer.offset.y = adventurer.sprites.runRight.offset.y
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${runCurrentFrame}.png`
             }  else if(keys.a.pressed && keys.w.pressed){
                 adventurer.speed.x = -3
                 adventurer.speed.y = -3
+                adventurer.width = adventurer.sprites.runLeft.width
+                adventurer.height = adventurer.sprites.runLeft.height
+                adventurer.offset.x = adventurer.sprites.runLeft.offset.x
+                adventurer.offset.y = adventurer.sprites.runLeft.offset.y
                 adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${runCurrentFrame}.png`
             }   else if(keys.a.pressed && keys.d.pressed){
                 adventurer.speed.x = 0
                 adventurer.speed.y = 0
+                adventurer.width = adventurer.sprites.idleDown.width
+                adventurer.height = adventurer.sprites.idleDown.height
+                adventurer.offset.x = adventurer.sprites.idleDown.offset.x
+                adventurer.offset.y = adventurer.sprites.idleDown.offset.y
                 adventurer.image.src =  `./images/adventurer/idleDown/golem-idle-d-0${idleCurrentFrame}.png`
             }  else if(keys.w.pressed && keys.s.pressed){
                 adventurer.speed.x = 0
                 adventurer.speed.y = 0              
+                adventurer.width = adventurer.sprites.idleDown.width
+                adventurer.height = adventurer.sprites.idleDown.height
+                adventurer.offset.x = adventurer.sprites.idleDown.offset.x
+                adventurer.offset.y = adventurer.sprites.idleDown.offset.y
                 adventurer.image.src = `./images/adventurer/idleDown/golem-idle-d-0${idleCurrentFrame}.png`
             } else if(keys.w.pressed){
                 adventurer.speed.y = -3
+                adventurer.width = adventurer.sprites.runUp.width
+                adventurer.height = adventurer.sprites.runUp.height
+                adventurer.offset.x = adventurer.sprites.runUp.offset.x
+                adventurer.offset.y = adventurer.sprites.runUp.offset.y
                 adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${runCurrentFrame}.png`
             } else if(keys.a.pressed){
                 adventurer.speed.x = -3
+                adventurer.width = adventurer.sprites.runLeft.width
+                adventurer.height = adventurer.sprites.runLeft.height
+                adventurer.offset.x = adventurer.sprites.runLeft.offset.x
+                adventurer.offset.y = adventurer.sprites.runLeft.offset.y
                 adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${runCurrentFrame}.png`
             } else if(keys.s.pressed){
                 adventurer.speed.y = 3
+                adventurer.width = adventurer.sprites.runDown.width
+                adventurer.height = adventurer.sprites.runDown.height
+                adventurer.offset.x = adventurer.sprites.runDown.offset.x
+                adventurer.offset.y = adventurer.sprites.runDown.offset.y
                 adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${runCurrentFrame}.png`
             } else if(keys.d.pressed){
                 adventurer.speed.x = 3
+                adventurer.width = adventurer.sprites.runRight.width
+                adventurer.height = adventurer.sprites.runRight.height
+                adventurer.offset.x = adventurer.sprites.runRight.offset.x
+                adventurer.offset.y = adventurer.sprites.runRight.offset.y
                 adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${runCurrentFrame}.png`
             }    else {
                 moving = false  
@@ -369,10 +448,9 @@ let attacking = false
 let attFramesElaped = 0
 let attCurrentFrame = 0
 let attFramesMax = 7
-let attFramesHold = 4
+let attFramesHold = 6
 
 const attack= () => {
-    attacking = true
     if(attacking == true){
         attFramesElaped++
             if(attFramesElaped % attFramesHold === 0){  
@@ -384,12 +462,28 @@ const attack= () => {
             }
         }
     if (lastKey == 'w'){
+        adventurer.width = adventurer.sprites.attUp.width
+        adventurer.height = adventurer.sprites.attUp.height
+        adventurer.offset.x = adventurer.sprites.attUp.offset.x
+        adventurer.offset.y = adventurer.sprites.attUp.offset.y
         adventurer.image.src = `./images/adventurer/attUp/golem-attack-t-0${attCurrentFrame}.png`
     } else if(lastKey == 'a'){
+        adventurer.width = adventurer.sprites.attLeft.width
+        adventurer.height = adventurer.sprites.attLeft.height
+        adventurer.offset.x = adventurer.sprites.attLeft.offset.x
+        adventurer.offset.y = adventurer.sprites.attLeft.offset.y
         adventurer.image.src =  `./images/adventurer/attLeft/golem-attack-l-0${attCurrentFrame}.png`
     } else if(lastKey == 's'){
+        adventurer.width = adventurer.sprites.attDown.width
+        adventurer.height = adventurer.sprites.attDown.height
+        adventurer.offset.x = adventurer.sprites.attDown.offset.x
+        adventurer.offset.y = adventurer.sprites.attDown.offset.y
         adventurer.image.src = `./images/adventurer/attDown/golem-attack-d-0${attCurrentFrame}.png`
     } else if(lastKey == 'd'){
+        adventurer.width = adventurer.sprites.attRight.width
+        adventurer.height = adventurer.sprites.attRight.height
+        adventurer.offset.x = adventurer.sprites.attRight.offset.x
+        adventurer.offset.y = adventurer.sprites.attRight.offset.y
         adventurer.image.src = `./images/adventurer/attRight/golem-attack-r-0${attCurrentFrame}.png`
     }    
   }
@@ -405,15 +499,31 @@ const idleDirection = () => {
         }
     }
 
-    if(lastKey == 'w'){
-        adventurer.image.src =  `./images/adventurer/idleUp/golem-idle-t-0${idleCurrentFrame}.png`
-       } else if(lastKey == 'a'){    
-           adventurer.image.src =  `./images/adventurer/idleLeft/golem-idle-l-0${idleCurrentFrame}.png`
-       } else if(lastKey == 's'|| !moved){   
-           adventurer.image.src =  `./images/adventurer/idleDown/golem-idle-d-0${idleCurrentFrame}.png`
-       } else if(lastKey == 'd'){    
-           adventurer.image.src =  `./images/adventurer/idleRight/golem-idle-r-0${idleCurrentFrame}.png`
-       }
+        if(lastKey == 'w'){
+            adventurer.width = adventurer.sprites.runUp.width
+                adventurer.height = adventurer.sprites.runUp.height
+            adventurer.offset.x = adventurer.sprites.idleUp.offset.x
+            adventurer.offset.y = adventurer.sprites.idleUp.offset.y
+            adventurer.image.src =  `./images/adventurer/idleUp/golem-idle-t-0${idleCurrentFrame}.png`
+        } else if(lastKey == 'a'){    
+            adventurer.width = adventurer.sprites.runUp.width
+                adventurer.height = adventurer.sprites.runUp.height
+            adventurer.offset.x = adventurer.sprites.idleLeft.offset.x
+            adventurer.offset.y = adventurer.sprites.idleLeft.offset.y
+            adventurer.image.src =  `./images/adventurer/idleLeft/golem-idle-l-0${idleCurrentFrame}.png`
+        } else if(lastKey == 's'|| !moved){   
+            adventurer.width = adventurer.sprites.runUp.width
+            adventurer.height = adventurer.sprites.runUp.height
+            adventurer.offset.x = adventurer.sprites.idleDown.offset.x
+            adventurer.offset.y = adventurer.sprites.idleDown.offset.y
+            adventurer.image.src =  `./images/adventurer/idleDown/golem-idle-d-0${idleCurrentFrame}.png`
+        } else if(lastKey == 'd'){    
+            adventurer.width = adventurer.sprites.runUp.width
+            adventurer.height = adventurer.sprites.runUp.height
+            adventurer.offset.x = adventurer.sprites.idleRight.offset.x
+            adventurer.offset.y = adventurer.sprites.idleRight.offset.y
+            adventurer.image.src =  `./images/adventurer/idleRight/golem-idle-r-0${idleCurrentFrame}.png`
+        }
 }
 
 
@@ -897,10 +1007,10 @@ const goblinAttack = (player, enemy)=>{
         enemyRight(enemy)
     }
     if(enemy.position.y >= player.position.y - 10){
-        enemy.position.y -= .8
+        enemy.position.y -= 0
     }
     if(enemy.position.y <= player.position.y - 10){
-        enemy.position.y += .8
+        enemy.position.y += 0
     }
 }
 
@@ -1863,7 +1973,7 @@ window.addEventListener('keydown', (event) => {
             if(adventurer.alive &&  !bossDead && !dialogue){
                 adventurer.attack()
                 currentFrame = 0
-                attack()
+                attacking = true
             }
             break
         case 'l' : 
