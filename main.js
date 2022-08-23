@@ -207,42 +207,7 @@ class Player {
             }
         }
     }
-
-    playerMoving(){
-        this.draw()
-        if(this.position.x < 30){
-            this.position.x = 30
-        } else if(this.position.x + this.width > 670){
-            this.position.x = 670 - this.width
-        } else {
-            this.position.x += this.speed.x
-        }
-
-        if(this.position.y < 60){
-            this.position.y = 60
-        } else if (this.position.y  + this.height > 450){
-            this.position.y = 450 - this.height    
-        } else {
-            this.position.y += this.speed.y
-        }
-
-        
-    if(moving){
-
-            this.framesElaped++
-            if(this.framesElaped % this.framesHold === 0){  
-                if(this.framesCurrent < this.framesMax - 1){
-                    this.framesCurrent++
-                } else {
-                    this.framesCurrent = 0
-                }
-            }
-        }
-    }
     
-    //
-
-
     visualHitBox(){
         if(this.isAttacking === true){
             ctx.fillStyle = 'black'
@@ -258,41 +223,16 @@ class Player {
 
         }
     }
-    drawAttack(){
-        ctx.drawImage(
-            this.image, 
-            this.framesCurrent,
-            0,
-            this.image.width,
-            this.image.height,
-            this.position.x - this.offset.x, 
-            this.position.y - this.offset.y, 
-            this.image.width * this.scale,
-            this.image.height * this.scale
-            )
-            
-            // ctx.fillStyle = 'green'
-            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-    attack(direction,maxFrames){
-        this.drawAttack()
-        stuck = true
+
+    attack(){
         this.isAttacking = true
-        this.framesElaped++
-        if(this.framesElaped % this.framesHold === 0){  
-            if(this.framesCurrent < this.framesMax - 1){
-                this.framesCurrent++
-            } else {
-                this.framesCurrent = 0
-            }
-        }
         console.log(this.isAttacking)
         setTimeout(()=>{
             this.isAttacking = false
-            stuck = false
+
         }, 200)
-           
     }
+
 }
 
 const adventurerTest = new Sprite({
@@ -349,17 +289,11 @@ const adventurer = new Player({
             framesMax: 7,
             framesHold: 7,
             offset: {x: 12, y:5}
-        },
-        attackDown: {
-            imageSrc: './images/adventurer/attDown/golem-attack-d-0.png',
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 12, y:5}
         }
     }
 })
 
-let stuck = false
+
 let moving = true
 
 // {position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset}
@@ -833,11 +767,11 @@ const headAttack = (player, enemy)=>{
 }
 const goblinAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= 0
+        enemy.position.x -= .8
         enemyLeft(enemy)
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += 0
+        enemy.position.x += .8
         enemyRight(enemy)
     }
     if(enemy.position.y >= player.position.y - 10){
@@ -1575,6 +1509,7 @@ const gameState=()=>{
 const idleDirection = () => {
     if(adventurer.speed.x == 0 && adventurer.speed.y == 0){
         moving = false
+       
     }
 }
 
@@ -1643,7 +1578,7 @@ const checkPlayerHit = () => {
  }
 let moved = false
 
-animate()
+
 
 function animate(){
     window.requestAnimationFrame(animate)
@@ -1664,14 +1599,10 @@ function animate(){
        adventurer.visualHitBox()
     }
 
- 
-
-
     gameState()
    
     adventurer.speed.x = 0
     adventurer.speed.y = 0
-    if(!stuck){
     if(keys.d.pressed && keys.s.pressed){
         adventurer.speed.x = 3
         adventurer.speed.y = 3
@@ -1709,7 +1640,6 @@ function animate(){
         adventurer.offset.x = adventurer.sprites.runRight.offset.x
         adventurer.offset.y = adventurer.sprites.runRight.offset.y
     }    
-}
     idleDirection()
     arrowArr.forEach(projectile =>{
         if(projectile.alive){
@@ -1787,6 +1717,7 @@ function animate(){
     keepTrack()
 }
 
+animate()
 
 
 const lastKeyPressed = ()=>{
