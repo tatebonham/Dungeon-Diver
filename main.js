@@ -82,9 +82,9 @@ class Sprite{
     draw(){
         ctx.drawImage(
             this.image, 
-            this.framesCurrent * (this.image.width / this.framesMax),
             0,
-            this.image.width / this.framesMax,
+            0,
+            this.image.width,
             this.image.height,
             this.position.x, 
             this.position.y, 
@@ -161,19 +161,19 @@ class Player {
     draw(){
         ctx.drawImage(
             this.image, 
-            this.framesCurrent * (this.image.width / this.framesMax),
             0,
-            this.image.width / this.framesMax,
+            0,
+            this.image.width,
             this.image.height,
             
 
             this.position.x - this.offset.x, 
             this.position.y - this.offset.y, 
-            (this.image.width / this.framesMax) * this.scale,
+            this.image.width  * this.scale,
             this.image.height * this.scale
             )
-            // ctx.fillStyle = 'green'
-            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+            ctx.fillStyle = 'green'
+            ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -254,6 +254,22 @@ const adventurerRunUp = new Sprite({
     framesMax: 5
 })
 
+let framesElaped = 0
+let currentFrame = 0
+let framesMax = 6
+let framesHold = 6
+
+const changeFrame = ()=>{
+            framesElaped++
+            if(framesElaped % framesHold === 0){  
+                if(currentFrame < framesMax - 1){
+                    currentFrame++
+                } else {
+                    currentFrame = 0
+                }
+            }
+}
+
 
 const adventurer = new Player({
     position: {x: 40, y: 70},
@@ -262,21 +278,21 @@ const adventurer = new Player({
     speed: {x: 0, y: 0},
     health: 3,
     imageSrc: '',
-    scale: 1.5,
+    scale: 1,
     framesMax: 5,
-    offset: {x: 9, y: 3},
+    offset: {x: 35, y: 4},
     sprites: {
-        runUp: {
-            imageSrc: './images/adventurer/run up.png',
-            framesMax: 7,
-            framesHold: 7,
-            offset: {x: 10, y:4}
-        },
-        runRight: {
-            imageSrc: './images/adventurer/run right.png',
+        run: {
+            imageSrc: '',
             framesMax: 6,
-            framesHold: 7,
-            offset: {x: 10, y:4}
+            framesHold: 6,
+            offset: {x: 35, y:4}
+        },
+        idle: {
+            imageSrc: '',
+            framesMax: 5,
+            framesHold: 5,
+            offset: {x: 35, y:4}
         },
         runLeft: {
             imageSrc: './images/adventurer/run left.png',
@@ -292,6 +308,7 @@ const adventurer = new Player({
         }
     }
 })
+
 
 
 let moving = true
@@ -767,11 +784,11 @@ const headAttack = (player, enemy)=>{
 }
 const goblinAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
-        enemy.position.x -= .8
+        enemy.position.x -= 0
         enemyLeft(enemy)
     }
     if(enemy.position.x <= player.position.x){
-        enemy.position.x += .8
+        enemy.position.x += 0
         enemyRight(enemy)
     }
     if(enemy.position.y >= player.position.y - 10){
@@ -1580,6 +1597,9 @@ let moved = false
 
 
 
+
+
+
 function animate(){
     window.requestAnimationFrame(animate)
    
@@ -1592,53 +1612,71 @@ function animate(){
     }
      
     adventurerTest.update()
-    
+    console.log()
 
     if(adventurer.alive){
        adventurer.update()
        adventurer.visualHitBox()
+       
     }
 
     gameState()
-   
+    changeFrame()
+
     adventurer.speed.x = 0
     adventurer.speed.y = 0
     if(keys.d.pressed && keys.s.pressed){
         adventurer.speed.x = 3
         adventurer.speed.y = 3
+        adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     }  else if(keys.a.pressed && keys.s.pressed){
         adventurer.speed.x = -3
         adventurer.speed.y = 3
+        adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     }  else if(keys.d.pressed && keys.w.pressed){
         adventurer.speed.x = 3
         adventurer.speed.y = -3
+        adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     }  else if(keys.a.pressed && keys.w.pressed){
         adventurer.speed.x = -3
         adventurer.speed.y = -3
+        adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     } else if(keys.w.pressed && lastKey == 'w'){
         adventurer.speed.y = -3
-        adventurer.image = adventurer.sprites.runUp.image
-        adventurer.framesMax = adventurer.sprites.runUp.framesMax
-        adventurer.offset.x = adventurer.sprites.runUp.offset.x
-        adventurer.offset.y = adventurer.sprites.runUp.offset.y
+        adventurer.image.src = `./images/adventurer/runUp/golem-run-t-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     } else if(keys.a.pressed && lastKey == 'a'){
         adventurer.speed.x = -3
-        adventurer.image = adventurer.sprites.runLeft.image
-        adventurer.framesMax = adventurer.sprites.runLeft.framesMax
-        adventurer.offset.x = adventurer.sprites.runLeft.offset.x
-        adventurer.offset.y = adventurer.sprites.runLeft.offset.y
+        adventurer.image.src =  `./images/adventurer/runLeft/golem-run-l-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     } else if(keys.s.pressed && lastKey == 's'){
         adventurer.speed.y = 3
-        adventurer.image = adventurer.sprites.runDown.image
-        adventurer.framesMax = adventurer.sprites.runDown.framesMax
-        adventurer.offset.x = adventurer.sprites.runDown.offset.x
-        adventurer.offset.y = adventurer.sprites.runDown.offset.y
+        adventurer.image.src = `./images/adventurer/runDown/golem-run-d-0${currentFrame}.png`
+      adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     } else if(keys.d.pressed && lastKey == 'd'){
         adventurer.speed.x = 3
-        adventurer.image = adventurer.sprites.runRight.image
-        adventurer.framesMax = adventurer.sprites.runRight.framesMax
-        adventurer.offset.x = adventurer.sprites.runRight.offset.x
-        adventurer.offset.y = adventurer.sprites.runRight.offset.y
+        adventurer.image.src = `./images/adventurer/runRight/golem-run-r-0${currentFrame}.png`
+        adventurer.framesMax = adventurer.sprites.run.framesMax
+        adventurer.offset.x = adventurer.sprites.run.offset.x
+        adventurer.offset.y = adventurer.sprites.run.offset.y
     }    
     idleDirection()
     arrowArr.forEach(projectile =>{
