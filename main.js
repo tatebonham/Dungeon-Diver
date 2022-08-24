@@ -761,79 +761,6 @@ const goblinD = new Entity({
         }
     }
 })
-const goblinE = new Entity({
-    position:{x: 30, y: 200},
-    width: 25, height: 48,
-    speed: {x: 0, y: 0},
-    health: 4,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 8, 
-    offset: {x: 0, y: 0},
-    sprites: {
-        left: {
-                imageSrc: './images/entities/leftGoblin.png',
-                framesMax: 8,
-                framesHold: 7,
-                offset: {x: 25, y:8}
-        },
-        right:{    
-                imageSrc: './images/entities/rightGoblin.png',
-                framesMax: 7,
-                framesHold: 7,
-                offset: {x: 22, y:13}
-        }
-    }
-})
-const goblinF = new Entity({
-    position:{x: 320, y: 410},
-    width: 25, height: 48,
-    speed: {x: 0, y: 0},
-    health: 4,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 8, 
-    offset: {x: 0, y: 0},
-    sprites: {
-        left: {
-                imageSrc: './images/entities/leftGoblin.png',
-                framesMax: 8,
-                framesHold: 7,
-                offset: {x: 25, y:8}
-        },
-        right:{    
-                imageSrc: './images/entities/rightGoblin.png',
-                framesMax: 7,
-                framesHold: 7,
-                offset: {x: 22, y:13}
-        }
-    }
-})
-const goblinG = new Entity({
-    position:{x: 320, y: 60},
-    width: 25, height: 48,
-    speed: {x: 0, y: 0},
-    health: 4,
-    imageSrc: '', 
-    scale: 1, 
-    framesMax: 8, 
-    offset: {x: 0, y: 0},
-    sprites: {
-        left: {
-                imageSrc: './images/entities/leftGoblin.png',
-                framesMax: 8,
-                framesHold: 7,
-                offset: {x: 25, y:8}
-        },
-        right:{    
-                imageSrc: './images/entities/rightGoblin.png',
-                framesMax: 7,
-                framesHold: 7,
-                offset: {x: 22, y:13}
-        }
-    }
-})
-
 const batA = new Entity({
     position:{x: 30, y: 60},
     width: 12, height: 12,
@@ -874,82 +801,12 @@ const batD = new Entity({
     framesMax: 5, 
     offset: {x: 2, y: 1}
 })
-const batE = new Entity({
-    position:{x: 350, y: 60},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 1,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const batF = new Entity({
-    position:{x: 350, y: 440},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 1,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const batG = new Entity({
-    position:{x: 30, y: 215},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 1,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const batH = new Entity({
-    position:{x: 655, y: 220},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 1,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const batI = new Entity({
-    position:{x: 30, y: 60},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const batJ = new Entity({
-    position:{x: 30, y: 440},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const batK = new Entity({
-    position:{x: 660, y: 60},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 2,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
 const head = new Entity({
     position:{x: 30, y: 160},
     width: 120, height: 170,
     speed: {x: 0, y: 0},
     health: 20,
-    imageSrc: './images/entities/head.png', 
+    imageSrc: './images/head/head.png', 
     scale: .7, 
     framesMax: 1, 
     offset: {x: 12, y: 2}
@@ -1060,23 +917,6 @@ const levelTwo = () =>{
         batD.update()
     }    
 
-    if(batE.alive){
-        batAttack(adventurer, batE)
-        batE.update()
-    }    
-    if(batF.alive){
-        batAttack(adventurer, batF)
-        batF.update()
-    }    
-    if(batG.alive){
-        batAttack(adventurer, batG)
-        batG.update()
-    }    
-    if(batH.alive){
-        batAttack(adventurer, batH)
-        batH.update()
-    }    
-
 
     if(arrowA.alive){
         arrowA.update()
@@ -1086,7 +926,7 @@ const levelTwo = () =>{
     }
     door.update()
 
-    if(batA.alive == false && batB.alive == false && batC.alive == false && batD.alive == false && batF.alive == false && batG.alive == false && batE.alive == false && batH.alive == false){
+    if(batA.alive == false && batB.alive == false && batC.alive == false && batD.alive == false){
         level = 3
         scoreCount += 4
     }
@@ -1248,12 +1088,12 @@ const levelEight = ()=>{
 
 let scoreCount = 0
 let goldCount = 0
-let arrowCount = 5
-const arrowArr = []
+let spikeCount = 5
+const spikeArr = []
 
 
 class Projectile{
-    constructor({position}, width, height, color, {speed}, health){
+    constructor({position, width, height, imageSrc, offset, color, speed, health}){
         this.position = position
         this.width = width
         this.height = height
@@ -1261,9 +1101,29 @@ class Projectile{
         this.health = health
         this.color = color
         this.speed = speed
+        this.image = new Image()
+        this.image.src = imageSrc
+        this.offset = offset
+        this.scale = .18
+        this.framesMax = 1
+        this.framesCurrent = this.framesCurrent
+        this.framesElaped = 0
+        this.framesHold = 9
     }
 
     draw(){
+        ctx.drawImage(
+            this.image, 
+            0,
+            0,
+            this.image.width,
+            this.image.height,
+            this.position.x - this.offset.x, 
+            this.position.y - this.offset.y, 
+            this.image.width  * this.scale,
+            this.image.height * this.scale
+        )
+
         ctx.fillStyle = this.color
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
@@ -1271,31 +1131,39 @@ class Projectile{
     update(){
         this.draw()
         if(this.position.x < 50){
-            this.position.x = 30
+            this.alive = false
         } else if(this.position.x + this.width > 670){
-            this.position.x = 670 - this.width
+            this.alive = false
         } else {
             this.position.x += this.speed.x
         }
 
         if(this.position.y < 60){
-            this.position.y = 60
+            this.alive = false
         } else if (this.position.y  + this.height > 450){
-            this.position.y = 450 - this.height    
+            this.alive = false  
         } else {
             this.position.y += this.speed.y
+        }
+        this.framesElaped++
+        if(this.framesElaped % this.framesHold === 0){  
+            if(this.framesCurrent < this.framesMax - 1){
+                this.framesCurrent++
+            } else {
+                this.framesCurrent = 0
+            }
         }
     }
 }
 const arrowDirection = () =>{
    if(lastKey ==='d'){
-    arrowArr.push(new Projectile({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: 2.5, y: 0}}, 0))
+    spikeArr.push(new Projectile({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 20}, width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-r.png', offset: {x: 0, y: 2}, color: 'black', speed: {x: 2.5, y: 0},health: 0}))
     } else if(lastKey === 'w'){
-        arrowArr.push(new Projectile({position: {x: adventurer.position.x + 12, y: adventurer.position.y - 19}}, 3, 20, 'black', {speed: {x: 0, y: -2.5}}, 0))
+        spikeArr.push(new Projectile({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y - 20},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-u.png', offset: {x: 2, y: 0},color:  'black', speed: {x: 0, y: -2.5},health: 0}))
     } else if(lastKey === 'a'){
-        arrowArr.push(new Projectile({position: {x: adventurer.position.x - 19, y: adventurer.position.y + 12}}, 20, 3, 'black', {speed: {x: -2.5, y: 0}}, 0))
+        spikeArr.push(new Projectile({position: {x: adventurer.position.x - 20, y: adventurer.position.y + 20},width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-l.png', offset: {x: 0, y: 2}, color:'black', speed: {x: -2.5, y: 0},health: 0}))
     } else if(lastKey === 's'){
-        arrowArr.push(new Projectile({position: {x: adventurer.position.x + 12, y: adventurer.position.y + adventurer.height}}, 3, 20, 'black', {speed: {x: 0, y: 2.5}}, 0))
+        spikeArr.push(new Projectile({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y + adventurer.height},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-d.png', offset: {x: 2, y: 0}, color: 'black', speed: {x: 0, y: 2.5},health: 0}))
     }
 }
 
@@ -1311,10 +1179,13 @@ const keepTrack = () => {
     } else {
         gold.innerText = `Gold: ${goldCount}`
     }
-    if(arrowCount >= 10){
-        arrows.innerText = `Arrows:${arrowCount}`
+    if(spikeCount
+     >= 10){
+        arrows.innerText = `Arrows:${spikeCount
+    }`
     } else {
-        arrows.innerText = `Arrows: ${arrowCount}`
+        arrows.innerText = `Arrows: ${spikeCount
+    }`
     }
 }
 
@@ -1391,7 +1262,8 @@ const collectArrow = (arrow, player) => {
     const bottom = arrow.position.y <= player.position.y + player.height
     
     if(right && left && top && bottom && arrow.alive){
-        arrowCount += 5
+        spikeCount
+     += 5
         arrow.alive = false
     } else {
         return false
@@ -1786,20 +1658,11 @@ const checkPlayerHit = () => {
         playerHit(adventurer,batB)
         playerHit(adventurer,batC)
         playerHit(adventurer,batD)
-        playerHit(adventurer,batE)
-        playerHit(adventurer,batF)
-        playerHit(adventurer,batG)
-        playerHit(adventurer,batH)
         
         }
 
         if(level == 6){
-        playerHit(adventurer,batI)
-        playerHit(adventurer,batJ)
-        playerHit(adventurer,batK)
-        playerHit(adventurer, goblinE)
-        playerHit(adventurer, goblinF)
-        playerHit(adventurer, goblinG)
+
         }
     
         if(level == 5 || level == 6){
@@ -1844,7 +1707,7 @@ function animate(){
 
  
     
-    arrowArr.forEach(projectile =>{
+    spikeArr.forEach(projectile =>{
         if(projectile.alive){
         projectile.position.x += projectile.speed.x
         projectile.position.y += projectile.speed.y
@@ -1860,10 +1723,6 @@ function animate(){
         arrowHit(projectile,batB)
         arrowHit(projectile,batC)
         arrowHit(projectile,batD)
-        arrowHit(projectile,batE)
-        arrowHit(projectile,batF)
-        arrowHit(projectile,batG)
-        arrowHit(projectile,batH)
         
         }
         if(level == 6){
@@ -1977,9 +1836,9 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'l' : 
-        if(adventurer.alive && arrowCount >= 1 && !dialogue){
+        if(adventurer.alive && spikeCount >= 1 && !dialogue && moved){
             arrowDirection()
-            arrowCount -= 1
+            spikeCount -= 1
         }
         break
     }
