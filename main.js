@@ -142,8 +142,8 @@ class Player {
             },
             right: {
                 position: this.position,
-                width: 45,
-                height: 5
+                width: 65,
+                height: 40
             }
           
         }
@@ -257,24 +257,24 @@ const adventurer = new Player({
             height: 55
         },
         attRight:{
-            offset: {x: 22 ,y: 9},
+            offset: {x: 20 ,y: 8},
             width: 40,
             height: 55,
         },
         attLeft:{
-            offset: {x: 22 ,y: 9},
+            offset: {x: 27 ,y: 9},
             width: 40,
             height: 55
         },
         attUp:{
-            offset: {x: 30 ,y: 15},
+            offset: {x: 30 ,y: 20},
             width: 40,
-            height: 50
+            height: 45,
         },
         attDown:{
-            offset: {x: 22 ,y: 9},
+            offset: {x: 30 ,y: 0},
             width: 40,
-            height: 45
+            height: 55
         },
         runUp:{
             offset: {x: 30 ,y: 9},
@@ -1970,7 +1970,7 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'k':
-            if(adventurer.alive &&  !bossDead && !dialogue){
+            if(adventurer.alive &&  !bossDead && !dialogue && !attacking){
                 adventurer.attack()
                 currentFrame = 0
                 attacking = true
