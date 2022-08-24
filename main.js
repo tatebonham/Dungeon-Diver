@@ -1090,9 +1090,9 @@ let scoreCount = 0
 let goldCount = 0
 let spikeCount = 5
 const spikeArr = []
+let swimming = false
 
-
-class Projectile{
+class Spell{
     constructor({position, width, height, imageSrc, offset, color, speed, health}){
         this.position = position
         this.width = width
@@ -1111,7 +1111,7 @@ class Projectile{
         this.framesHold = 9
     }
 
-    draw(){
+    drawSpikes(){
         ctx.drawImage(
             this.image, 
             0,
@@ -1128,8 +1128,8 @@ class Projectile{
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
-    update(){
-        this.draw()
+    updateSpikes(){
+        this.drawSpikes()
         if(this.position.x < 50){
             this.alive = false
         } else if(this.position.x + this.width > 670){
@@ -1157,13 +1157,13 @@ class Projectile{
 }
 const arrowDirection = () =>{
    if(lastKey ==='d'){
-    spikeArr.push(new Projectile({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 20}, width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-r.png', offset: {x: 0, y: 2}, color: 'black', speed: {x: 2.5, y: 0},health: 0}))
+    spikeArr.push(new Spell({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 20}, width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-r.png', offset: {x: 0, y: 2}, color: 'black', speed: {x: 2.5, y: 0},health: 0}))
     } else if(lastKey === 'w'){
-        spikeArr.push(new Projectile({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y - 20},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-u.png', offset: {x: 2, y: 0},color:  'black', speed: {x: 0, y: -2.5},health: 0}))
+        spikeArr.push(new Spell({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y - 20},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-u.png', offset: {x: 2, y: 0},color:  'black', speed: {x: 0, y: -2.5},health: 0}))
     } else if(lastKey === 'a'){
-        spikeArr.push(new Projectile({position: {x: adventurer.position.x - 20, y: adventurer.position.y + 20},width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-l.png', offset: {x: 0, y: 2}, color:'black', speed: {x: -2.5, y: 0},health: 0}))
+        spikeArr.push(new Spell({position: {x: adventurer.position.x - 20, y: adventurer.position.y + 20},width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-l.png', offset: {x: 0, y: 2}, color:'black', speed: {x: -2.5, y: 0},health: 0}))
     } else if(lastKey === 's'){
-        spikeArr.push(new Projectile({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y + adventurer.height},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-d.png', offset: {x: 2, y: 0}, color: 'black', speed: {x: 0, y: 2.5},health: 0}))
+        spikeArr.push(new Spell({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y + adventurer.height},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-d.png', offset: {x: 2, y: 0}, color: 'black', speed: {x: 0, y: 2.5},health: 0}))
     }
 }
 
@@ -1181,10 +1181,10 @@ const keepTrack = () => {
     }
     if(spikeCount
      >= 10){
-        arrows.innerText = `Arrows:${spikeCount
+        arrows.innerText = `Spikes:${spikeCount
     }`
     } else {
-        arrows.innerText = `Arrows: ${spikeCount
+        arrows.innerText = `Spikes: ${spikeCount
     }`
     }
 }
@@ -1445,6 +1445,7 @@ const playerHit = (player, enemy) => {
     const top = enemy.position.y + enemy.height >= player.position.y
     const bottom = enemy.position.y <= player.position.y + player.height
 
+    if(!swimming){
     if(right && left && top && bottom && enemy.alive){
         player.health -= 1
         healthChecker(player)
@@ -1463,7 +1464,7 @@ const playerHit = (player, enemy) => {
     } else{
         return false
     }
-
+    }
 }
 
 const keys = {
@@ -1707,34 +1708,34 @@ function animate(){
 
  
     
-    spikeArr.forEach(projectile =>{
-        if(projectile.alive){
-        projectile.position.x += projectile.speed.x
-        projectile.position.y += projectile.speed.y
-        projectile.update()
+    spikeArr.forEach(spell =>{
+        if(spell.alive){
+        spell.position.x += spell.speed.x
+        spell.position.y += spell.speed.y
+        spell.updateSpikes()
         if(level == 1){
-        arrowHit(projectile, goblinA)
-        arrowHit(projectile, goblinB)
-        arrowHit(projectile, goblinC)
-        arrowHit(projectile, goblinD)
+        arrowHit(spell, goblinA)
+        arrowHit(spell, goblinB)
+        arrowHit(spell, goblinC)
+        arrowHit(spell, goblinD)
         }
         if(level == 2){
-        arrowHit(projectile,batA)
-        arrowHit(projectile,batB)
-        arrowHit(projectile,batC)
-        arrowHit(projectile,batD)
+        arrowHit(spell,batA)
+        arrowHit(spell,batB)
+        arrowHit(spell,batC)
+        arrowHit(spell,batD)
         
         }
         if(level == 6){
-            arrowHit(projectile,batA)
-            arrowHit(projectile,batB)
-            arrowHit(projectile,batC)
-            arrowHit(projectile, goblinA)
-            arrowHit(projectile, goblinB)
-            arrowHit(projectile, goblinC)
+            arrowHit(spell,batA)
+            arrowHit(spell,batB)
+            arrowHit(spell,batC)
+            arrowHit(spell, goblinA)
+            arrowHit(spell, goblinB)
+            arrowHit(spell, goblinC)
         }
         if(level == 5 || level == 6){
-        arrowHit(projectile,head)
+        arrowHit(spell,head)
         }
         }
     })
