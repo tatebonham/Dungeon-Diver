@@ -127,23 +127,23 @@ class Player {
         this.attackBox = {
             up: {
                 position: this.position,
-                width: 5,
-                height: 50
+                width: 40,
+                height: 25
             },
             left: {
                 position: this.position,
-                width: 50,
-                height: 5
+                width: 30,
+                height: 60
             },
             down: {
                 position: this.position,
-                width: 5,
-                height: 50
+                width: 40,
+                height: 25
             },
             right: {
                 position: this.position,
-                width: 65,
-                height: 40
+                width: 30,
+                height: 60
             }
           
         }
@@ -191,13 +191,13 @@ class Player {
         if(this.isAttacking === true){
             ctx.fillStyle = 'black'
             if(lastKey === 'w'){  
-                ctx.fillRect(this.attackBox.up.position.x+10, this.attackBox.up.position.y-25, this.attackBox.up.width, this.attackBox.up.height -25)
+                ctx.fillRect(this.attackBox.up.position.x, this.attackBox.up.position.y -25, this.attackBox.up.width, this.attackBox.up.height)
             } else if (lastKey === 'a') {
-                ctx.fillRect(this.attackBox.left.position.x-25, this.attackBox.left.position.y+15, this.attackBox.left.width -25, this.attackBox.left.height)
+                ctx.fillRect(this.attackBox.left.position.x - 30, this.attackBox.left.position.y, this.attackBox.left.width, this.attackBox.left.height)
             } else if (lastKey === 's') {
-                ctx.fillRect(this.attackBox.down.position.x+10, this.attackBox.down.position.y+25, this.attackBox.down.width, this.attackBox.down.height -25)
+                ctx.fillRect(this.attackBox.down.position.x, this.attackBox.down.position.y+55, this.attackBox.down.width, this.attackBox.down.height)
             } else if (lastKey === 'd') {
-                ctx.fillRect(this.attackBox.right.position.x + 25, this.attackBox.right.position.y+15, this.attackBox.right.width - 25, this.attackBox.right.height)
+                ctx.fillRect(this.attackBox.right.position.x + 40, this.attackBox.right.position.y, this.attackBox.right.width, this.attackBox.right.height)
             }
 
         }
@@ -247,7 +247,7 @@ const adventurer = new Player({
             height: 55
         },
         idleDown:{
-            offset: {x:30, y: 10},
+            offset: {x:30, y: 15},
             width: 40,
             height: 55
         },
@@ -257,12 +257,12 @@ const adventurer = new Player({
             height: 55
         },
         attRight:{
-            offset: {x: 20 ,y: 8},
+            offset: {x: 15 ,y: 8},
             width: 40,
             height: 55,
         },
         attLeft:{
-            offset: {x: 27 ,y: 9},
+            offset: {x: 30 ,y: 9},
             width: 40,
             height: 55
         },
@@ -1430,25 +1430,25 @@ const arrowHit = (arrow, enemy) => {
         }
 }
 const enemyHit = (player, enemy) => {
-    const rLeft = player.attackBox.right.position.x + player.attackBox.right.width >=  enemy.position.x
+    const rLeft = (player.attackBox.right.position.x + 40)+ player.attackBox.right.width >=  enemy.position.x
     const rRight = player.attackBox.right.position.x <= enemy.position.x + enemy.width
-    const rTop =  (player.attackBox.right.position.y + 10) + player.attackBox.right.height>= enemy.position.y
-    const rBottom =(player.attackBox.right.position.y + 10) <= enemy.position.y + enemy.height
+    const rTop =  (player.attackBox.right.position.y) + player.attackBox.right.height>= enemy.position.y
+    const rBottom =(player.attackBox.right.position.y) <= enemy.position.y + enemy.height
 
-    const lLeft = (player.attackBox.left.position.x - 25)+ player.attackBox.left.width >=  enemy.position.x
-    const lRight = player.attackBox.left.position.x - 25 <= enemy.position.x + enemy.width
-    const lTop = (player.attackBox.left.position.y + 10) + player.attackBox.left.height >= enemy.position.y
-    const lBottom = (player.attackBox.left.position.y + 10) <= enemy.position.y + enemy.height
+    const lLeft = (player.attackBox.left.position.x - 30)+ player.attackBox.left.width >=  enemy.position.x
+    const lRight = player.attackBox.left.position.x - 30 <= enemy.position.x + enemy.width
+    const lTop = (player.attackBox.left.position.y) + player.attackBox.left.height >= enemy.position.y
+    const lBottom = (player.attackBox.left.position.y) <= enemy.position.y + enemy.height
 
-    const uLeft = (player.attackBox.up.position.x + 10 )+ player.attackBox.up.width >=  enemy.position.x
-    const uRight = (player.attackBox.up.position.x + 10) <= enemy.position.x + enemy.width
+    const uLeft = (player.attackBox.up.position.x)+ player.attackBox.up.width >=  enemy.position.x
+    const uRight = (player.attackBox.up.position.x) <= enemy.position.x + enemy.width
     const uTop = (player.attackBox.up.position.y - 25) + player.attackBox.up.height >= enemy.position.y
     const uBottom = (player.attackBox.up.position.y - 25) <= enemy.position.y + enemy.height
 
-    const dLeft = (player.attackBox.down.position.x + 10)+ player.attackBox.down.width >=  enemy.position.x
-    const dRight = player.attackBox.down.position.x + 10 <= enemy.position.x + enemy.width
-    const dTop = player.attackBox.down.position.y + player.attackBox.down.height >= enemy.position.y
-    const dBottom = player.attackBox.down.position.y  <= enemy.position.y + enemy.height
+    const dLeft = player.attackBox.down.position.x + player.attackBox.down.width >=  enemy.position.x
+    const dRight = player.attackBox.down.position.x <= enemy.position.x + enemy.width
+    const dTop = player.attackBox.down.position.y + 55 + player.attackBox.down.height >= enemy.position.y
+    const dBottom = player.attackBox.down.position.y + 55 <= enemy.position.y + enemy.height
 
 
     if(player.isAttacking){
