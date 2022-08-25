@@ -303,7 +303,7 @@ const adventurer = new Player({
 
     }
 })
-
+let hurt = false
 let dying = false
 
 let runFramesElaped = 0
@@ -318,7 +318,7 @@ let idleframesMax = 5
 let idleframesHold = 10
 
 const movementFrames = ()=>{
-    if(!attacking && !dying){
+    if(!attacking && !dying && !hurt){
             runFramesElaped++
             if(runFramesElaped % runFramesHold === 0){  
                 if(runCurrentFrame < runFramesMax - 1){
@@ -487,7 +487,7 @@ let attFramesMax = 7
 let attFramesHold = 6
 
 const attack= () => {
-    if(attacking && !swimming && !dying){
+    if(attacking && !swimming && !dying && !hurt){
         attFramesElaped++
             if(attFramesElaped % attFramesHold === 0){  
                 if(attCurrentFrame < attFramesMax - 1){
@@ -529,7 +529,7 @@ const attack= () => {
 }
 
 const idleDirection = () => {
-    if(!moving && !attacking && !swimming && !dying){
+    if(!moving && !attacking && !swimming && !dying && !hurt){
     idleframesElaped++
     if(idleframesElaped % idleframesHold === 0){  
         if(idleCurrentFrame < idleframesMax - 1){
@@ -608,6 +608,7 @@ const diveTimer = ()=>{
 
 const swimFrames = () =>{
     if(swimming == true && !onCooldown){
+        hurt = false
         attacking = false
         attCurrentFrame = 0
         attFramesElaped = 0
@@ -1596,6 +1597,54 @@ let dyingFramesElaped = 0
 let dyingCurrentFrame = 0
 let dyingFramesMax = 9
 let dyingFramesHold = 15
+
+let hurtFramesElaped = 0
+let hurtCurrentFrame = 0
+let hurtFramesMax = 3
+let hurtFramesHold = 15
+const hurtFrames = ()=>{
+                if(hurt){
+                    hurtFramesElaped++
+                    if(hurtFramesElaped % hurtFramesHold === 0){  
+                        if(hurtCurrentFrame < hurtFramesMax - 1){
+                            hurtCurrentFrame++
+                            adventurer.speed.x = 0
+                            adventurer.speed.y = 0
+                        } else {
+                            hurtFramesElaped = 0
+                            hurtCurrentFrame = 0
+                            hurt = false
+                        }
+                    }
+                    if(lastKey == 's'){
+                        adventurer.width = adventurer.sprites.hurt.width
+                        adventurer.height = adventurer.sprites.hurt.height
+                        adventurer.offset.x = adventurer.sprites.hurt.offset.x
+                        adventurer.offset.y = adventurer.sprites.hurt.offset.y
+                        adventurer.image.src = `./images/adventurer/hurtD/golem-hurt-d-0${hurtCurrentFrame}.png`
+                    } else if (lastKey == 'w'){
+                        adventurer.width = adventurer.sprites.hurt.width
+                        adventurer.height = adventurer.sprites.hurt.height
+                        adventurer.offset.x = adventurer.sprites.hurt.offset.x
+                        adventurer.offset.y = adventurer.sprites.hurt.offset.y
+                        adventurer.image.src = `./images/adventurer/hurtU/golem-hurt-t-0${hurtCurrentFrame}.png`
+                    } else if (lastKey == 'a'){
+                        adventurer.width = adventurer.sprites.hurt.width
+                        adventurer.height = adventurer.sprites.hurt.height
+                        adventurer.offset.x = adventurer.sprites.hurt.offset.x
+                        adventurer.offset.y = adventurer.sprites.hurt.offset.y
+                        adventurer.image.src = `./images/adventurer/hurtL/golem-hurt-l-0${hurtCurrentFrame}.png`
+                    } else if (lastKey == 'd'){
+                        adventurer.width = adventurer.sprites.hurt.width
+                        adventurer.height = adventurer.sprites.hurt.height
+                        adventurer.offset.x = adventurer.sprites.hurt.offset.x
+                        adventurer.offset.y = adventurer.sprites.hurt.offset.y
+                        adventurer.image.src = `./images/adventurer/hurtR/golem-hurt-r-0${hurtCurrentFrame}.png`
+                    }
+                }
+}
+
+
             
 
 
@@ -1668,7 +1717,7 @@ const playerHit = (player, enemy) => {
         } else if (!swimming && right && left && top && bottom && enemy.alive){
             player.health -= 5
             healthChecker(player)
-
+            hurt = true
 
             if(player.health >= 1 && lastKey === 'w'){
                 player.position.y += 60
@@ -1915,6 +1964,7 @@ function animate(){
     
     attack()
     swimFrames()
+    hurtFrames()
     diveTimer()
     movementFrames()
     idleDirection()
@@ -1975,7 +2025,7 @@ const lastKeyPressed = ()=>{
 window.addEventListener('keydown', (event) => {
     switch(event.key){
         case 'w':
-            if(!attacking && !dialogue){
+            if(!attacking && !dialogue && !hurt){
                 keys.w.pressed = true
                 lastKeyPressed()
                 moving = true
@@ -1983,7 +2033,7 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'a':
-            if(!attacking && !dialogue){
+            if(!attacking && !dialogue && !hurt){
                 keys.a.pressed = true  
                 lastKeyPressed()  
                 moving = true
@@ -1991,7 +2041,7 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 's':
-            if(!attacking && !dialogue){
+            if(!attacking && !dialogue && !hurt){
                 keys.s.pressed = true
                 lastKeyPressed()
                 moving = true
@@ -1999,7 +2049,7 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'd':
-            if(!attacking && !dialogue){
+            if(!attacking && !dialogue && !hurt){
                 keys.d.pressed = true 
                 lastKeyPressed()
                 moving = true
