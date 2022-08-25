@@ -294,12 +294,17 @@ const adventurer = new Player({
         },
         swimUnD: {
             offset: {x: 30, y: 18}
+        }, 
+        hurt: {
+            offset: {x: 30, y: 9},
+            width: 40,
+            height: 55
         }
 
     }
 })
 
-let hurt = false
+let dying = false
 
 let runFramesElaped = 0
 let runCurrentFrame = 0
@@ -313,7 +318,7 @@ let idleframesMax = 5
 let idleframesHold = 10
 
 const movementFrames = ()=>{
-    if(!attacking){
+    if(!attacking && !dying){
             runFramesElaped++
             if(runFramesElaped % runFramesHold === 0){  
                 if(runCurrentFrame < runFramesMax - 1){
@@ -482,7 +487,7 @@ let attFramesMax = 7
 let attFramesHold = 6
 
 const attack= () => {
-    if(attacking && !swimming){
+    if(attacking && !swimming && !dying){
         attFramesElaped++
             if(attFramesElaped % attFramesHold === 0){  
                 if(attCurrentFrame < attFramesMax - 1){
@@ -524,7 +529,7 @@ const attack= () => {
 }
 
 const idleDirection = () => {
-    if(!moving && !attacking && !swimming){
+    if(!moving && !attacking && !swimming && !dying){
     idleframesElaped++
     if(idleframesElaped % idleframesHold === 0){  
         if(idleCurrentFrame < idleframesMax - 1){
@@ -575,8 +580,9 @@ let diveTimerCurrentFrame = 0
 let diveTimerFramesMax = 23
 let diveTimerFramesHold = 15
 
+
 const diveTimer = ()=>{
-    if(onCooldown){
+    if(onCooldown && !dying){
         diveTimerFramesElaped++
         if(diveTimerFramesElaped % diveTimerFramesHold === 0){  
             if(diveTimerCurrentFrame < diveTimerFramesMax - 1 && cdBar <= 22){
@@ -1585,6 +1591,14 @@ const collectHeart = (heart, player) => {
         return false
     }
 }
+
+let dyingFramesElaped = 0
+let dyingCurrentFrame = 0
+let dyingFramesMax = 9
+let dyingFramesHold = 15
+            
+
+
 const playerHit = (player, enemy) => {
     const left = enemy.position.x + enemy.width >=  player.position.x
     const right = enemy.position.x <= player.position.x + player.width
@@ -1652,19 +1666,51 @@ const playerHit = (player, enemy) => {
                 diveTimerCurrentFrame = 0
             }
         } else if (!swimming && right && left && top && bottom && enemy.alive){
-            player.health -= 19
+            player.health -= 5
             healthChecker(player)
+
+
             if(player.health >= 1 && lastKey === 'w'){
                 player.position.y += 60
+                adventurer.speed.x = 0
+                adventurer.speed.y = 0
             } else if (player.health >= 1 && lastKey === 'a') {
                 player.position.x += 60
+                adventurer.speed.x = 0
+                adventurer.speed.y = 0
             } else if (player.health >= 1 && lastKey === 's') {
                 player.position.y -= 60
+                adventurer.speed.x = 0
+                adventurer.speed.y = 0
             } else if (player.health >= 1 && lastKey === 'd') {
                 player.position.x -= 60
-            } else if (player.health === 0){
-                player.alive = false
-                gameLost = true
+                adventurer.speed.x = 0
+                adventurer.speed.y = 0
+            } else if (player.health <= 0){
+                dying = true
+                if(dying){
+                    dyingFramesElaped++
+                    if(dyingFramesElaped % dyingFramesHold === 0){  
+                        if(dyingCurrentFrame < dyingFramesMax - 1){
+                            dyingCurrentFrame++
+                        } else {
+                            dyingFramesElaped = 0
+                            dyingCurrentFrame = 0
+                            gameLost = true 
+                            player.alive = false
+                        }
+                    }
+                }
+                adventurer.speed.x = 0
+                adventurer.speed.y = 0
+                adventurer.width = adventurer.sprites.swimLeft.width
+                adventurer.height = adventurer.sprites.swimLeft.height
+                adventurer.offset.x = adventurer.sprites.swimUnD.offset.x
+                adventurer.offset.y = adventurer.sprites.swimUnD.offset.y
+                adventurer.image.src = `./images/adventurer/dying/golem-death-d-0${dyingCurrentFrame}.png`
+
+           
+                
             }
       } else {
         return false
@@ -1961,14 +2007,14 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'j':
-            if(adventurer.alive &&  !bossDead && !dialogue && !attacking && !swimming){
+            if(adventurer.alive &&  !bossDead && !dialogue && !attacking && !swimming && !hurt){
                 adventurer.attack()
                 currentFrame = 0
                 attacking = true
             }
             break
         case 'l': 
-        if(adventurer.alive && spikeCount >= 1 && !dialogue && moved){
+        if(adventurer.alive && spikeCount >= 1 && !dialogue && moved && !hurt){
             spikeDirection()
             spikeCount -= 1
             }
@@ -1986,9 +2032,6 @@ window.addEventListener('keydown', (event) => {
                 
                 swimFrames()
             }
-            break
-        case 'h':
-
             break
     }
 })
