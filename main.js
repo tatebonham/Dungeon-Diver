@@ -100,21 +100,11 @@ class Sprite{
 
         update(){
             this.draw()
-            this.framesElaped++
-            if(this.framesElaped % this.framesHold === 0){  
-                if(this.framesCurrent < this.framesMax - 1){
-                    this.framesCurrent++
-                } else {
-                    this.framesCurrent = 0
-                }
-            }       
-
-
-
         }
         
        
 }
+
 
 class Player {
     constructor({position, width, height, speed, health, imageSrc, scale = 1, offset, sprites}){
@@ -577,8 +567,41 @@ let swimCurrentFrame = 0
 let swimFramesMax = 13
 let swimFramesHold = 15
 
+let onCooldown = true
+let cdBar = 0
+let cdY = 23
+let diveTimerFramesElaped = 0
+let diveTimerCurrentFrame = 0
+let diveTimerFramesMax = 23
+let diveTimerFramesHold = 15
+
+const diveTimer = ()=>{
+    if(onCooldown){
+        diveTimerFramesElaped++
+        if(diveTimerFramesElaped % diveTimerFramesHold === 0){  
+            if(diveTimerCurrentFrame < diveTimerFramesMax - 1 && cdBar <= 22){
+                diveTimerCurrentFrame++
+                cdBar += 1
+                cdY -= 1
+            } else {
+                cdBar = 0
+                cdY = 23
+                diveTimerCurrentFrame = 0
+                onCooldown = false
+            }
+        }
+        
+        // console.log('h')
+        ctx.fillStyle = 'black'
+        ctx.fillRect(adventurer.position.x + adventurer.width + 9, adventurer.position.y -4, 7, 28)
+        ctx.fillStyle = 'white'
+        ctx.fillRect(adventurer.position.x + adventurer.width + 11, (adventurer.position.y - 2) + cdY, 3, cdBar)
+    }
+}
+
+
 const swimFrames = () =>{
-    if(swimming == true){
+    if(swimming == true && !onCooldown){
         attacking = false
         attCurrentFrame = 0
         attFramesElaped = 0
@@ -595,7 +618,7 @@ const swimFrames = () =>{
                     swimFramesElaped = 0
                     swimCurrentFrame = 0
                     swimming = false
-                    
+                    onCooldown = true
             }
         }
 
@@ -1647,7 +1670,7 @@ const gameBorders = () => {
     //gold background
     ctx.fillRect(195, 1, 146, 29)
     //arrows background
-    ctx.fillRect(55, 490, 188, 26)
+    ctx.fillRect(65, 490, 188, 26)
     //objective background
     ctx.fillRect(275, 490, 420, 26)
 
@@ -1665,7 +1688,7 @@ const gameBorders = () => {
     //bottom border
     ctx.fillRect(0, 516, 700, 4)
     //bottom left border
-    ctx.fillRect(0, 485, 55, 31)
+    ctx.fillRect(0, 485, 15, 31)
     //bottom right border
     ctx.fillRect(695, 485, 5, 31)
     //bottom top border
@@ -1677,7 +1700,7 @@ const gameBorders = () => {
     //top right background border
     ctx.fillRect(341, 4, 39, 26)
     //bottom background border
-    ctx.fillRect(241, 490, 34, 26)
+    ctx.fillRect(251, 490, 24, 26)
  
 
     ctx.fillStyle = 'purple'
@@ -1845,6 +1868,7 @@ function animate(){
     
     attack()
     swimFrames()
+    diveTimer()
     movementFrames()
     idleDirection()
     healthChecker(adventurer)
@@ -1971,8 +1995,16 @@ window.addEventListener('keydown', (event) => {
             }
             break
         case 'k':
-            if(adventurer.alive && !dialogue && moved){
-                swimming = true
+            if(adventurer.alive && !dialogue && moved && !onCooldown){
+                if(swimming == true){
+                    swimming = false
+                    onCooldown = true
+                    swimCurrentFrame = 0
+                    swimFramesElaped = 0
+                } else{
+                    swimming = true
+                }
+                
                 swimFrames()
             }
             break
