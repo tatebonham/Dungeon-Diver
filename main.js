@@ -1,7 +1,7 @@
 const objective = document.getElementById('objective')
 const score = document.getElementById('score')
 const health = document.getElementById('health')
-const arrows = document.getElementById('arrows')
+const spikes = document.getElementById('spikes')
 const gold = document.getElementById('gold')
 const canvas = document.getElementById('canvas')
 const continueButton = document.getElementById('continueButton')
@@ -29,7 +29,7 @@ class Entity{
         }
         this.width = width
         this.height = height
-        this.alive = true
+        this.alive = false
         this.health = health
         this.offset = offset
         this.notSafe = true
@@ -182,19 +182,19 @@ class Player {
     }
     
     visualHitBox(){
-        if(this.isAttacking === true){
-            ctx.fillStyle = 'black'
-            if(lastKey === 'w'){  
-                ctx.fillRect(this.attackBox.up.position.x, this.attackBox.up.position.y -25, this.attackBox.up.width, this.attackBox.up.height)
-            } else if (lastKey === 'a') {
-                ctx.fillRect(this.attackBox.left.position.x - 30, this.attackBox.left.position.y, this.attackBox.left.width, this.attackBox.left.height)
-            } else if (lastKey === 's') {
-                ctx.fillRect(this.attackBox.down.position.x, this.attackBox.down.position.y+55, this.attackBox.down.width, this.attackBox.down.height)
-            } else if (lastKey === 'd') {
-                ctx.fillRect(this.attackBox.right.position.x + 40, this.attackBox.right.position.y, this.attackBox.right.width, this.attackBox.right.height)
-            }
+        // if(this.isAttacking === true){
+        //     ctx.fillStyle = 'black'
+        //     if(lastKey === 'w'){  
+        //         ctx.fillRect(this.attackBox.up.position.x, this.attackBox.up.position.y -25, this.attackBox.up.width, this.attackBox.up.height)
+        //     } else if (lastKey === 'a') {
+        //         ctx.fillRect(this.attackBox.left.position.x - 30, this.attackBox.left.position.y, this.attackBox.left.width, this.attackBox.left.height)
+        //     } else if (lastKey === 's') {
+        //         ctx.fillRect(this.attackBox.down.position.x, this.attackBox.down.position.y+55, this.attackBox.down.width, this.attackBox.down.height)
+        //     } else if (lastKey === 'd') {
+        //         ctx.fillRect(this.attackBox.right.position.x + 40, this.attackBox.right.position.y, this.attackBox.right.width, this.attackBox.right.height)
+        //     }
 
-        }
+        // }
     }
 
     attack(){
@@ -687,7 +687,7 @@ const survivorRoomOne = new Entity({
     }
 })
 
-const arrowA = new Entity({
+const spikeA = new Entity({
     position: {x: 650, y: 80},
     width: 22,
     height: 20,
@@ -698,22 +698,22 @@ const arrowA = new Entity({
     offset: {x: 2, y: 1}
     
 })
-const arrowB = new Entity({
+const spikeB = new Entity({
     position: {x: 360, y: 220},
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
-    imageSrc: './images/entities/arrow.png',
+    imageSrc: './images/adventurer/spike/spike-u.png',
     scale: .5,
     framesMax: 1,
     offset: {x: 2, y: 1}
 })
-const arrowC = new Entity({
+const spikeC = new Entity({
     position: {x: 620, y: 420},
     width: 5,
     height: 30,
     speed: {x: 0, y: 0},
-    imageSrc: './images/entities/arrow.png',
+    imageSrc: './images/adventurer/spike/spike-u.png',
     scale: .5,
     framesMax: 1,
     offset: {x: 2, y: 1}
@@ -856,7 +856,7 @@ const enemyD = new Entity({
         }
     }
 })
-const batA = new Entity({
+const enemyE = new Entity({
     position:{x: 30, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
@@ -866,7 +866,7 @@ const batA = new Entity({
     framesMax: 5, 
     offset: {x: 2, y: 1}
 })
-const batB = new Entity({
+const enemyF = new Entity({
     position:{x: 30, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
@@ -876,7 +876,7 @@ const batB = new Entity({
     framesMax: 5, 
     offset: {x: 2, y: 1}
 })
-const batC = new Entity({
+const enemyG = new Entity({
     position:{x: 660, y: 440},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
@@ -886,7 +886,7 @@ const batC = new Entity({
     framesMax: 5, 
     offset: {x: 2, y: 1}
 })
-const batD = new Entity({
+const enemyH = new Entity({
     position:{x: 660, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
@@ -969,6 +969,11 @@ const enemyAttack = (player, enemy)=>{
 let dialogue = false
 
 const levelOne = ()=>{
+    enemyA.alive = true
+    enemyB.alive = true
+    enemyC.alive = true
+    enemyD.alive = true
+
     if(enemyA.alive){
         enemyAttack(adventurer, enemyA)
         enemyA.update()
@@ -1013,8 +1018,8 @@ const levelTwo = () =>{
     }    
 
 
-    if(arrowA.alive){
-        arrowA.update()
+    if(spikeA.alive){
+        spikeA.update()
     }
     door.update()
 
@@ -1025,8 +1030,8 @@ const levelTwo = () =>{
 }
 let roomOver = false
 const levelThree = () =>{
-    if(arrowA.alive){
-        arrowA.update()
+    if(spikeA.alive){
+        spikeA.update()
     }
     door.update()
 }
@@ -1036,8 +1041,8 @@ const levelFour = () =>{
     }
     chest.update()
     door.update()
-    if(arrowB.alive){
-        arrowB.update()
+    if(spikeB.alive){
+        spikeB.update()
     }
     if(survivorRoomOne.notSafe == false){
         dialogue = true
@@ -1062,8 +1067,8 @@ const levelFive = () =>{
     }
     chest.update()
     door.update()
-    if(arrowB.alive){
-        arrowB.update()
+    if(spikeB.alive){
+        spikeB.update()
     }
    
 
@@ -1113,11 +1118,11 @@ const levelSix = () =>{
     if(heartD.alive){
         heartD.update()
     }
-    if(arrowB.alive){
-        arrowB.update()
+    if(spikeB.alive){
+        spikeB.update()
     }
-    if(arrowC.alive){
-        arrowC.update()
+    if(spikeC.alive){
+        spikeC.update()
     }
    
 
@@ -1134,8 +1139,8 @@ const levelSix = () =>{
         heartB.alive = false
         heartC.alive = false
         heartD.alive = false
-        arrowB.alive = false
-        arrowC.alive = false
+        spikeB.alive = false
+        spikeC.alive = false
     }
 }
 const levelSeven = ()=>{
@@ -1208,8 +1213,8 @@ class Spell{
             this.image.height * this.scale
         )
 
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        // ctx.fillStyle = this.color
+        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     updateSpikes(){
@@ -1239,9 +1244,11 @@ class Spell{
         }
     }
 }
-const arrowDirection = () =>{
-   if(lastKey ==='d'){
-    spikeArr.push(new Spell({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 20}, width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-r.png', offset: {x: 0, y: 2}, color: 'black', speed: {x: 2.5, y: 0},health: 0}))
+const spikeDirection = () =>{
+    if(keys.a.pressed && keys.d.pressed){
+        spikeArr.push(new Spell({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y + adventurer.height},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-d.png', offset: {x: 2, y: 0}, color: 'black', speed: {x: 0, y: 2.5},health: 0}))
+    } else if(lastKey ==='d'){
+        spikeArr.push(new Spell({position: {x: adventurer.position.x + adventurer.width, y: adventurer.position.y + 20}, width: 20, height: 21, imageSrc: './images/adventurer/spike/spike-r.png', offset: {x: 0, y: 2}, color: 'black', speed: {x: 2.5, y: 0},health: 0}))
     } else if(lastKey === 'w'){
         spikeArr.push(new Spell({position: {x: adventurer.position.x + 10.5, y: adventurer.position.y - 20},width: 21, height: 20, imageSrc: './images/adventurer/spike/spike-u.png', offset: {x: 2, y: 0},color:  'black', speed: {x: 0, y: -2.5},health: 0}))
     } else if(lastKey === 'a'){
@@ -1265,10 +1272,10 @@ const keepTrack = () => {
     }
     if(spikeCount
      >= 10){
-        arrows.innerText = `Spikes:${spikeCount
+        spikes.innerText = `Spikes:${spikeCount
     }`
     } else {
-        arrows.innerText = `Spikes: ${spikeCount
+        spikes.innerText = `Spikes: ${spikeCount
     }`
     }
 }
@@ -1339,47 +1346,47 @@ const touchChest = (chest, player) => {
     }
 }
 
-const collectArrow = (arrow, player) => {
-    const left = arrow.position.x + arrow.width >=  player.position.x
-    const right = arrow.position.x <= player.position.x + player.width
-    const top = arrow.position.y + arrow.height >= player.position.y
-    const bottom = arrow.position.y <= player.position.y + player.height
+const collectSpike = (spike, player) => {
+    const left = spike.position.x + spike.width >=  player.position.x
+    const right = spike.position.x <= player.position.x + player.width
+    const top = spike.position.y + spike.height >= player.position.y
+    const bottom = spike.position.y <= player.position.y + player.height
     
-    if(right && left && top && bottom && arrow.alive){
+    if(right && left && top && bottom && spike.alive){
         spikeCount
      += 5
-        arrow.alive = false
+        spike.alive = false
     } else {
         return false
     }
 }
-const arrowHit = (arrow, enemy) => {
+const spikeHit = (spike, enemy) => {
         // AABB -- axis aligned bounding box collision detection
-        const Left = arrow.position.x + arrow.width >= enemy.position.x
+        const Left = spike.position.x + spike.width >= enemy.position.x
     
-        const Right = arrow.position.x <= enemy.position.x + enemy.width 
+        const Right = spike.position.x <= enemy.position.x + enemy.width 
     
-        const Top = arrow.position.y + arrow.height >= enemy.position.y
+        const Top = spike.position.y + spike.height >= enemy.position.y
     
-        const Bottom = arrow.position.y <= enemy.position.y + enemy.height
+        const Bottom = spike.position.y <= enemy.position.y + enemy.height
     
         if(Right && Left && Bottom && Top){
             enemy.health -= 1
-            if(enemy.health >= 1 && arrow.speed.x > 0){
+            if(enemy.health >= 1 && spike.speed.x > 0){
                 enemy.position.x += 30
-                arrow.alive = false
-            } else if(enemy.health >=  1 && arrow.speed.x < 0){
+                spike.alive = false
+            } else if(enemy.health >=  1 && spike.speed.x < 0){
                 enemy.position.x -= 30
-                arrow.alive = false
-            } else if(enemy.health >=  1 && arrow.speed.y < 0){
+                spike.alive = false
+            } else if(enemy.health >=  1 && spike.speed.y < 0){
                 enemy.position.y -= 30
-                arrow.alive = false
-            } else if(enemy.health >=  1 && arrow.speed.y > 0){
+                spike.alive = false
+            } else if(enemy.health >=  1 && spike.speed.y > 0){
                 enemy.position.y += 30
-                arrow.alive = false
+                spike.alive = false
             } else if (enemy.health == 0){
                 enemy.alive = false
-                arrow.alive = false
+                spike.alive = false
             }    
         } else {
             return false
@@ -1589,6 +1596,10 @@ const playerHit = (player, enemy) => {
     const stop = enemy.position.y + enemy.height >= player.position.y + 17
     const sbottom = enemy.position.y <= player.position.y + player.height + 5
 
+    if(enemy.health > 0){
+        enemy.alive = true
+    }
+
     
 
     
@@ -1599,26 +1610,46 @@ const playerHit = (player, enemy) => {
                 swimming = false
                 swimCurrentFrame = 0
                 swimFramesElaped = 0
+                onCooldown = true
+                cdBar = 0
+                cdY = 23
+                diveTimerCurrentFrame = 0
             } else if (enemy.health >= 1 && lastKey === 'a') {
                 enemy.position.x -= 60
                 swimming = false
                 swimCurrentFrame = 0
                 swimFramesElaped = 0
+                onCooldown = true
+                cdBar = 0
+                cdY = 23
+                diveTimerCurrentFrame = 0
             } else if (enemy.health >= 1 && lastKey === 's') {
                 enemy.position.y += 60
                 swimming = false
                 swimCurrentFrame = 0
                 swimFramesElaped = 0
+                onCooldown = true
+                cdBar = 0
+                cdY = 23
+                diveTimerCurrentFrame = 0
             } else if (enemy.health >= 1 && lastKey === 'd') {
                 enemy.position.x += 60
                 swimming = false
                 swimCurrentFrame = 0
                 swimFramesElaped = 0
+                onCooldown = true
+                cdBar = 0
+                cdY = 23
+                diveTimerCurrentFrame = 0
             } else if (enemy.health === 0){
                 enemy.alive = false
                 swimming = false
                 swimCurrentFrame = 0
                 swimFramesElaped = 0
+                onCooldown = true
+                cdBar = 0
+                cdY = 23
+                diveTimerCurrentFrame = 0
             }
         } else if (!swimming && right && left && top && bottom && enemy.alive){
             player.health -= 19
@@ -1669,7 +1700,7 @@ const gameBorders = () => {
     ctx.fillRect(0, 1, 170, 29)
     //gold background
     ctx.fillRect(195, 1, 146, 29)
-    //arrows background
+    //spikes background
     ctx.fillRect(65, 490, 188, 26)
     //objective background
     ctx.fillRect(275, 490, 420, 26)
@@ -1688,7 +1719,7 @@ const gameBorders = () => {
     //bottom border
     ctx.fillRect(0, 516, 700, 4)
     //bottom left border
-    ctx.fillRect(0, 485, 15, 31)
+    ctx.fillRect(0, 485, 65, 31)
     //bottom right border
     ctx.fillRect(695, 485, 5, 31)
     //bottom top border
@@ -1790,58 +1821,28 @@ const gameState=()=>{
 }
 
 const checkEnemyHit = ()=>{
-    if(level == 1){
         enemyHit(adventurer, enemyA)
         enemyHit(adventurer, enemyB)
         enemyHit(adventurer, enemyC)
         enemyHit(adventurer, enemyD)
-        }
-        if(level == 2){
-        enemyHit(adventurer,batA)
-        enemyHit(adventurer,batB)
-        enemyHit(adventurer,batC)
-        enemyHit(adventurer,batD)
-        enemyHit(adventurer,batE)
-        enemyHit(adventurer,batF)
-        enemyHit(adventurer,batG)
-        enemyHit(adventurer,batH)
-        }
-       if(level == 5 || level == 6){
-        headHit(adventurer, head)
-       }
-        if(level == 6){
-        enemyHit(adventurer,batI)
-        enemyHit(adventurer,batJ)
-        enemyHit(adventurer,batK)
-        enemyHit(adventurer, goblinE)
-        enemyHit(adventurer, goblinF)
-        enemyHit(adventurer, goblinG)
-        }
+        enemyHit(adventurer, enemyE)
+        enemyHit(adventurer, enemyF)
+        enemyHit(adventurer, enemyG)
+        enemyHit(adventurer, enemyH)
+        headHit(adventurer, head) 
 
-        
 }
 const checkPlayerHit = () => {
-    if(level == 1){
         playerHit(adventurer,enemyA)
         playerHit(adventurer,enemyB)
         playerHit(adventurer,enemyC)
         playerHit(adventurer,enemyD)
-        }
-        if(level == 2){
-        playerHit(adventurer,batA)
-        playerHit(adventurer,batB)
-        playerHit(adventurer,batC)
-        playerHit(adventurer,batD)
+        playerHit(adventurer,enemyE)
+        playerHit(adventurer,enemyF)
+        playerHit(adventurer,enemyG)
+        playerHit(adventurer,enemyH)
+        playerHit(adventurer, head)
         
-        }
-
-        if(level == 6){
-
-        }
-    
-        if(level == 5 || level == 6){
-            playerHit(adventurer, head)
-        }
  }
 let moved = false
 
@@ -1880,54 +1881,32 @@ function animate(){
         spell.position.x += spell.speed.x
         spell.position.y += spell.speed.y
         spell.updateSpikes()
-        if(level == 1){
-        arrowHit(spell, enemyA)
-        arrowHit(spell, enemyB)
-        arrowHit(spell, enemyC)
-        arrowHit(spell, enemyD)
-        }
-        if(level == 2){
-        arrowHit(spell,batA)
-        arrowHit(spell,batB)
-        arrowHit(spell,batC)
-        arrowHit(spell,batD)
         
-        }
-        if(level == 6){
-            arrowHit(spell,batA)
-            arrowHit(spell,batB)
-            arrowHit(spell,batC)
-            arrowHit(spell, enemyA)
-            arrowHit(spell, enemyB)
-            arrowHit(spell, enemyC)
-        }
-        if(level == 5 || level == 6){
-        arrowHit(spell,head)
-        }
-        }
+        spikeHit(spell, enemyA)
+        spikeHit(spell, enemyB)
+        spikeHit(spell, enemyC)
+        spikeHit(spell, enemyD)
+        spikeHit(spell, enemyE)
+        spikeHit(spell, enemyF)
+        spikeHit(spell, enemyG)
+        spikeHit(spell, enemyH)
+        spikeHit(spell, head)
+      }
     })
     // console.log(roomOver)
     // console.log(level)
     
     checkEnemyHit()
-
     checkPlayerHit()
 
-    if(level >= 4){
-    collectArrow(arrowB, adventurer)
-    }
-    if(level >= 5){
-    collectArrow(arrowC, adventurer)
-    }
-    if(level == 4){
+    collectSpike(spikeA, adventurer)
+    collectSpike(spikeB, adventurer)
+    collectSpike(spikeC, adventurer)
     saveSurvivor(survivorRoomOne, adventurer)
-    }
     touchDoor(door, adventurer)
-    if(level == 7){
-        touchChest(chest, adventurer)
-        touchKey(key, adventurer)
-    }
-    
+    touchChest(chest, adventurer)
+    touchKey(key, adventurer)
+
     keepTrack()
 }
 
@@ -1990,7 +1969,7 @@ window.addEventListener('keydown', (event) => {
             break
         case 'l': 
         if(adventurer.alive && spikeCount >= 1 && !dialogue && moved){
-            arrowDirection()
+            spikeDirection()
             spikeCount -= 1
             }
             break
