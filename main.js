@@ -163,8 +163,8 @@ class Player {
             this.image.width  * this.scale,
             this.image.height * this.scale
             )
-            ctx.fillStyle = 'green'
-            ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+            // ctx.fillStyle = 'green'
+            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update(){
@@ -225,7 +225,7 @@ const adventurerTest = new Sprite({
 
 
 const adventurer = new Player({
-    position: {x: 40, y: 70},
+    position: {x: 50, y: 70},
     width: 40,
     height: 55,
     speed: {x: 0, y: 0},
@@ -503,6 +503,7 @@ const attack= () => {
                     adventurer.speed.y = 0
                 } else {
                     attCurrentFrame = 0
+                    swimFramesElaped = 0
                     attacking = false
             }
         }
@@ -581,11 +582,14 @@ let swimFramesHold = 15
 const swimFrames = () =>{
     if(swimming == true){
         attacking = false
+        attCurrentFrame = 0
+        attFramesElaped = 0
         swimFramesElaped++
             if(swimFramesElaped % swimFramesHold === 0){  
                 if(swimCurrentFrame < swimFramesMax - 1){
                     swimCurrentFrame++
                 } else {
+                    swimFramesElaped = 0
                     swimCurrentFrame = 0
                     swimming = false
                     
@@ -1060,11 +1064,13 @@ const levelFour = () =>{
         arrowB.update()
     }
     if(survivorRoomOne.notSafe == false){
+        dialogue = true
         message.classList.remove('hidden')
         message.innerText = 'Oh my gosh, thank you so much for coming to save me. Here is one gold as a token of my appreciation. Good luck getting that chest full of gold open!'
         continueButton.classList.remove('hidden')
         continueButton.innerText = `Press 'k' to Continue`
-        window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
+        window.addEventListener('keydown', (e)=>{if(e.key == 'Enter'){
+            dialogue = false
             message.classList.add('hidden')
             continueButton.classList.add('hidden')
             scoreCount = 9
@@ -1169,11 +1175,13 @@ const levelSeven = ()=>{
         key.update()
     }
     if(chest.alive == false){
+        dialogue = true
         message.classList.remove('hidden')
         message.innerText = '...it\'s empty...'
         continueButton.classList.remove('hidden')
         continueButton.innerText = `Press 'k' to Continue`
-        window.addEventListener('keydown', (e)=>{if(e.key == 'k'){
+        window.addEventListener('keydown', (e)=>{if(e.key == 'Enter'){
+            dialogue = false
             message.classList.add('hidden')
             continueButton.classList.add('hidden')
             scoreCount = 29
@@ -1551,42 +1559,60 @@ const playerHit = (player, enemy) => {
     const top = enemy.position.y + enemy.height >= player.position.y
     const bottom = enemy.position.y <= player.position.y + player.height
 
+    const sleft = enemy.position.x + enemy.width >=  player.position.x -15
+    const sright = enemy.position.x <= player.position.x + player.width + 15
+    const stop = enemy.position.y + enemy.height >= player.position.y + 17
+    const sbottom = enemy.position.y <= player.position.y + player.height + 5
+
     
 
     
-    if(right && left && top && bottom && enemy.alive){
-        if(swimming){
+    if(swimming && sright && sleft && stop && sbottom && enemy.alive){
             enemy.health -= 1
             if(enemy.health >= 1 && lastKey === 'w'){
                 enemy.position.y -= 60
+                swimming = false
+                swimCurrentFrame = 0
+                swimFramesElaped = 0
             } else if (enemy.health >= 1 && lastKey === 'a') {
                 enemy.position.x -= 60
+                swimming = false
+                swimCurrentFrame = 0
+                swimFramesElaped = 0
             } else if (enemy.health >= 1 && lastKey === 's') {
                 enemy.position.y += 60
+                swimming = false
+                swimCurrentFrame = 0
+                swimFramesElaped = 0
             } else if (enemy.health >= 1 && lastKey === 'd') {
                 enemy.position.x += 60
+                swimming = false
+                swimCurrentFrame = 0
+                swimFramesElaped = 0
             } else if (enemy.health === 0){
                 enemy.alive = false
+                swimming = false
+                swimCurrentFrame = 0
+                swimFramesElaped = 0
             }
-        } else if (!swimming){
-        player.health -= 1
-        healthChecker(player)
-        if(player.health >= 1 && lastKey === 'w'){
-            player.position.y += 60
-        } else if (player.health >= 1 && lastKey === 'a') {
-            player.position.x += 60
-        } else if (player.health >= 1 && lastKey === 's') {
-            player.position.y -= 60
-        } else if (player.health >= 1 && lastKey === 'd') {
-            player.position.x -= 60
-        } else if (player.health === 0){
-            player.alive = false
-            gameLost = true
-        }
-      } 
-    }else{
+        } else if (!swimming && right && left && top && bottom && enemy.alive){
+            player.health -= 1
+            healthChecker(player)
+            if(player.health >= 1 && lastKey === 'w'){
+                player.position.y += 60
+            } else if (player.health >= 1 && lastKey === 'a') {
+                player.position.x += 60
+            } else if (player.health >= 1 && lastKey === 's') {
+                player.position.y -= 60
+            } else if (player.health >= 1 && lastKey === 'd') {
+                player.position.x -= 60
+            } else if (player.health === 0){
+                player.alive = false
+                gameLost = true
+            }
+      } else {
         return false
-    }
+      }
 }
 
 const keys = {
