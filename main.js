@@ -86,12 +86,17 @@ class Sprite{
             0,
             this.image.width,
             this.image.height,
-            this.position.x, 
-            this.position.y, 
-            (this.image.width / this.framesMax) * this.scale,
+            
+
+            this.position.x - this.offset.x, 
+            this.position.y - this.offset.y, 
+            this.image.width  * this.scale,
             this.image.height * this.scale
             )
+            // ctx.fillStyle = 'green'
+            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
+
 
         update(){
             this.draw()
@@ -212,15 +217,6 @@ class Player {
        }  
 }
 
-const adventurerTest = new Sprite({
-    position: {
-        x: 40,
-        y: 200
-    },
-    imageSrc: '',
-    scale: 1,
-    framesMax: 5
-})
 
 
 
@@ -229,7 +225,7 @@ const adventurer = new Player({
     width: 40,
     height: 55,
     speed: {x: 0, y: 0},
-    health: 3,
+    health: 20,
     imageSrc: '',
     scale: 1,
     offset: {x: 30, y:9},
@@ -312,6 +308,8 @@ const adventurer = new Player({
 
     }
 })
+
+let hurt = false
 
 let runFramesElaped = 0
 let runCurrentFrame = 0
@@ -587,6 +585,11 @@ const swimFrames = () =>{
         swimFramesElaped++
             if(swimFramesElaped % swimFramesHold === 0){  
                 if(swimCurrentFrame < swimFramesMax - 1){
+                    if(adventurer.health == 20){
+                        adventurer.health = 20
+                    } else{
+                        adventurer.health += 1
+                    }
                     swimCurrentFrame++
                 } else {
                     swimFramesElaped = 0
@@ -638,6 +641,8 @@ const swimFrames = () =>{
 }
 
 
+
+
 // {position, width, height, speed, health, imageSrc, scale = 1, framesMax = 1, offset}
 const survivorRoomOne = new Entity({
     position: {x: 600, y: 250},
@@ -657,49 +662,6 @@ const survivorRoomOne = new Entity({
             offset: {x: 22, y:10}
         }
     }
-})
-
-
-
-const heartA = new Entity({
-    position: {x: 350, y: 350},
-    width: 30,
-    height: 30,
-    speed: {x: 0, y: 0},
-    imageSrc: './images/entities/heart.png',
-    scale: 1,
-    framesMax: 1,
-    offset: {x: 1, y: 0}
-})
-const heartB = new Entity({
-    position: {x: 440, y: 350},
-    width: 30,
-    height: 30,
-    speed: {x: 0, y: 0},
-    imageSrc: './images/entities/heart.png',
-    scale: 1,
-    framesMax: 1,
-    offset: {x: 1, y: 0}
-})
-const heartC = new Entity({
-    position: {x: 60, y: 410},
-    width: 30,
-    height: 30,
-    speed: {x: 0, y: 0},
-    imageSrc: './images/entities/heart.png',
-    scale: 1,
-    framesMax: 1,
-    offset: {x: 1, y: 0}
-})
-const heartD = new Entity({
-    position: {x: 60, y: 70},
-    width: 30,
-    height: 30,
-    speed: {x: 0, y: 0},
-    imageSrc: './images/entities/heart.png',
-    scale: 1,
-    framesMax: 1,
-    offset: {x: 1, y: 0}
 })
 
 const arrowA = new Entity({
@@ -775,7 +737,7 @@ const chest = new Entity({
 })
 
 
-const goblinA = new Entity({
+const enemyA = new Entity({
     position:{x: 300, y: 300},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
@@ -799,7 +761,7 @@ const goblinA = new Entity({
         }
     }
 })
-const goblinB = new Entity({
+const enemyB = new Entity({
     position:{x: 200, y: 230},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
@@ -823,7 +785,7 @@ const goblinB = new Entity({
         }
     }
 })
-const goblinC = new Entity({
+const enemyC = new Entity({
     position:{x: 400, y: 400},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
@@ -847,7 +809,7 @@ const goblinC = new Entity({
         }
     }
 })
-const goblinD = new Entity({
+const enemyD = new Entity({
     position:{x: 500, y: 100},
     width: 25, height: 48,
     speed: {x: 0, y: 0},
@@ -964,7 +926,7 @@ const headAttack = (player, enemy)=>{
     }
    
 }
-const goblinAttack = (player, enemy)=>{
+const enemyAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
         enemy.position.x -= 0
         enemyLeft(enemy)
@@ -984,26 +946,26 @@ const goblinAttack = (player, enemy)=>{
 let dialogue = false
 
 const levelOne = ()=>{
-    if(goblinA.alive){
-        goblinAttack(adventurer, goblinA)
-        goblinA.update()
+    if(enemyA.alive){
+        enemyAttack(adventurer, enemyA)
+        enemyA.update()
     }
    
-    if(goblinB.alive){
-        goblinAttack(adventurer, goblinB)
-        goblinB.update()
+    if(enemyB.alive){
+        enemyAttack(adventurer, enemyB)
+        enemyB.update()
     }
-    if(goblinC.alive){
-        goblinAttack(adventurer, goblinC)
-        goblinC.update()
+    if(enemyC.alive){
+        enemyAttack(adventurer, enemyC)
+        enemyC.update()
     }
-    if(goblinD.alive){
-        goblinAttack(adventurer, goblinD)
-        goblinD.update()
+    if(enemyD.alive){
+        enemyAttack(adventurer, enemyD)
+        enemyD.update()
     }
     door.update()
 
-    if(goblinA.alive == false && goblinB.alive == false && goblinC.alive == false && goblinD.alive == false){
+    if(enemyA.alive == false && enemyB.alive == false && enemyC.alive == false && enemyD.alive == false){
         level = 2
         scoreCount += 4
     }
@@ -1031,9 +993,6 @@ const levelTwo = () =>{
     if(arrowA.alive){
         arrowA.update()
     }
-    if(heartA.alive){
-        heartA.update()
-    }
     door.update()
 
     if(batA.alive == false && batB.alive == false && batC.alive == false && batD.alive == false){
@@ -1046,9 +1005,6 @@ const levelThree = () =>{
     if(arrowA.alive){
         arrowA.update()
     }
-    if(heartA.alive){
-        heartA.update()
-    }
     door.update()
 }
 const levelFour = () =>{
@@ -1057,9 +1013,6 @@ const levelFour = () =>{
     }
     chest.update()
     door.update()
-    if(heartB.alive){
-        heartB.update()
-    }
     if(arrowB.alive){
         arrowB.update()
     }
@@ -1086,12 +1039,6 @@ const levelFive = () =>{
     }
     chest.update()
     door.update()
-    if(heartC.alive){
-        heartC.update()
-    }   door.update()
-    if(heartB.alive){
-        heartB.update()
-    }
     if(arrowB.alive){
         arrowB.update()
     }
@@ -1109,15 +1056,15 @@ const levelSix = () =>{
         head.update()
     }
     if(goblinE.alive){
-        goblinAttack(adventurer, goblinE)
+        enemyAttack(adventurer, goblinE)
         goblinE.update()
     }
     if(goblinF.alive){
-        goblinAttack(adventurer, goblinF)
+        enemyAttack(adventurer, goblinF)
         goblinF.update()
     }
     if(goblinG.alive){
-        goblinAttack(adventurer, goblinG)
+        enemyAttack(adventurer, goblinG)
         goblinG.update()
     }
     if(batI.alive){
@@ -1528,11 +1475,66 @@ const headHit = (player, enemy) => {
     }
 }
 const healthChecker = (player) =>{
-    if(player.health == 2){
-        health.style.width = '66%'
+    // console.log(player.health)
+    if(player.health == 20){
+        health.style.width = '100%'
+        health.style.backgroundColor = 'green'
+    } else if(player.health == 19){
+        health.style.width = '95%'
+        health.style.backgroundColor = 'green'
+    } else if(player.health == 18){
+        health.style.width = '90%'
+        health.style.backgroundColor = 'green'
+    } else if(player.health == 17){
+        health.style.width = '85%'
+        health.style.backgroundColor = 'green'
+    } else if(player.health == 16){
+        health.style.width = '80%'
+        health.style.backgroundColor = 'green'
+    } else if(player.health == 15){
+        health.style.width = '75%'
         health.style.backgroundColor = 'orange'
+    } else if(player.health == 14){
+        health.style.width = '70%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 13){
+        health.style.width = '65%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 12){
+        health.style.width = '60%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 11){
+        health.style.width = '55%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 10){
+        health.style.width = '50%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 9){
+        health.style.width = '45%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 8){
+        health.style.width = '40%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 7){
+        health.style.width = '35%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 6){
+        health.style.width = '30%'
+        health.style.backgroundColor = 'orange'
+    } else if(player.health == 5){
+        health.style.width = '25%'
+        health.style.backgroundColor = 'red'
+    } else if(player.health == 4){
+        health.style.width = '20%'
+        health.style.backgroundColor = 'red'
+    } else if(player.health == 3){
+        health.style.width = '15%'
+        health.style.backgroundColor = 'red'
+    } else if(player.health == 2){
+        health.style.width = '10%'
+        health.style.backgroundColor = 'red'
     } else if(player.health == 1) {
-        health.style.width = '33%'
+        health.style.width = '5%'
         health.style.backgroundColor = 'red'
     } else if (player.health == 0){
         health.style.width = '0%'
@@ -1596,7 +1598,7 @@ const playerHit = (player, enemy) => {
                 swimFramesElaped = 0
             }
         } else if (!swimming && right && left && top && bottom && enemy.alive){
-            player.health -= 1
+            player.health -= 19
             healthChecker(player)
             if(player.health >= 1 && lastKey === 'w'){
                 player.position.y += 60
@@ -1704,7 +1706,7 @@ let bossDead = false
 const gameState=()=>{
     if(!gameStart){
         window.addEventListener('keydown', (e)=>{
-            if(e.key == 'k'){
+            if(e.key == 'Enter'){
                 message.classList.add('hidden')
                 continueButton.classList.add('hidden')
                 gameStart = true
@@ -1717,9 +1719,9 @@ const gameState=()=>{
         message.classList.remove('hidden')
         message.style.backgroundColor = 'red'
         continueButton.classList.remove('hidden')
-        continueButton.innerText = `Press 'k' to Retry?`
+        continueButton.innerText = `Press 'Enter' to Retry?`
         window.addEventListener('keydown', (e)=>{
-            if(e.key == 'k'){
+            if(e.key == 'Enter'){
             location.reload()
             }})
     }
@@ -1755,9 +1757,9 @@ const gameState=()=>{
         message.classList.remove('hidden')
         message.style.backgroundColor = 'red'
         continueButton.classList.remove('hidden')
-        continueButton.innerText = `Press 'k' to Retry?`
+        continueButton.innerText = `Press 'Enter' to Retry?`
         window.addEventListener('keydown', (e)=>{
-            if(e.key == 'k'){
+            if(e.key == 'Enter'){
             location.reload()
             }})
     }
@@ -1766,10 +1768,10 @@ const gameState=()=>{
 
 const checkEnemyHit = ()=>{
     if(level == 1){
-        enemyHit(adventurer, goblinA)
-        enemyHit(adventurer, goblinB)
-        enemyHit(adventurer, goblinC)
-        enemyHit(adventurer, goblinD)
+        enemyHit(adventurer, enemyA)
+        enemyHit(adventurer, enemyB)
+        enemyHit(adventurer, enemyC)
+        enemyHit(adventurer, enemyD)
         }
         if(level == 2){
         enemyHit(adventurer,batA)
@@ -1797,10 +1799,10 @@ const checkEnemyHit = ()=>{
 }
 const checkPlayerHit = () => {
     if(level == 1){
-        playerHit(adventurer,goblinA)
-        playerHit(adventurer,goblinB)
-        playerHit(adventurer,goblinC)
-        playerHit(adventurer,goblinD)
+        playerHit(adventurer,enemyA)
+        playerHit(adventurer,enemyB)
+        playerHit(adventurer,enemyC)
+        playerHit(adventurer,enemyD)
         }
         if(level == 2){
         playerHit(adventurer,batA)
@@ -1831,9 +1833,6 @@ function animate(){
     ctx.fillStyle = 'gray'
     ctx.fillRect(0,0, canvas.width, canvas.height)
     gameBorders()
-     
-    adventurerTest.update()
-    console.log()
 
     if(adventurer.alive){
        adventurer.update()
@@ -1848,7 +1847,7 @@ function animate(){
     swimFrames()
     movementFrames()
     idleDirection()
-  
+    healthChecker(adventurer)
 
  
     
@@ -1858,10 +1857,10 @@ function animate(){
         spell.position.y += spell.speed.y
         spell.updateSpikes()
         if(level == 1){
-        arrowHit(spell, goblinA)
-        arrowHit(spell, goblinB)
-        arrowHit(spell, goblinC)
-        arrowHit(spell, goblinD)
+        arrowHit(spell, enemyA)
+        arrowHit(spell, enemyB)
+        arrowHit(spell, enemyC)
+        arrowHit(spell, enemyD)
         }
         if(level == 2){
         arrowHit(spell,batA)
@@ -1874,9 +1873,9 @@ function animate(){
             arrowHit(spell,batA)
             arrowHit(spell,batB)
             arrowHit(spell,batC)
-            arrowHit(spell, goblinA)
-            arrowHit(spell, goblinB)
-            arrowHit(spell, goblinC)
+            arrowHit(spell, enemyA)
+            arrowHit(spell, enemyB)
+            arrowHit(spell, enemyC)
         }
         if(level == 5 || level == 6){
         arrowHit(spell,head)
@@ -1890,21 +1889,6 @@ function animate(){
 
     checkPlayerHit()
 
-    if(level == 2 || level == 3){
-    collectHeart(heartA, adventurer)
-    }
-    if(level >= 4){
-    collectHeart(heartB, adventurer)
-    }
-    if(level >= 5){
-    collectHeart(heartC, adventurer)
-    }
-    if(level == 6){
-    collectHeart(heartD, adventurer)
-    }
-    if(level == 2 || level == 3){
-    collectArrow(arrowA, adventurer)
-    }
     if(level >= 4){
     collectArrow(arrowB, adventurer)
     }
