@@ -116,7 +116,7 @@ An HTML Canvas game with animations that run off of your browser's frame rate. G
 - Enemy Creatures: https://craftpix.net/product/hell-monster-pixel-art-game-sprite-pack/
 - Spike: https://flyclipart.com/spikes-pixel-art-maker-spikes-png-345594#
 - Boss Mob: https://opengameart.org/content/bosses-and-monsters-spritesheets-ars-notoria
-- Player Character: https://www.gamedevmarket.net/asset/2d-animated-top-down-golem/
+- Player Character/Geraldo the Golum: https://www.gamedevmarket.net/asset/2d-animated-top-down-golem/
 - Key: Legend of Zelda a Link to the Past
 - Bebo the True Hero of the Story: https://craftpix.net/freebies/free-pixel-art-tiny-hero-sprites/
 - Reaper: https://www.gamedevmarket.net/asset/pixel-art-reaper-character-with-animations/
