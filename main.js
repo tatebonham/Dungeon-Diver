@@ -54,8 +54,8 @@ class Entity{
             (this.image.width / this.framesMax) * this.scale,
             this.image.height * this.scale
             )
-        ctx.fillStyle = 'red'
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        // ctx.fillStyle = 'red'
+        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
     update(){
         this.draw()
@@ -837,7 +837,7 @@ const enemyA = new Entity({
             framesHold: 5,
             offset: {x: 10, y:16},
             width: 36,
-            height: 33
+            height: 33,
         },
         houndRight:{    
             imageSrc: './images/entities/hound/houndR.png',
@@ -1317,7 +1317,7 @@ const mobCollision = (mobOne, mobTwo)=>{
 
 
 const houndAttack = (player, enemy)=>{
-    let attacking = false
+    enemy.damage = 1
 
     if(enemy.dying){
         if(enemy.direction == 'left'){
@@ -1355,17 +1355,21 @@ const houndAttack = (player, enemy)=>{
             enemy.offset.x = enemy.sprites.houndHurtRight.offset.x
             enemy.offset.y = enemy.sprites.houndHurtRight.offset.y
         }
-    } else if (!enemy.hurt && !enemy.dying &&enemy.alive){
-        if(enemy.position.x <= player.position.x + player.width + 45){
-            attacking = true
-            enemy.position.x -= 0
-            enemy.direction = 'left'
+    } else if (!enemy.hurt && !enemy.dying && enemy.alive && !enemy.waiting){
+        if(enemy.position.x <= player.position.x + player.width + 45 && enemy.position.x >= player.position.x + player.width && !player.dying && !enemy.dying){
+            setTimeout(()=>{enemy.position.x -= 2; enemy.position.y += 0 ; attacking = false}, 1000)
             enemy.image = enemy.sprites.houndAttackLeft.image
             enemy.framesMax = enemy.sprites.houndAttackLeft.framesMax
             enemy.offset.x = enemy.sprites.houndAttackLeft.offset.x
             enemy.offset.y = enemy.sprites.houndAttackLeft.offset.y
             
-        } else {
+        } else if(enemy.position.x + enemy.width  >= player.position.x - 45 && enemy.position.x + enemy.width <= player.position.x && !enemy.dying && !player.dying) {
+            setTimeout(()=>{enemy.position.x += 2; enemy.position.y += 0;attacking = false}, 1000)
+            enemy.image = enemy.sprites.houndAttackRight.image
+            enemy.framesMax = enemy.sprites.houndAttackRight.framesMax
+            enemy.offset.x = enemy.sprites.houndAttackRight.offset.x
+            enemy.offset.y = enemy.sprites.houndAttackRight.offset.y
+        } else{
           if(enemy.position.x >= player.position.x + player.width + 35){
            
             enemy.position.x -= .4
@@ -1388,10 +1392,10 @@ const houndAttack = (player, enemy)=>{
             enemy.offset.y = enemy.sprites.houndRight.offset.y
         }
         if(enemy.position.y >= player.position.y + 12){
-            enemy.position.y -= 0
+            enemy.position.y -= 1
         }
         if(enemy.position.y <= player.position.y + 12){
-            enemy.position.y += 0
+            enemy.position.y += 1
         }
     }
   }
@@ -2172,8 +2176,28 @@ const healthChecker = (player) =>{
     } else if(player.health == 1) {
         health.style.width = '5%'
         health.style.backgroundColor = 'red'
-    } else if (player.health == 0){
+    } else if (player.health <= 0){
         health.style.width = '0%'
+        if(dying){
+            dyingFramesElaped++
+            if(dyingFramesElaped % dyingFramesHold === 0){  
+                if(dyingCurrentFrame < dyingFramesMax - 1){
+                    dyingCurrentFrame++
+                } else {
+                    dyingFramesElaped = 0
+                    dyingCurrentFrame = 0
+                    gameLost = true 
+                    player.alive = false
+                }
+            }
+        }
+        adventurer.speed.x = 0
+        adventurer.speed.y = 0
+        adventurer.width = adventurer.sprites.swimLeft.width
+        adventurer.height = adventurer.sprites.swimLeft.height
+        adventurer.offset.x = adventurer.sprites.swimUnD.offset.x
+        adventurer.offset.y = adventurer.sprites.swimUnD.offset.y
+        adventurer.image.src = `./images/adventurer/dying/golem-death-d-0${dyingCurrentFrame}.png`
     }   
 }
 
@@ -2239,7 +2263,7 @@ const playerHit = (player, enemy) => {
     const stop = enemy.position.y + enemy.height >= player.position.y + 17
     const sbottom = enemy.position.y <= player.position.y + player.height + 5
 
-    if(swimming && sright && sleft && stop && sbottom && enemy.alive){
+    if(swimming && sright && sleft && stop && sbottom && enemy.alive && !enemy.dying){
             enemy.health -= 1
             if(enemy.health >= 1 && lastKey === 'w'){
                 enemy.position.y -= 60
@@ -2318,51 +2342,27 @@ const playerHit = (player, enemy) => {
                 diveTimerCurrentFrame = 0
             }
         } else if (!swimming && right && left && top && bottom && enemy.alive && !enemy.dying){
-            player.health -= 5
-            healthChecker(player)
+            player.health -= enemy.damage
             hurt = true
 
-            if(player.health >= 1 && lastKey === 'w'){
+            if(player.health >= 1 && keys.w.pressed){
                 player.position.y += 60
                 adventurer.speed.x = 0
                 adventurer.speed.y = 0
-            } else if (player.health >= 1 && lastKey === 'a') {
-                player.position.x += 60
-                adventurer.speed.x = 0
-                adventurer.speed.y = 0
-            } else if (player.health >= 1 && lastKey === 's') {
+            }else if (player.health >= 1 && keys.s.pressed) {
                 player.position.y -= 60
                 adventurer.speed.x = 0
                 adventurer.speed.y = 0
-            } else if (player.health >= 1 && lastKey === 'd') {
+            }else if (player.health >= 1 && enemy.direction == 'left') {
                 player.position.x -= 60
+                adventurer.speed.x = 0
+                adventurer.speed.y = 0
+            } else if (player.health >= 1 && enemy.direction == 'right') {
+                player.position.x += 60
                 adventurer.speed.x = 0
                 adventurer.speed.y = 0
             } else if (player.health <= 0){
                 dying = true
-                if(dying){
-                    dyingFramesElaped++
-                    if(dyingFramesElaped % dyingFramesHold === 0){  
-                        if(dyingCurrentFrame < dyingFramesMax - 1){
-                            dyingCurrentFrame++
-                        } else {
-                            dyingFramesElaped = 0
-                            dyingCurrentFrame = 0
-                            gameLost = true 
-                            player.alive = false
-                        }
-                    }
-                }
-                adventurer.speed.x = 0
-                adventurer.speed.y = 0
-                adventurer.width = adventurer.sprites.swimLeft.width
-                adventurer.height = adventurer.sprites.swimLeft.height
-                adventurer.offset.x = adventurer.sprites.swimUnD.offset.x
-                adventurer.offset.y = adventurer.sprites.swimUnD.offset.y
-                adventurer.image.src = `./images/adventurer/dying/golem-death-d-0${dyingCurrentFrame}.png`
-
-           
-                
             }
       } else {
         return false
