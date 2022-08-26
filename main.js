@@ -730,7 +730,14 @@ const door = new Entity({
         imageSrc: './images/entities/door2.png',
         offset: {x: 18, y: 15},
         scale: 1.25
-    }}
+    },
+    door:{
+        imageSrc: './images/entities/door.png',
+        offset: {x: 22, y: 15},
+        scale: 1
+    }
+
+}
 })
 const chest = new Entity({
     position: {x: 600, y: 70},
@@ -1411,10 +1418,10 @@ const houndAttack = (player, enemy)=>{
             enemy.offset.x = enemy.sprites.houndRight.offset.x
             enemy.offset.y = enemy.sprites.houndRight.offset.y
         }
-        if(enemy.position.y >= player.position.y + 12){
+        if(enemy.position.y >= player.position.y + 20){
             enemy.position.y -= .5
         }
-        if(enemy.position.y <= player.position.y + 12){
+        if(enemy.position.y <= player.position.y + 20){
             enemy.position.y += .5
         }
     }
@@ -1696,19 +1703,22 @@ const levelFour = () =>{
     if(spikeB.alive){
         spikeB.update()
     }
-    if(survivorRoomOne.notSafe == false){
+    if(level == 4 && survivorRoomOne.notSafe == false){
         dialogue = true
         message.classList.remove('hidden')
         message.innerText = 'Oh my gosh, thank you so much for coming to save me. Here is one gold as a token of my appreciation. Good luck getting that chest full of gold open!'
         continueButton.classList.remove('hidden')
         continueButton.innerText = `Press 'Enter' to Continue`
-        window.addEventListener('keydown', (e)=>{if(e.key == 'Enter'){
+        
+        window.addEventListener('keydown', (e)=>{if(e.key == 'Enter' && level == 4){
             dialogue = false
             message.classList.add('hidden')
             continueButton.classList.add('hidden')
             scoreCount = 9
             goldCount = 1
             level = 5
+            reaper.position.x = 100
+            reaper.position.y = 240
             intermission = false
             reaper.alive = true
             reaperBlink()
@@ -1716,7 +1726,9 @@ const levelFour = () =>{
             enemyB.alive = false
             enemyC.alive = false
             enemyD.alive = false
+            reaper.health = 20
         }})
+      
     }
 }
 const levelFive = () =>{
@@ -2585,7 +2597,7 @@ let bossDead = false
 const gameState=()=>{
     if(!gameStart && level == 1){
         window.addEventListener('keydown', (e)=>{
-            if(e.key == 'Enter'){
+            if(e.key == 'Enter' && level == 1){
                 message.classList.add('hidden')
                 continueButton.classList.add('hidden')
                 gameStart = true
@@ -2604,8 +2616,47 @@ const gameState=()=>{
         continueButton.classList.remove('hidden')
         continueButton.innerText = `Press 'Enter' to Retry?`
         window.addEventListener('keydown', (e)=>{
-            if(e.key == 'Enter'){
-            location.reload()
+            if(e.key == 'Enter' && gameLost == true){
+
+                level = 1
+                enemyA.alive = true
+                enemyB.alive = true
+                enemyC.alive = true
+                enemyD.alive = true
+                reaper.position.x = 100
+                reaper.position.y = 240
+                reaper.alive = false
+                reaper.health = 20
+                enemyA.health = 5
+                enemyB.health = 5
+                enemyC.health = 5
+                enemyD.health = 5
+                enemyA.position.x = 650
+                enemyA.position.y = 400
+                enemyB.position.x = 410
+                enemyB.position.y = 300
+                enemyC.position.x = 400
+                enemyC.position.y = 400
+                enemyD.position.x = 500
+                enemyD.position.y = 100
+                dying = false
+                moved = false
+                adventurer.alive = true
+                adventurer.position.x = 50
+                adventurer.position.y = 70
+                adventurer.health = 20
+                spikeCount = 5
+                scoreCount = 0
+                goldCount = 0
+                message.classList.add('hidden')
+                continueButton.classList.add('hidden')
+                door.image = door.sprites.door.image
+                door.scale = 1
+                door.position.x = 666
+                door.position.y = 200
+                door.offset.x = door.sprites.door.offset.x
+                door.offset.y = door.sprites.door.offset.y
+                gameLost = false
             }})
     }
     if(gameStart){
@@ -2646,8 +2697,44 @@ const gameState=()=>{
         continueButton.classList.remove('hidden')
         continueButton.innerText = `Press 'Enter' to Retry?`
         window.addEventListener('keydown', (e)=>{
-            if(e.key == 'Enter'){
-            location.reload()
+            if(e.key == 'Enter' && gameWon == true){
+                level = 1
+                enemyA.alive = true
+                enemyB.alive = true
+                enemyC.alive = true
+                enemyD.alive = true
+                reaper.alive = false
+                reaper.health = 20
+                enemyA.health = 5
+                enemyB.health = 5
+                enemyC.health = 5
+                enemyD.health = 5
+                enemyA.position.x = 650
+                enemyA.position.y = 400
+                enemyB.position.x = 410
+                enemyB.position.y = 300
+                enemyC.position.x = 400
+                enemyC.position.y = 400
+                enemyD.position.x = 500
+                enemyD.position.y = 100
+                adventurer.alive = true
+                dying = false
+                moved = false
+                adventurer.position.x = 50
+                adventurer.position.y = 70
+                adventurer.health = 20
+                spikeCount = 5
+                scoreCount = 0
+                goldCount = 0  
+                message.classList.add('hidden')
+                continueButton.classList.add('hidden')
+                door.image = door.sprites.door.image
+                door.scale = 1
+                door.position.x = 666
+                door.position.y = 200
+                door.offset.x = door.sprites.door.offset.x
+                door.offset.y = door.sprites.door.offset.y
+                gameWon = false
             }})
     }
 
