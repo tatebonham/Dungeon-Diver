@@ -38,6 +38,7 @@ class Entity{
         this.hurt = false
         this.dying = false
         this.waiting = false
+        this.attacking = false
     }
 
     draw(){
@@ -862,7 +863,7 @@ const enemyA = new Entity({
             offset: {x: 4, y:16},
             width: 36,
             height: 33
-    },
+        },
         houndDeathLeft: {
             imageSrc: './images/entities/hound/houndDyingL.png',
             framesMax: 6,
@@ -878,7 +879,7 @@ const enemyA = new Entity({
             offset: {x: 4, y:16},
             width: 36,
             height: 33
-    },
+        },
         houndAttackLeft: {
             imageSrc: './images/entities/hound/houndAttackL.png',
             framesMax: 4,
@@ -894,8 +895,7 @@ const enemyA = new Entity({
             offset: {x: 4, y:16},
             width: 36,
             height: 33
-    },
-
+        },
     }
 })
 const enemyB = new Entity({
@@ -1276,27 +1276,82 @@ const enemyD = new Entity({
 
     }
 })
-const enemyE = new Entity({
-    position:{x: 30, y: 60},
-    width: 12, height: 12,
+const reaper = new Entity({
+    position:{x: 300, y: 160},
+    width: 20, height: 20,
     speed: {x: 0, y: 0},
-    health: 1,
-    damage: 4,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const head = new Entity({
-    position:{x: 30, y: 160},
-    width: 120, height: 170,
-    speed: {x: 0, y: 0},
-    health: 20,
-    damage: 10,
-    imageSrc: './images/head/head.png', 
+    health: 5,
+    damage: 2,
+    imageSrc: '', 
     scale: .7, 
     framesMax: 1, 
-    offset: {x: 12, y: 2}
+    offset: {x: 12, y: 2},
+    sprites: {
+            reaperLeft: {
+                imageSrc: './images/entities/reaper/reaperRunningLeft.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 16, y:10},
+                width: 20,
+                height: 30
+            },
+            reaperRight:{    
+                imageSrc: './images/entities/reaper/reaperRunningRight.png',
+                framesMax: 8,
+                framesHold: 7,
+                offset: {x: 14, y:10},
+                width: 20,
+                height: 30
+            },
+            reaperIdle:{
+                imageSrc: './images/entities/reaper/reaperIdle.png',
+                framesMax: 5,
+                framesHold: 7,
+                offset: {x: 14, y:10},
+                width: 20,
+                height: 30
+            },
+            reaperAttackRight:{
+                imageSrc: './images/entities/reaper/reaperAttackRight.png',
+                framesMax: 10,
+                framesHold: 15,
+                offset: {x: 14, y: 10},
+                width: 20,
+                height: 30
+            },
+            reaperEquipWeaponLeft:{
+                imageSrc: './images/entities/reaper/reaperEquipWeaponLeft.png',
+                framesMax: 10,
+                framesHold: 10,
+                offset: {x: 5, y:11},
+                width: 20,
+                height: 30
+            },
+            reaperEquipWeaponRight:{
+                imageSrc: './images/entities/reaper/reaperEquipWeaponRight.png',
+                framesMax: 10,
+                framesHold: 10,
+                offset: {x: 5, y:11},
+                width: 20,
+                height: 30
+            },
+            reaperHolsterWeaponLeft:{
+                imageSrc: './images/entities/reaper/reaperHolsterWeaponLeft.png',
+                framesMax: 10,
+                framesHold: 10,
+                offset: {x: 5, y:11},
+                width: 20,
+                height: 30
+            },
+            reaperHolsterWeaponRight:{
+                imageSrc: './images/entities/reaper/reaperHolsterWeaponRight.png',
+                framesMax: 10,
+                framesHold: 10,
+                offset: {x: 5, y:11},
+                width: 20,
+                height: 30
+            },
+    }
 })
 
 const mobCollision = (mobOne, mobTwo)=>{    
@@ -1357,14 +1412,14 @@ const houndAttack = (player, enemy)=>{
         }
     } else if (!enemy.hurt && !enemy.dying && enemy.alive && !enemy.waiting){
         if(enemy.position.x <= player.position.x + player.width + 45 && enemy.position.x >= player.position.x + player.width && !player.dying && !enemy.dying){
-            setTimeout(()=>{enemy.position.x -= 2; enemy.position.y += 0 ; attacking = false}, 1000)
+            setTimeout(()=>{enemy.position.x -= 2; enemy.position.y += 0 }, 1000)
             enemy.image = enemy.sprites.houndAttackLeft.image
             enemy.framesMax = enemy.sprites.houndAttackLeft.framesMax
             enemy.offset.x = enemy.sprites.houndAttackLeft.offset.x
             enemy.offset.y = enemy.sprites.houndAttackLeft.offset.y
             
         } else if(enemy.position.x + enemy.width  >= player.position.x - 45 && enemy.position.x + enemy.width <= player.position.x && !enemy.dying && !player.dying) {
-            setTimeout(()=>{enemy.position.x += 2; enemy.position.y += 0;attacking = false}, 1000)
+            setTimeout(()=>{enemy.position.x += 2; enemy.position.y += 0}, 1000)
             enemy.image = enemy.sprites.houndAttackRight.image
             enemy.framesMax = enemy.sprites.houndAttackRight.framesMax
             enemy.offset.x = enemy.sprites.houndAttackRight.offset.x
@@ -1372,7 +1427,7 @@ const houndAttack = (player, enemy)=>{
         } else{
           if(enemy.position.x >= player.position.x + player.width + 35){
            
-            enemy.position.x -= .4
+            enemy.position.x -= 0
             enemy.direction = 'left'
             enemy.width = enemy.sprites.houndLeft.width
             enemy.height = enemy.sprites.houndLeft.height
@@ -1382,7 +1437,7 @@ const houndAttack = (player, enemy)=>{
             enemy.offset.y = enemy.sprites.houndLeft.offset.y
         }
         if(enemy.position.x + enemy.width <= player.position.x - 35){
-            enemy.position.x += .4
+            enemy.position.x += 0
             enemy.direction = 'right'
             enemy.width = enemy.sprites.houndRight.width
             enemy.height = enemy.sprites.houndRight.height
@@ -1392,58 +1447,117 @@ const houndAttack = (player, enemy)=>{
             enemy.offset.y = enemy.sprites.houndRight.offset.y
         }
         if(enemy.position.y >= player.position.y + 12){
-            enemy.position.y -= 1
+            enemy.position.y -= 0
         }
         if(enemy.position.y <= player.position.y + 12){
-            enemy.position.y += 1
+            enemy.position.y += 0
         }
-    }
-  }
-}
-const huskyAttack = (player, enemy)=>{
-    if(enemy.alive){
-    if(enemy.position.x >= player.position.x + 6){
-        enemy.position.x -= 0
-        enemy.width = enemy.sprites.houndLeft.width
-        enemy.height = enemy.sprites.houndLeft.height
-        enemy.image = enemy.sprites.houndLeft.image
-        enemy.framesMax = enemy.sprites.houndLeft.framesMax
-        enemy.offset.x = enemy.sprites.houndLeft.offset.x
-        enemy.offset.y = enemy.sprites.houndLeft.offset.y
-    }
-    if(enemy.position.x <= player.position.x + 6){
-        enemy.position.x += 0
-        enemy.width = enemy.sprites.houndRight.width
-        enemy.height = enemy.sprites.houndRight.height
-        enemy.image = enemy.sprites.houndRight.image
-        enemy.framesMax = enemy.sprites.houndRight.framesMax
-        enemy.offset.x = enemy.sprites.houndRight.offset.x
-        enemy.offset.y = enemy.sprites.houndRight.offset.y
-    }
-    if(enemy.position.y >= player.position.y + 12){
-        enemy.position.y -= 0
-    }
-    if(enemy.position.y <= player.position.y + 12){
-        enemy.position.y += 0
     }
   }
 }
 
-const headAttack = (player, enemy)=>{
-    if(enemy.position.x >= player.position.x){
-        enemy.position.x -= .5
-    }
-    if(enemy.position.x <= player.position.x){
-        enemy.position.x += .5
-    }
-    if(enemy.position.y >= player.position.y - (enemy.height/2)){
-        enemy.position.y -= .5
-    }
-    if(enemy.position.y <= player.position.y - (enemy.height/2)){
-        enemy.position.y += .5
-    }
-   
+let intermission = true
+
+if(intermission){
+setInterval(()=>{
+    setTimeout(()=>{
+        reaper.framesCurrent = 0
+        reaper.attacking = true
+        reaper.damage = 5
+        reaper.position.x = adventurer.position.x - 22
+        reaper.position.y = adventurer.position.y + 20
+    }, 5000)
+    setTimeout(()=>{
+        reaper.width = 40
+    }, 5400)
+    setTimeout(()=>{
+        reaper.width = 20
+    }, 5600)
+    setTimeout(()=>{
+        reaper.attacking = false
+        reaper.damage = 2
+        reaper.framesCurrent = 0
+    }, 6000)
+}, 7000)
 }
+
+
+const reaperAttack = (player, enemy)=>{
+    enemy.scale = 1
+
+    if(enemy.attacking){
+        enemy.position.x -= 0
+        enemy.framesMax = enemy.sprites.reaperAttackRight.framesMax
+        enemy.height = enemy.sprites.reaperAttackRight.height
+        enemy.image = enemy.sprites.reaperAttackRight.image 
+        enemy.offset.x = enemy.sprites.reaperAttackRight.offset.x
+        enemy.offset.y = enemy.sprites.reaperAttackRight.offset.y
+    } else if(enemy.dying){
+        if(enemy.direction == 'left'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.reaperIdle.framesMax
+            enemy.width = enemy.sprites.reaperIdle.width
+            enemy.height = enemy.sprites.reaperIdle.height
+            enemy.image = enemy.sprites.reaperIdle.image 
+            enemy.offset.x = enemy.sprites.reaperIdle.offset.x
+            enemy.offset.y = enemy.sprites.reaperIdle.offset.y
+        } if(enemy.direction == 'right'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.reaperIdle.framesMax
+            enemy.width = enemy.sprites.reaperIdle.width
+            enemy.height = enemy.sprites.reaperIdle.height
+            enemy.image = enemy.sprites.reaperIdle.image 
+            enemy.offset.x = enemy.sprites.reaperIdle.offset.x
+            enemy.offset.y = enemy.sprites.reaperIdle.offset.y
+        }
+    } else if(enemy.hurt && !enemy.dying){
+        if(enemy.direction == 'left'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.reaperIdle.framesMax
+            enemy.width = enemy.sprites.reaperIdle.width
+            enemy.height = enemy.sprites.reaperIdle.height
+            enemy.image = enemy.sprites.reaperIdle.image 
+            enemy.offset.x = enemy.sprites.reaperIdle.offset.x
+            enemy.offset.y = enemy.sprites.reaperIdle.offset.y
+        } if(enemy.direction == 'right'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.reaperIdle.framesMax
+            enemy.width = enemy.sprites.reaperIdle.width
+            enemy.height = enemy.sprites.reaperIdle.height
+            enemy.image = enemy.sprites.reaperIdle.image 
+            enemy.offset.x = enemy.sprites.reaperIdle.offset.x
+            enemy.offset.y = enemy.sprites.reaperIdle.offset.y
+        }
+    } else if (!enemy.hurt && !enemy.dying && enemy.alive && !enemy.waiting &&  !enemy.attacking){
+        if(enemy.position.x >= player.position.x){
+            enemy.direction = 'left'
+            enemy.position.x -= .4
+            enemy.width = enemy.sprites.reaperLeft.width
+            enemy.height = enemy.sprites.reaperLeft.height
+            enemy.image = enemy.sprites.reaperLeft.image
+            enemy.framesMax = enemy.sprites.reaperLeft.framesMax
+            enemy.offset.x = enemy.sprites.reaperLeft.offset.x
+            enemy.offset.y = enemy.sprites.reaperLeft.offset.y
+        }
+        if(enemy.position.x <= player.position.x){
+            enemy.direction = 'right'
+            enemy.position.x += .4
+            enemy.width = enemy.sprites.reaperRight.width
+            enemy.height = enemy.sprites.reaperRight.height
+            enemy.image = enemy.sprites.reaperRight.image
+            enemy.framesMax = enemy.sprites.reaperRight.framesMax
+            enemy.offset.x = enemy.sprites.reaperRight.offset.x
+            enemy.offset.y = enemy.sprites.reaperRight.offset.y           
+        }
+        if(enemy.position.y >= player.position.y + 15){
+            enemy.position.y -= .4
+        }
+        if(enemy.position.y <= player.position.y + 15){
+            enemy.position.y += .4
+        }
+      }
+}
+
 const goblinAttack = (player, enemy)=>{
 
     if(enemy.dying){
@@ -1516,9 +1630,9 @@ let dialogue = false
 
 const levelOne = ()=>{
     
-    if(enemyA.alive){
-        houndAttack(adventurer, enemyA)
-        enemyA.update()
+    if(reaper.alive){
+        reaperAttack(adventurer, reaper)
+        reaper.update()
     }
    
     if(enemyB.alive){
@@ -1922,6 +2036,7 @@ const spikeHit = (spike, enemy) => {
                 enemy.position.x += 30
                 spike.alive = false
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -1930,6 +2045,7 @@ const spikeHit = (spike, enemy) => {
                 enemy.position.x -= 30
                 spike.alive = false
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -1938,6 +2054,7 @@ const spikeHit = (spike, enemy) => {
                 enemy.position.y -= 30
                 spike.alive = false
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -1946,6 +2063,7 @@ const spikeHit = (spike, enemy) => {
                 enemy.position.y += 30
                 spike.alive = false
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -1953,6 +2071,7 @@ const spikeHit = (spike, enemy) => {
             } else if (enemy.health == 0){
                 enemy.dying = true
                 spike.alive = false
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.alive = false
                     enemy.framesCurrent = 0
@@ -1989,6 +2108,7 @@ const enemyHit = (player, enemy) => {
             enemy.health -= 1
             if(enemy.health >= 1){
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -1996,6 +2116,7 @@ const enemyHit = (player, enemy) => {
                 enemy.position.y -= 50
             } else if (enemy.health <= 0){
                 enemy.dying = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.alive = false
                     enemy.framesCurrent = 0
@@ -2006,6 +2127,7 @@ const enemyHit = (player, enemy) => {
             enemy.health -= 1
             if(enemy.health >= 1){
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -2013,6 +2135,7 @@ const enemyHit = (player, enemy) => {
                 enemy.position.x -= 50
             } else if (enemy.health <= 0){
                 enemy.dying = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.alive = false
                     enemy.framesCurrent = 0
@@ -2023,6 +2146,7 @@ const enemyHit = (player, enemy) => {
             enemy.health -= 1
             if(enemy.health >= 1){
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -2030,6 +2154,7 @@ const enemyHit = (player, enemy) => {
                 enemy.position.y += 50
             } else if (enemy.health <= 0){
                 enemy.dying = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.alive = false
                     enemy.framesCurrent = 0
@@ -2040,6 +2165,7 @@ const enemyHit = (player, enemy) => {
             enemy.health -= 1
             if(enemy.health >= 1){
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -2047,6 +2173,7 @@ const enemyHit = (player, enemy) => {
                 enemy.position.x += 50
             } else if (enemy.health <= 0){
                 enemy.dying = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.alive = false
                     enemy.framesCurrent = 0
@@ -2058,7 +2185,7 @@ const enemyHit = (player, enemy) => {
      return false
     }
 }
-const headHit = (player, enemy) => {
+const reaperHit = (player, enemy) => {
     const rLeft = player.attackBox.right.position.x + player.attackBox.right.width >=  enemy.position.x
     const rRight = player.attackBox.right.position.x <= enemy.position.x + enemy.width
     const rTop =  (player.attackBox.right.position.y + 10) + player.attackBox.right.height>= enemy.position.y
@@ -2114,6 +2241,8 @@ const headHit = (player, enemy) => {
      return false
     }
 }
+
+
 const healthChecker = (player) =>{
     // console.log(player.health)
     if(player.health == 20){
@@ -2268,6 +2397,7 @@ const playerHit = (player, enemy) => {
             if(enemy.health >= 1 && lastKey === 'w'){
                 enemy.position.y -= 60
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -2282,6 +2412,7 @@ const playerHit = (player, enemy) => {
             } else if (enemy.health >= 1 && lastKey === 'a') {
                 enemy.position.x -= 60
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -2296,6 +2427,7 @@ const playerHit = (player, enemy) => {
             } else if (enemy.health >= 1 && lastKey === 's') {
                 enemy.position.y += 60
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -2307,14 +2439,10 @@ const playerHit = (player, enemy) => {
                 cdBar = 0
                 cdY = 23
                 diveTimerCurrentFrame = 0
-                enemy.hurt = true
-                setTimeout(()=>{
-                    enemy.hurt = false
-                    enemy.framesCurrent = 0
-                }, 500)
             } else if (enemy.health >= 1 && lastKey === 'd') {
                 enemy.position.x += 60
                 enemy.hurt = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.hurt = false
                     enemy.framesCurrent = 0
@@ -2328,6 +2456,7 @@ const playerHit = (player, enemy) => {
                 diveTimerCurrentFrame = 0
             } else if (enemy.health <= 0){
                 enemy.dying = true
+                enemy.framesCurrent = 0
                 setTimeout(()=>{
                     enemy.alive = false
                     enemy.framesCurrent = 0
@@ -2463,7 +2592,7 @@ const gameState=()=>{
                 continueButton.classList.add('hidden')
                 gameStart = true
                 adventurer.alive = true
-                enemyA.alive = true
+                reaper.alive = true
                 enemyB.alive = true
                 enemyC.alive = true
                 enemyD.alive = true
@@ -2526,13 +2655,11 @@ const checkMobCollision = ()=>{
         mobCollision(enemyA, enemyB)
         mobCollision(enemyA, enemyC)
         mobCollision(enemyA, enemyD)
-        mobCollision(enemyA, enemyE)
         mobCollision(enemyB, enemyC)
-        mobCollision(enemyB, enemyD)
-        mobCollision(enemyB, enemyE)
+        mobCollision(enemyB, enemyD)    
         mobCollision(enemyC, enemyD)
-        mobCollision(enemyC, enemyE)
-        mobCollision(enemyD, enemyE)
+       
+       
 
          
 }
@@ -2542,8 +2669,7 @@ const checkEnemyHit = ()=>{
         enemyHit(adventurer, enemyB)
         enemyHit(adventurer, enemyC)
         enemyHit(adventurer, enemyD)
-        enemyHit(adventurer, enemyE)
-        headHit(adventurer, head) 
+        enemyHit(adventurer, reaper) 
 
 }
 const checkPlayerHit = () => {
@@ -2551,8 +2677,7 @@ const checkPlayerHit = () => {
         playerHit(adventurer,enemyB)
         playerHit(adventurer,enemyC)
         playerHit(adventurer,enemyD)
-        playerHit(adventurer,enemyE)
-        playerHit(adventurer, head)
+        playerHit(adventurer, reaper)
         
  }
 let moved = false
@@ -2598,8 +2723,7 @@ function animate(){
         spikeHit(spell, enemyB)
         spikeHit(spell, enemyC)
         spikeHit(spell, enemyD)
-        spikeHit(spell, enemyE)
-        spikeHit(spell, head)
+        spikeHit(spell, reaper)
       }
     })
     // console.log(roomOver)
