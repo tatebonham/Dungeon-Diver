@@ -29,7 +29,7 @@ canvas {
 
   #gameboy{
     position:absolute;
-    background-image: url(./images/gameboy.png);
+    background-image: url(./images/gameboy.JPG);
     padding-top: 0px;
     color: white;
     background-size: cover;
