@@ -100,6 +100,8 @@ An HTML Canvas game with animations that run off of your browser's frame rate. G
 
 ## Post-Project Reflection
 
+- I tried too hard to force multipurpose fucntions and class, I eventually realized after after watching a tiktok that it's okay to just use single purpose functions.
+- Take more breaks, I have so much trouble not just going on for hours without taking a break, and I definitely felt it come back to bite me.
 - Wish I realized sooner, any functions in the animate would run over and over and take priority over anything else in the Javascript because its running frame by frame.
 - Couldn't end up getting the enemy projectiles to work, I will come back to add those in and refactor my code to make it cleaner later on in class.
 - Never found where a bug is but even when the conditions aren't met if you beat the last boss phase, if you push "Enter" it will take it back to the second boss phase
