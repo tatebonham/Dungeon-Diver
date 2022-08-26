@@ -37,6 +37,7 @@ class Entity{
         this.direction = 'left'
         this.hurt = false
         this.dying = false
+        this.waiting = false
     }
 
     draw(){
@@ -168,16 +169,20 @@ class Player {
     update(){
         this.draw()
         if(this.position.x < 30){
+            this.speed.x = 0
             this.position.x = 30
         } else if(this.position.x + this.width > 670){
+            this.speed.x = 0
             this.position.x = 670 - this.width
         } else {
             this.position.x += this.speed.x
         }
 
         if(this.position.y < 60){
+            this.speed.y = 0
             this.position.y = 60
         } else if (this.position.y  + this.height > 450){
+            this.speed.y = 0
             this.position.y = 450 - this.height    
         } else {
             this.position.y += this.speed.y
@@ -821,10 +826,10 @@ const enemyA = new Entity({
         goblinDeathRight:{
             imageSrc: './images/entities/goblin/goblinDeathR.png',
             framesMax: 4,
-                framesHold: 7,
-                offset: {x: 5, y:11},
-                width: 25,
-                height: 38
+            framesHold: 7,
+            offset: {x: 5, y:11},
+            width: 25,
+            height: 38
         },
         houndLeft: {
             imageSrc: './images/entities/hound/houndL.png',
@@ -838,6 +843,54 @@ const enemyA = new Entity({
             imageSrc: './images/entities/hound/houndR.png',
             framesMax: 6,
             framesHold: 5,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+        },
+        houndHurtLeft: {
+            imageSrc: './images/entities/hound/houndHurtL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndHurtRight:{    
+            imageSrc: './images/entities/hound/houndHurtR.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+    },
+        houndDeathLeft: {
+            imageSrc: './images/entities/hound/houndDyingL.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndDeathRight:{    
+            imageSrc: './images/entities/hound/houndDyingR.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+    },
+        houndAttackLeft: {
+            imageSrc: './images/entities/hound/houndAttackL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndAttackRight:{    
+            imageSrc: './images/entities/hound/houndAttackR.png',
+            framesMax: 4,
+            framesHold: 7,
             offset: {x: 4, y:16},
             width: 36,
             height: 33
@@ -863,64 +916,112 @@ const enemyB = new Entity({
             offset: {x: 20, y:11},
             width: 25,
             height: 38
+        },
+        goblinRight:{    
+                imageSrc: './images/entities/goblin/goblinR.png',
+                framesMax: 6,
+                framesHold: 7,
+                offset: {x: 5, y:11},
+                width: 25,
+                height: 38
+        },
+        goblinHurtLeft:{
+            imageSrc: './images/entities/goblin/goblinHurtL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 20, y:11},
+            width: 25,
+            height: 38
+        },
+        goblinHurtRight:{
+            imageSrc: './images/entities/goblin/goblinHurtR.png',
+            framesMax: 4,
+                framesHold: 7,
+                offset: {x: 5, y:11},
+                width: 25,
+                height: 38
+        },
+        goblinDeathLeft:{
+            imageSrc: './images/entities/goblin/goblinDeathL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 20, y:11},
+            width: 25,
+            height: 38
+        },
+        goblinDeathRight:{
+            imageSrc: './images/entities/goblin/goblinDeathR.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 5, y:11},
+            width: 25,
+            height: 38
+        },
+        houndLeft: {
+            imageSrc: './images/entities/hound/houndL.png',
+            framesMax: 6,
+            framesHold: 5,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndRight:{    
+            imageSrc: './images/entities/hound/houndR.png',
+            framesMax: 6,
+            framesHold: 5,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+        },
+        houndHurtLeft: {
+            imageSrc: './images/entities/hound/houndHurtL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndHurtRight:{    
+            imageSrc: './images/entities/hound/houndHurtR.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
     },
-    goblinRight:{    
-            imageSrc: './images/entities/goblin/goblinR.png',
+        houndDeathLeft: {
+            imageSrc: './images/entities/hound/houndDyingL.png',
             framesMax: 6,
             framesHold: 7,
-            offset: {x: 5, y:11},
-            width: 25,
-            height: 38
-    },
-    goblinHurtLeft:{
-        imageSrc: './images/entities/goblin/goblinHurtL.png',
-        framesMax: 4,
-        framesHold: 7,
-        offset: {x: 20, y:11},
-        width: 25,
-        height: 38
-    },
-    goblinHurtRight:{
-        imageSrc: './images/entities/goblin/goblinHurtR.png',
-        framesMax: 4,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndDeathRight:{    
+            imageSrc: './images/entities/hound/houndDyingR.png',
+            framesMax: 6,
             framesHold: 7,
-            offset: {x: 5, y:11},
-            width: 25,
-            height: 38
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
     },
-    goblinDeathLeft:{
-        imageSrc: './images/entities/goblin/goblinDeathL.png',
-        framesMax: 4,
-        framesHold: 7,
-        offset: {x: 20, y:11},
-        width: 25,
-        height: 38
-    },
-    goblinDeathRight:{
-        imageSrc: './images/entities/goblin/goblinDeathR.png',
-        framesMax: 4,
+        houndAttackLeft: {
+            imageSrc: './images/entities/hound/houndAttackL.png',
+            framesMax: 4,
             framesHold: 7,
-            offset: {x: 5, y:11},
-            width: 25,
-            height: 38
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndAttackRight:{    
+            imageSrc: './images/entities/hound/houndAttackR.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
     },
-    houndLeft: {
-        imageSrc: './images/entities/hound/houndL.png',
-        framesMax: 6,
-        framesHold: 5,
-        offset: {x: 10, y:16},
-        width: 36,
-        height: 33
-    },
-    houndRight:{    
-        imageSrc: './images/entities/hound/houndR.png',
-        framesMax: 6,
-        framesHold: 5,
-        offset: {x: 4, y:16},
-        width: 36,
-        height: 33
-    
-},
+
     }
 })
 const enemyC = new Entity({
@@ -977,10 +1078,10 @@ const enemyC = new Entity({
         goblinDeathRight:{
             imageSrc: './images/entities/goblin/goblinDeathR.png',
             framesMax: 4,
-                framesHold: 7,
-                offset: {x: 5, y:11},
-                width: 25,
-                height: 38
+            framesHold: 7,
+            offset: {x: 5, y:11},
+            width: 25,
+            height: 38
         },
         houndLeft: {
             imageSrc: './images/entities/hound/houndL.png',
@@ -997,26 +1098,57 @@ const enemyC = new Entity({
             offset: {x: 4, y:16},
             width: 36,
             height: 33
-        
         },
-        huskyLeft: {
-            imageSrc: './images/entities/hound/houndL.png',
-            framesMax: 6,
-            framesHold: 5,
+        houndHurtLeft: {
+            imageSrc: './images/entities/hound/houndHurtL.png',
+            framesMax: 4,
+            framesHold: 7,
             offset: {x: 10, y:16},
             width: 36,
             height: 33
         },
-        huskyRight:{    
-            imageSrc: './images/entities/hound/houndR.png',
-            framesMax: 6,
-            framesHold: 5,
+        houndHurtRight:{    
+            imageSrc: './images/entities/hound/houndHurtR.png',
+            framesMax: 4,
+            framesHold: 7,
             offset: {x: 4, y:16},
             width: 36,
             height: 33
-        
+    },
+        houndDeathLeft: {
+            imageSrc: './images/entities/hound/houndDyingL.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
         },
-}
+        houndDeathRight:{    
+            imageSrc: './images/entities/hound/houndDyingR.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+    },
+        houndAttackLeft: {
+            imageSrc: './images/entities/hound/houndAttackL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndAttackRight:{    
+            imageSrc: './images/entities/hound/houndAttackR.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+    },
+
+    }
 })
 const enemyD = new Entity({
     position:{x: 500, y: 100},
@@ -1072,10 +1204,10 @@ const enemyD = new Entity({
         goblinDeathRight:{
             imageSrc: './images/entities/goblin/goblinDeathR.png',
             framesMax: 4,
-                framesHold: 7,
-                offset: {x: 5, y:11},
-                width: 25,
-                height: 38
+            framesHold: 7,
+            offset: {x: 5, y:11},
+            width: 25,
+            height: 38
         },
         houndLeft: {
             imageSrc: './images/entities/hound/houndL.png',
@@ -1092,45 +1224,60 @@ const enemyD = new Entity({
             offset: {x: 4, y:16},
             width: 36,
             height: 33
-        
+        },
+        houndHurtLeft: {
+            imageSrc: './images/entities/hound/houndHurtL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndHurtRight:{    
+            imageSrc: './images/entities/hound/houndHurtR.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
     },
+        houndDeathLeft: {
+            imageSrc: './images/entities/hound/houndDyingL.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndDeathRight:{    
+            imageSrc: './images/entities/hound/houndDyingR.png',
+            framesMax: 6,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+    },
+        houndAttackLeft: {
+            imageSrc: './images/entities/hound/houndAttackL.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 10, y:16},
+            width: 36,
+            height: 33
+        },
+        houndAttackRight:{    
+            imageSrc: './images/entities/hound/houndAttackR.png',
+            framesMax: 4,
+            framesHold: 7,
+            offset: {x: 4, y:16},
+            width: 36,
+            height: 33
+    },
+
     }
 })
 const enemyE = new Entity({
     position:{x: 30, y: 60},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 1,
-    damage: 4,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const enemyF = new Entity({
-    position:{x: 30, y: 440},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 1,
-    damage: 4,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const enemyG = new Entity({
-    position:{x: 660, y: 440},
-    width: 12, height: 12,
-    speed: {x: 0, y: 0},
-    health: 1,
-    damage: 4,
-    imageSrc: './images/entities/bat.png', 
-    scale: 1, 
-    framesMax: 5, 
-    offset: {x: 2, y: 1}
-})
-const enemyH = new Entity({
-    position:{x: 660, y: 60},
     width: 12, height: 12,
     speed: {x: 0, y: 0},
     health: 1,
@@ -1152,32 +1299,100 @@ const head = new Entity({
     offset: {x: 12, y: 2}
 })
 
+const mobCollision = (mobOne, mobTwo)=>{    
+    const left = mobOne.position.x + mobOne.width >=  mobTwo.position.x
+    const right = mobOne.position.x <= mobTwo.position.x + mobTwo.width
+    const top = mobOne.position.y + mobOne.height >= mobTwo.position.y
+    const bottom = mobOne.position.y <= mobTwo.position.y + mobTwo.height
+
+
+    if(left && right && top && bottom && mobOne.alive && mobTwo.alive && !mobOne.dying && !mobTwo.dying && !mobOne.hurt){
+            mobTwo.waiting = true
+    } else {
+            mobTwo.waiting = false
+    }
+
+
+}
+
 
 const houndAttack = (player, enemy)=>{
-    if(enemy.alive){
-    if(enemy.position.x >= player.position.x + 6){
-        enemy.position.x -= 0
-        enemy.width = enemy.sprites.houndLeft.width
-        enemy.height = enemy.sprites.houndLeft.height
-        enemy.image = enemy.sprites.houndLeft.image
-        enemy.framesMax = enemy.sprites.houndLeft.framesMax
-        enemy.offset.x = enemy.sprites.houndLeft.offset.x
-        enemy.offset.y = enemy.sprites.houndLeft.offset.y
-    }
-    if(enemy.position.x <= player.position.x + 6){
-        enemy.position.x += 0
-        enemy.width = enemy.sprites.houndRight.width
-        enemy.height = enemy.sprites.houndRight.height
-        enemy.image = enemy.sprites.houndRight.image
-        enemy.framesMax = enemy.sprites.houndRight.framesMax
-        enemy.offset.x = enemy.sprites.houndRight.offset.x
-        enemy.offset.y = enemy.sprites.houndRight.offset.y
-    }
-    if(enemy.position.y >= player.position.y + 12){
-        enemy.position.y -= 0
-    }
-    if(enemy.position.y <= player.position.y + 12){
-        enemy.position.y += 0
+    let attacking = false
+
+    if(enemy.dying){
+        if(enemy.direction == 'left'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.houndDeathLeft.framesMax
+            enemy.width = enemy.sprites.houndDeathLeft.width
+            enemy.height = enemy.sprites.houndDeathLeft.height
+            enemy.image = enemy.sprites.houndDeathLeft.image 
+            enemy.offset.x = enemy.sprites.houndDeathLeft.offset.x
+            enemy.offset.y = enemy.sprites.houndDeathLeft.offset.y
+        } if(enemy.direction == 'right'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.houndDeathRight.framesMax
+            enemy.width = enemy.sprites.houndDeathRight.width
+            enemy.height = enemy.sprites.houndDeathRight.height
+            enemy.image = enemy.sprites.houndDeathRight.image 
+            enemy.offset.x = enemy.sprites.houndDeathRight.offset.x
+            enemy.offset.y = enemy.sprites.houndDeathRight.offset.y
+        }
+    } else if(enemy.hurt && !enemy.dying){
+        if(enemy.direction == 'left'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.houndHurtLeft.framesMax
+            enemy.width = enemy.sprites.houndHurtLeft.width
+            enemy.height = enemy.sprites.houndHurtLeft.height
+            enemy.image = enemy.sprites.houndHurtLeft.image 
+            enemy.offset.x = enemy.sprites.houndHurtLeft.offset.x
+            enemy.offset.y = enemy.sprites.houndHurtLeft.offset.y
+        } if(enemy.direction == 'right'){
+            enemy.position.x -= 0
+            enemy.framesMax = enemy.sprites.houndHurtRight.framesMax
+            enemy.width = enemy.sprites.houndHurtRight.width
+            enemy.height = enemy.sprites.houndHurtRight.height
+            enemy.image = enemy.sprites.houndHurtRight.image 
+            enemy.offset.x = enemy.sprites.houndHurtRight.offset.x
+            enemy.offset.y = enemy.sprites.houndHurtRight.offset.y
+        }
+    } else if (!enemy.hurt && !enemy.dying &&enemy.alive){
+        if(enemy.position.x <= player.position.x + player.width + 45){
+            attacking = true
+            enemy.position.x -= 0
+            enemy.direction = 'left'
+            enemy.image = enemy.sprites.houndAttackLeft.image
+            enemy.framesMax = enemy.sprites.houndAttackLeft.framesMax
+            enemy.offset.x = enemy.sprites.houndAttackLeft.offset.x
+            enemy.offset.y = enemy.sprites.houndAttackLeft.offset.y
+            
+        } else {
+          if(enemy.position.x >= player.position.x + player.width + 35){
+           
+            enemy.position.x -= .4
+            enemy.direction = 'left'
+            enemy.width = enemy.sprites.houndLeft.width
+            enemy.height = enemy.sprites.houndLeft.height
+            enemy.image = enemy.sprites.houndLeft.image
+            enemy.framesMax = enemy.sprites.houndLeft.framesMax
+            enemy.offset.x = enemy.sprites.houndLeft.offset.x
+            enemy.offset.y = enemy.sprites.houndLeft.offset.y
+        }
+        if(enemy.position.x + enemy.width <= player.position.x - 35){
+            enemy.position.x += .4
+            enemy.direction = 'right'
+            enemy.width = enemy.sprites.houndRight.width
+            enemy.height = enemy.sprites.houndRight.height
+            enemy.image = enemy.sprites.houndRight.image
+            enemy.framesMax = enemy.sprites.houndRight.framesMax
+            enemy.offset.x = enemy.sprites.houndRight.offset.x
+            enemy.offset.y = enemy.sprites.houndRight.offset.y
+        }
+        if(enemy.position.y >= player.position.y + 12){
+            enemy.position.y -= 0
+        }
+        if(enemy.position.y <= player.position.y + 12){
+            enemy.position.y += 0
+        }
     }
   }
 }
@@ -1209,7 +1424,6 @@ const huskyAttack = (player, enemy)=>{
     }
   }
 }
-const fireballArr = []
 
 const headAttack = (player, enemy)=>{
     if(enemy.position.x >= player.position.x){
@@ -1244,7 +1458,7 @@ const goblinAttack = (player, enemy)=>{
             enemy.height = enemy.sprites.goblinDeathRight.height
             enemy.image = enemy.sprites.goblinDeathRight.image 
             enemy.offset.x = enemy.sprites.goblinDeathRight.offset.x
-            enemy.offset.y = enemy.sprites.goblinDeathLeft.offset.y
+            enemy.offset.y = enemy.sprites.goblinDeathRight.offset.y
         }
     } else if(enemy.hurt && !enemy.dying){
         if(enemy.direction == 'left'){
@@ -1264,10 +1478,10 @@ const goblinAttack = (player, enemy)=>{
             enemy.offset.x = enemy.sprites.goblinHurtRight.offset.x
             enemy.offset.y = enemy.sprites.goblinHurtRight.offset.y
         }
-    } else if (!enemy.hurt && !enemy.dying &&enemy.alive){
+    } else if (!enemy.hurt && !enemy.dying && enemy.alive && !enemy.waiting){
         if(enemy.position.x >= player.position.x){
             enemy.direction = 'left'
-            enemy.position.x -= 0
+            enemy.position.x -= .5
             enemy.width = enemy.sprites.goblinLeft.width
             enemy.height = enemy.sprites.goblinLeft.height
             enemy.image = enemy.sprites.goblinLeft.image
@@ -1277,7 +1491,7 @@ const goblinAttack = (player, enemy)=>{
         }
         if(enemy.position.x <= player.position.x){
             enemy.direction = 'right'
-            enemy.position.x += 0
+            enemy.position.x += .5
             enemy.width = enemy.sprites.goblinRight.width
             enemy.height = enemy.sprites.goblinRight.height
             enemy.image = enemy.sprites.goblinRight.image
@@ -1285,17 +1499,13 @@ const goblinAttack = (player, enemy)=>{
             enemy.offset.x = enemy.sprites.goblinRight.offset.x
             enemy.offset.y = enemy.sprites.goblinRight.offset.y           
         }
-        if(enemy.position.y >= player.position.y - 10){
-            enemy.position.y -= 0
+        if(enemy.position.y >= player.position.y + 15){
+            enemy.position.y -= .5
         }
-        if(enemy.position.y <= player.position.y - 10){
-            enemy.position.y += 0
+        if(enemy.position.y <= player.position.y + 15){
+            enemy.position.y += .5
         }
       }
-
-
-
-
 }
 
 let dialogue = false
@@ -1308,15 +1518,15 @@ const levelOne = ()=>{
     }
    
     if(enemyB.alive){
-        goblinAttack(adventurer, enemyB)
+        houndAttack(adventurer, enemyB)
         enemyB.update()
     }
     if(enemyC.alive){
-        goblinAttack(adventurer, enemyC)
+        houndAttack(adventurer, enemyC)
         enemyC.update()
     }
     if(enemyD.alive){
-        goblinAttack(adventurer, enemyD)
+        houndAttack(adventurer, enemyD)
         enemyD.update()
     }
     door.update()
@@ -1707,15 +1917,35 @@ const spikeHit = (spike, enemy) => {
             if(enemy.health >= 1 && spike.speed.x > 0){
                 enemy.position.x += 30
                 spike.alive = false
+                enemy.hurt = true
+                setTimeout(()=>{
+                    enemy.hurt = false
+                    enemy.framesCurrent = 0
+                }, 500)
             } else if(enemy.health >=  1 && spike.speed.x < 0){
                 enemy.position.x -= 30
                 spike.alive = false
+                enemy.hurt = true
+                setTimeout(()=>{
+                    enemy.hurt = false
+                    enemy.framesCurrent = 0
+                }, 500)
             } else if(enemy.health >=  1 && spike.speed.y < 0){
                 enemy.position.y -= 30
                 spike.alive = false
+                enemy.hurt = true
+                setTimeout(()=>{
+                    enemy.hurt = false
+                    enemy.framesCurrent = 0
+                }, 500)
             } else if(enemy.health >=  1 && spike.speed.y > 0){
                 enemy.position.y += 30
                 spike.alive = false
+                enemy.hurt = true
+                setTimeout(()=>{
+                    enemy.hurt = false
+                    enemy.framesCurrent = 0
+                }, 500)
             } else if (enemy.health == 0){
                 enemy.dying = true
                 spike.alive = false
@@ -1945,21 +2175,6 @@ const healthChecker = (player) =>{
     } else if (player.health == 0){
         health.style.width = '0%'
     }   
-}
-const collectHeart = (heart, player) => {
-    const left = heart.position.x + heart.width >=  player.position.x
-    const right = heart.position.x <= player.position.x + player.width
-    const top = heart.position.y + heart.height >= player.position.y
-    const bottom = heart.position.y <= player.position.y + player.height
-    
-    if(right && left && top && bottom && heart.alive){
-        player.health = 3
-        heart.alive = false
-        health.style.width = '100%'
-        health.style.backgroundColor = 'green'
-    } else {
-        return false
-    }
 }
 
 let dyingFramesElaped = 0
@@ -2307,15 +2522,27 @@ const gameState=()=>{
 
 }
 
+const checkMobCollision = ()=>{
+        mobCollision(enemyA, enemyB)
+        mobCollision(enemyA, enemyC)
+        mobCollision(enemyA, enemyD)
+        mobCollision(enemyA, enemyE)
+        mobCollision(enemyB, enemyC)
+        mobCollision(enemyB, enemyD)
+        mobCollision(enemyB, enemyE)
+        mobCollision(enemyC, enemyD)
+        mobCollision(enemyC, enemyE)
+        mobCollision(enemyD, enemyE)
+
+         
+}
+
 const checkEnemyHit = ()=>{
         enemyHit(adventurer, enemyA)
         enemyHit(adventurer, enemyB)
         enemyHit(adventurer, enemyC)
         enemyHit(adventurer, enemyD)
         enemyHit(adventurer, enemyE)
-        enemyHit(adventurer, enemyF)
-        enemyHit(adventurer, enemyG)
-        enemyHit(adventurer, enemyH)
         headHit(adventurer, head) 
 
 }
@@ -2325,9 +2552,6 @@ const checkPlayerHit = () => {
         playerHit(adventurer,enemyC)
         playerHit(adventurer,enemyD)
         playerHit(adventurer,enemyE)
-        playerHit(adventurer,enemyF)
-        playerHit(adventurer,enemyG)
-        playerHit(adventurer,enemyH)
         playerHit(adventurer, head)
         
  }
@@ -2375,9 +2599,6 @@ function animate(){
         spikeHit(spell, enemyC)
         spikeHit(spell, enemyD)
         spikeHit(spell, enemyE)
-        spikeHit(spell, enemyF)
-        spikeHit(spell, enemyG)
-        spikeHit(spell, enemyH)
         spikeHit(spell, head)
       }
     })
@@ -2386,6 +2607,7 @@ function animate(){
     
     checkEnemyHit()
     checkPlayerHit()
+    checkMobCollision()
 
     collectSpike(spikeA, adventurer)
     collectSpike(spikeB, adventurer)
