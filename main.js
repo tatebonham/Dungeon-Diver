@@ -185,7 +185,7 @@ class Player {
         }, 250)       
         setTimeout(()=>{
           this.isAttacking = false
-        }, 600)
+        }, 400)
        }  
 }
 
