@@ -65,13 +65,17 @@ Delve deep into the dungeons! ...why? To save the survivors of the last party th
 
 - Doors: https://opengameart.org/content/lpc-animated-doors
 - Chest: Twitter@pixelpooper
-- Enemy Creatures:
-- Spike:
+- Enemy Creatures: https://craftpix.net/product/hell-monster-pixel-art-game-sprite-pack/
+- Spike: https://flyclipart.com/spikes-pixel-art-maker-spikes-png-345594#
 - Boss Mob: https://opengameart.org/content/bosses-and-monsters-spritesheets-ars-notoria
-- Player Character:
+- Player Character: https://www.gamedevmarket.net/asset/2d-animated-top-down-golem/
 - Key: Legend of Zelda a Link to the Past
 - Bebo the True Hero of the Story: https://craftpix.net/freebies/free-pixel-art-tiny-hero-sprites/
+- Reaper: https://www.gamedevmarket.net/asset/pixel-art-reaper-character-with-animations/
 
 ---
 
 ## JS Rescources
+
+- Top-Down Animations for Character: https://www.youtube.com/watch?v=yP5DKzriqXA&t=5678s
+- Canvas Animation: https://www.youtube.com/watch?v=vyqbNFMDRGQ&t=3238s

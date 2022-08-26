@@ -68,7 +68,19 @@ class Entity{
                 this.framesCurrent = 0
             }
         }
+        if(this.position.x < 30){
+            this.position.x = 30
+        } else if(this.position.x + this.width > 670){
+            this.position.x = 670 - this.width
+        } 
+
+        if(this.position.y < 60){
+            this.position.y = 60
+        } else if (this.position.y  + this.height > 450){
+            this.position.y = 450 - this.height    
+        } 
     }
+
     
 }
 
@@ -713,7 +725,7 @@ const door = new Entity({
     imageSrc: './images/entities/door.png',
     scale: 1,
     framesMax: 1,
-    offset: {x: 28, y: 15},
+    offset: {x: 22, y: 15},
     sprites: {openDoor: {
         imageSrc: './images/entities/door2.png',
         offset: {x: 18, y: 15},
@@ -721,7 +733,7 @@ const door = new Entity({
     }}
 })
 const chest = new Entity({
-    position: {x: 400, y: 70},
+    position: {x: 600, y: 70},
     width: 50,
     height: 40,
     speed: {x: 0, y: 0},
@@ -2630,7 +2642,7 @@ const gameState=()=>{
         scoreCount = 34
         message.innerText = 'Well, you saved Bebo... but you only came out with 1 measely gold. But hey, that\'s 1 more gold than before. Take an extra point on the house!'
         message.classList.remove('hidden')
-        message.style.backgroundColor = 'red'
+        message.style.backgroundColor = 'skyblue'
         continueButton.classList.remove('hidden')
         continueButton.innerText = `Press 'Enter' to Retry?`
         window.addEventListener('keydown', (e)=>{
