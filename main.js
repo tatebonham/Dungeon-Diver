@@ -1516,7 +1516,7 @@ const reaperAttack = (player, enemy)=>{
     } else if (!enemy.hurt && !enemy.dying && enemy.alive && !enemy.waiting &&  !enemy.attacking && !intermission){
         if(enemy.position.x >= player.position.x){
             enemy.direction = 'left'
-            enemy.position.x -= .4
+            enemy.position.x -= 1
             enemy.width = enemy.sprites.reaperLeft.width
             enemy.height = enemy.sprites.reaperLeft.height
             enemy.image = enemy.sprites.reaperLeft.image
@@ -1526,7 +1526,7 @@ const reaperAttack = (player, enemy)=>{
         }
         if(enemy.position.x <= player.position.x){
             enemy.direction = 'right'
-            enemy.position.x += .4
+            enemy.position.x += 1
             enemy.width = enemy.sprites.reaperRight.width
             enemy.height = enemy.sprites.reaperRight.height
             enemy.image = enemy.sprites.reaperRight.image
@@ -1535,10 +1535,10 @@ const reaperAttack = (player, enemy)=>{
             enemy.offset.y = enemy.sprites.reaperRight.offset.y           
         }
         if(enemy.position.y >= player.position.y + 20){
-            enemy.position.y -= .4
+            enemy.position.y -= 1
         }
         if(enemy.position.y <= player.position.y + 20){
-            enemy.position.y += .4
+            enemy.position.y += 1
         }
       }
 }
