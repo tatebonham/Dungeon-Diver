@@ -674,21 +674,21 @@ const spikeA = new Entity({
 })
 const spikeB = new Entity({
     position: {x: 360, y: 220},
-    width: 5,
-    height: 30,
+    width: 22,
+    height: 20,
     speed: {x: 0, y: 0},
     imageSrc: './images/adventurer/spike/spike-u.png',
-    scale: .5,
+    scale: .15,
     framesMax: 1,
     offset: {x: 2, y: 1}
 })
 const spikeC = new Entity({
     position: {x: 620, y: 420},
-    width: 5,
-    height: 30,
+    width: 22,
+    height: 20,
     speed: {x: 0, y: 0},
     imageSrc: './images/adventurer/spike/spike-u.png',
-    scale: .5,
+    scale: .15,
     framesMax: 1,
     offset: {x: 2, y: 1}
 })
@@ -706,7 +706,7 @@ const key = new Entity({
     offset: {x: 1, y: 0}
 })
 const door = new Entity({
-    position: {x: 665, y: 200},
+    position: {x: 666, y: 200},
     width: 10,
     height: 65,
     speed: {x: 0, y: 0},
@@ -735,10 +735,10 @@ const chest = new Entity({
 
 
 const enemyA = new Entity({
-    position:{x: 300, y: 300},
+    position:{x: 650, y: 400},
     width: 25, height: 40,
     speed: {x: 0, y: 0},
-    health: 3,
+    health: 5,
     damage: 4,
     imageSrc: '', 
     scale: 1, 
@@ -860,10 +860,10 @@ const enemyA = new Entity({
     }
 })
 const enemyB = new Entity({
-    position:{x: 200, y: 230},
+    position:{x: 410, y: 300},
     width: 25, height: 40,
     speed: {x: 0, y: 0},
-    health: 3,
+    health: 5,
     damage: 4,
     imageSrc: '', 
     scale: 1, 
@@ -989,7 +989,7 @@ const enemyC = new Entity({
     position:{x: 400, y: 400},
     width: 25, height: 40,
     speed: {x: 0, y: 0},
-    health: 3,
+    health: 4,
     damage: 4,
     imageSrc: '', 
     scale: 1, 
@@ -1115,7 +1115,7 @@ const enemyD = new Entity({
     position:{x: 500, y: 100},
     width: 25, height: 40,
     speed: {x: 0, y: 0},
-    health: 3,
+    health: 5,
     damage: 4,
     imageSrc: '', 
     scale: 1, 
@@ -1238,11 +1238,11 @@ const enemyD = new Entity({
     }
 })
 const reaper = new Entity({
-    position:{x: 300, y: 160},
+    position:{x: 100, y: 240},
     width: 20, height: 20,
     speed: {x: 0, y: 0},
-    health: 5,
-    damage: 2,
+    health: 20,
+    damage: 3,
     imageSrc: '', 
     scale: .7, 
     framesMax: 1, 
@@ -1325,7 +1325,7 @@ const mobCollision = (mobOne, mobTwo)=>{
 
 
 const houndAttack = (player, enemy)=>{
-    enemy.damage = 1
+    enemy.damage = 2
 
     if(enemy.dying){
         if(enemy.direction == 'left'){
@@ -1418,19 +1418,19 @@ const reaperBlink=()=>{
             setTimeout(()=>{
                 reaper.framesCurrent = 0
                 reaper.attacking = true
-                reaper.damage = 5
                 reaper.position.x = adventurer.position.x - 22
                 reaper.position.y = adventurer.position.y + 20
             }, 5000)
             setTimeout(()=>{
+                reaper.damage = 6
                 reaper.width = 40
             }, 5400)
             setTimeout(()=>{
+                reaper.damage = 3
                 reaper.width = 20
             }, 5600)
             setTimeout(()=>{
                 reaper.attacking = false
-                reaper.damage = 2
                 reaper.framesCurrent = 0
             }, 6000)
         }, 7000)
@@ -1439,6 +1439,7 @@ const reaperBlink=()=>{
 
 
 const reaperAttack = (player, enemy)=>{
+
     enemy.scale = 1
     if(enemy.attacking){
         enemy.direction = 'right'
@@ -1524,7 +1525,7 @@ const reaperAttack = (player, enemy)=>{
 }
 
 const goblinAttack = (player, enemy)=>{
-
+    enemy.damage = 4
     if(enemy.dying){
         if(enemy.direction == 'left'){
             enemy.position.x -= 0
@@ -1562,9 +1563,9 @@ const goblinAttack = (player, enemy)=>{
             enemy.offset.y = enemy.sprites.goblinHurtRight.offset.y
         }
     } else if (!enemy.hurt && !enemy.dying && enemy.alive && !enemy.waiting){
-        if(enemy.position.x >= player.position.x){
+        if(enemy.position.x >= player.position.x && !enemy.waiting){
             enemy.direction = 'left'
-            enemy.position.x -= .5
+            enemy.position.x -= .6
             enemy.width = enemy.sprites.goblinLeft.width
             enemy.height = enemy.sprites.goblinLeft.height
             enemy.image = enemy.sprites.goblinLeft.image
@@ -1572,9 +1573,9 @@ const goblinAttack = (player, enemy)=>{
             enemy.offset.x = enemy.sprites.goblinLeft.offset.x
             enemy.offset.y = enemy.sprites.goblinLeft.offset.y
         }
-        if(enemy.position.x <= player.position.x){
+        if(enemy.position.x <= player.position.x && !enemy.waiting){
             enemy.direction = 'right'
-            enemy.position.x += .5
+            enemy.position.x += .6
             enemy.width = enemy.sprites.goblinRight.width
             enemy.height = enemy.sprites.goblinRight.height
             enemy.image = enemy.sprites.goblinRight.image
@@ -1582,11 +1583,11 @@ const goblinAttack = (player, enemy)=>{
             enemy.offset.x = enemy.sprites.goblinRight.offset.x
             enemy.offset.y = enemy.sprites.goblinRight.offset.y           
         }
-        if(enemy.position.y >= player.position.y + 15){
-            enemy.position.y -= .5
+        if(enemy.position.y >= player.position.y + 15 && !enemy.waiting){
+            enemy.position.y -= .6
         }
-        if(enemy.position.y <= player.position.y + 15){
-            enemy.position.y += .5
+        if(enemy.position.y <= player.position.y + 15 && !enemy.waiting){
+            enemy.position.y += .6
         }
       }
 }
@@ -1595,9 +1596,9 @@ let dialogue = false
 
 const levelOne = ()=>{
     
-    if(reaper.alive){
-        reaperAttack(adventurer, reaper)
-        reaper.update()
+    if(enemyA.alive){
+        goblinAttack(adventurer, enemyA)
+        enemyA.update()
     }
    
     if(enemyB.alive){
@@ -1617,10 +1618,15 @@ const levelOne = ()=>{
     if(enemyA.alive == false && enemyB.alive == false && enemyC.alive == false && enemyD.alive == false){
         level = 2
         scoreCount += 4
+        spikeA.alive = true
         enemyA.alive = true
         enemyB.alive = true
         enemyC.alive = true
         enemyD.alive = true
+        enemyA.health = 4
+        enemyB.health = 4
+        enemyC.health = 4
+        enemyD.health = 4
         enemyA.position.x = 40
         enemyA.position.y = 70
         enemyB.position.x = 630
@@ -1683,7 +1689,7 @@ const levelFour = () =>{
         message.classList.remove('hidden')
         message.innerText = 'Oh my gosh, thank you so much for coming to save me. Here is one gold as a token of my appreciation. Good luck getting that chest full of gold open!'
         continueButton.classList.remove('hidden')
-        continueButton.innerText = `Press 'k' to Continue`
+        continueButton.innerText = `Press 'Enter' to Continue`
         window.addEventListener('keydown', (e)=>{if(e.key == 'Enter'){
             dialogue = false
             message.classList.add('hidden')
@@ -1691,67 +1697,74 @@ const levelFour = () =>{
             scoreCount = 9
             goldCount = 1
             level = 5
+            intermission = false
+            reaper.alive = true
+            reaperBlink()
+            enemyA.alive = false
+            enemyB.alive = false
+            enemyC.alive = false
+            enemyD.alive = false
         }})
     }
 }
 const levelFive = () =>{
-    if(head.alive){
-        headAttack(adventurer, head)
-        head.update()
+    if(reaper.alive){
+        reaperAttack(adventurer, reaper)
+        reaper.update()
     }
     chest.update()
     door.update()
     if(spikeB.alive){
         spikeB.update()
     }
-   
 
-    if(head.health <= 15){
+    if(reaper.health <= 8){
         level = 6
+        intermission = true
+        spikeC.alive = true
+        enemyA.alive = true
+        enemyB.alive = true
+        enemyC.alive = true
+        enemyD.alive = true
+        enemyA.health = 4
+        enemyB.health = 4
+        enemyC.health = 4
+        enemyD.health = 4
+        enemyA.position.x = 40
+        enemyA.position.y = 70
+        enemyB.position.x = 630
+        enemyB.position.y = 70
+        enemyC.position.x = 40
+        enemyC.position.y = 400
+        enemyD.position.x = 630
+        enemyD.position.y = 400
     }
 
 }
 const levelSix = () =>{
 
-    if(head.alive){
-        headAttack(adventurer, head)
-        head.update()
+    if(reaper.alive){
+        reaperAttack(adventurer, reaper)
+        reaper.update()
     }
-    if(goblinE.alive){
-        enemyAttack(adventurer, goblinE)
-        goblinE.update()
+    if(enemyA.alive){
+        houndAttack(adventurer, enemyA)
+        enemyA.update()
     }
-    if(goblinF.alive){
-        enemyAttack(adventurer, goblinF)
-        goblinF.update()
+    if(enemyB.alive){
+        houndAttack(adventurer, enemyB)
+        enemyB.update()
     }
-    if(goblinG.alive){
-        enemyAttack(adventurer, goblinG)
-        goblinG.update()
+    if(enemyC.alive){
+        houndAttack(adventurer, enemyC)
+        enemyC.update()
     }
-    if(batI.alive){
-        batAttack(adventurer,batI)
-        batI.update()
-    }
-    if(batJ.alive){
-        batAttack(adventurer,batJ)
-        batJ.update()
-    }
-    if(batK.alive){
-        batAttack(adventurer,batK)
-        batK.update()
+    if(enemyD.alive){
+        houndAttack(adventurer,enemyD)
+        enemyD.update()
     }
     chest.update()
     door.update()
-    if(heartB.alive){
-        heartB.update()
-    }
-    if(heartC.alive){
-        heartC.update()
-    }
-    if(heartD.alive){
-        heartD.update()
-    }
     if(spikeB.alive){
         spikeB.update()
     }
@@ -1760,24 +1773,68 @@ const levelSix = () =>{
     }
    
 
-    if(head.alive == false){
-        bossDead = true
-        scoreCount = 29
+    if(enemyA.alive == false && enemyB.alive == false && enemyC.alive == false && enemyD.alive == false){
+        scoreCount = 13
         level = 7
-        goblinE.alive = false
-        goblinF.alive = false
-        goblinG.alive = false
-        batI.alive = false
-        batJ.alive = false
-        batK.alive = false
-        heartB.alive = false
-        heartC.alive = false
-        heartD.alive = false
-        spikeB.alive = false
-        spikeC.alive = false
+        intermission = false
+        enemyA.alive = true
+        enemyB.alive = true
+        enemyC.alive = true
+        enemyD.alive = true
+        enemyA.health = 5
+        enemyB.health = 5
+        enemyC.health = 5
+        enemyD.health = 5
+        enemyA.position.x = 40
+        enemyA.position.y = 70
+        enemyB.position.x = 630
+        enemyB.position.y = 70
+        enemyC.position.x = 630
+        enemyC.position.y = 400
+        enemyD.position.x = 40
+        enemyD.position.y = 400
+
     }
 }
-const levelSeven = ()=>{
+const levelSeven = () =>{
+
+    if(reaper.alive){
+        reaperAttack(adventurer, reaper)
+        reaper.update()
+    }
+    if(enemyA.alive){
+        goblinAttack(adventurer, enemyA)
+        enemyA.update()
+    }
+    if(enemyB.alive){
+        goblinAttack(adventurer, enemyB)
+        enemyB.update()
+    }
+    if(enemyC.alive){
+        goblinAttack(adventurer, enemyC)
+        enemyC.update()
+    }
+    if(enemyD.alive){
+        goblinAttack(adventurer,enemyD)
+        enemyD.update()
+    }
+    chest.update()
+    door.update()
+    if(spikeB.alive){
+        spikeB.update()
+    }
+    if(spikeC.alive){
+        spikeC.update()
+    }
+    if(reaper.alive == false && enemyA.alive == false && enemyB.alive == false && enemyC.alive == false && enemyD.alive == false){
+        scoreCount = 33
+        level = 8
+        bossDead = true
+        key.alive = true
+        chest.alive = true
+    }
+}
+const levelEight = ()=>{
     chest.update()
     door.update()
     if(key.alive){
@@ -1793,12 +1850,19 @@ const levelSeven = ()=>{
             dialogue = false
             message.classList.add('hidden')
             continueButton.classList.add('hidden')
-            scoreCount = 29
-            level = 8
+            scoreCount = 33
+            level = 9
+            enemyA.alive = false
+            enemyB.alive = false
+            enemyC.alive = false
+            enemyD.alive = false
+            reaper.alive = false
+
+
         }})
     }
 }
-const levelEight = ()=>{
+const levelNine = ()=>{
     // message.classList.add('hidden')
     // continueButton.classList.add('hidden')
     chest.image = chest.sprites.open.image
@@ -1806,7 +1870,7 @@ const levelEight = ()=>{
     chest.offset.y = 60
     chest.update()
     door.update()
-    scoreCount = 29
+    scoreCount = 33
 }
 
 let scoreCount = 0
@@ -1947,6 +2011,8 @@ const touchDoor = (door, player) => {
     
     if(right && left && top && bottom){
         if(level == 3){
+            survivorRoomOne.alive = true
+            survivorRoomOne.notSafe = true
             player.position.x = 40
             player.position.y = 230
             door.position.x = 30
@@ -1956,7 +2022,7 @@ const touchDoor = (door, player) => {
             door.scale = door.sprites.openDoor.scale
             doorOpened = true
             level = 4
-        } else if(level == 8) {
+        } else if(level == 9) {
             gameWon = true
         }
      
@@ -2002,7 +2068,7 @@ const spikeHit = (spike, enemy) => {
     
         const Bottom = spike.position.y <= enemy.position.y + enemy.height
     
-        if(Right && Left && Bottom && Top && !enemy.dying){
+        if(Right && Left && Bottom && Top && !enemy.dying && enemy.alive){
             enemy.health -= 1
             if(enemy.health >= 1 && spike.speed.x > 0){
                 enemy.position.x += 30
@@ -2078,7 +2144,7 @@ const enemyHit = (player, enemy) => {
 
     if(player.isAttacking && !enemy.dying && enemy.alive){
         if(uRight && uLeft && uTop && uBottom && lastKey == 'w'){
-            enemy.health -= 1
+            enemy.health -= 2
             if(enemy.health >= 1){
                 enemy.hurt = true
                 enemy.framesCurrent = 0
@@ -2097,7 +2163,7 @@ const enemyHit = (player, enemy) => {
                 }, 500)
             }   
         } else if (lRight && lLeft && lTop && lBottom && lastKey == 'a') {
-            enemy.health -= 1
+            enemy.health -= 2
             if(enemy.health >= 1){
                 enemy.hurt = true
                 enemy.framesCurrent = 0
@@ -2116,7 +2182,7 @@ const enemyHit = (player, enemy) => {
                 }, 500)
             }            
         } else if (dRight && dLeft && dTop && dBottom && lastKey == 's') {
-            enemy.health -= 1
+            enemy.health -= 2
             if(enemy.health >= 1){
                 enemy.hurt = true
                 enemy.framesCurrent = 0
@@ -2135,7 +2201,7 @@ const enemyHit = (player, enemy) => {
                 }, 500)
             }          
         } else if (rRight && rLeft && rTop && rBottom && lastKey == 'd') {
-            enemy.health -= 1
+            enemy.health -= 2
             if(enemy.health >= 1){
                 enemy.hurt = true
                 enemy.framesCurrent = 0
@@ -2505,7 +2571,7 @@ let bossDead = false
 
 
 const gameState=()=>{
-    if(!gameStart){
+    if(!gameStart && level == 1){
         window.addEventListener('keydown', (e)=>{
             if(e.key == 'Enter'){
                 message.classList.add('hidden')
@@ -2535,7 +2601,7 @@ const gameState=()=>{
             objective.innerText = 'Slay all the goblins!'
             levelOne()
         } else if (level == 2){
-            objective.innerText = 'Careful there\'s bats!'
+            objective.innerText = 'Careful, hounds!'
             levelTwo()
         } else if (level == 3){
             objective.innerText = 'Go find Bebo!'
@@ -2547,18 +2613,22 @@ const gameState=()=>{
             objective.innerText = 'What\'s that????'
             levelFive()
         } else if (level == 6){
-            objective.innerText = 'Don\'t die...'
+            objective.innerText = 'More hounds?!?!'
             levelSix()
         } else if (level == 7){
-            objective.innerText = 'Collect your prize.'
+            objective.innerText = 'Don\'t die...'
             levelSeven()
-        } else if(level == 8){
+        } else if (level == 8){
+            objective.innerText = 'Collect your prize.'
             levelEight()
+        } else if(level == 9){
+            levelNine()
             objective.innerText = 'Leave dissappointed'
         }
     }  
     if(gameWon){
-        message.innerText = 'Well, you saved Bebo... but you only came out with 1 measely gold. But hey, that\'s 1 more gold than before.'
+        scoreCount = 34
+        message.innerText = 'Well, you saved Bebo... but you only came out with 1 measely gold. But hey, that\'s 1 more gold than before. Take an extra point on the house!'
         message.classList.remove('hidden')
         message.style.backgroundColor = 'red'
         continueButton.classList.remove('hidden')
@@ -2578,6 +2648,7 @@ const checkMobCollision = ()=>{
         mobCollision(enemyB, enemyC)
         mobCollision(enemyB, enemyD)    
         mobCollision(enemyC, enemyD)
+
 }
 
 const checkEnemyHit = ()=>{
@@ -2585,7 +2656,9 @@ const checkEnemyHit = ()=>{
         enemyHit(adventurer, enemyB)
         enemyHit(adventurer, enemyC)
         enemyHit(adventurer, enemyD)
+        if(!intermission){
         enemyHit(adventurer, reaper) 
+        }
 
 }
 const checkPlayerHit = () => {
@@ -2594,7 +2667,6 @@ const checkPlayerHit = () => {
         playerHit(adventurer,enemyC)
         playerHit(adventurer,enemyD)
         playerHit(adventurer, reaper)
-        
  }
 let moved = false
 
@@ -2634,13 +2706,13 @@ function animate(){
         spikeHit(spell, enemyB)
         spikeHit(spell, enemyC)
         spikeHit(spell, enemyD)
+        if(!intermission){
         spikeHit(spell, reaper)
+        }
       }
     })
-    // console.log(enemyA.alive)
-    // console.log(enemyB.alive)
-    // console.log(enemyC.alive)
-    // console.log(enemyD.alive)
+    
+    
     
     checkEnemyHit()
     checkPlayerHit()
@@ -2712,6 +2784,7 @@ window.addEventListener('keydown', (event) => {
                 adventurer.attack()
                 currentFrame = 0
                 attacking = true
+                console.log('R:', reaper.alive)
             }
             break
         case 'l': 

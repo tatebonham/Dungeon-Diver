@@ -95,7 +95,7 @@ canvas {
 
   
   #screenMessage {
-    padding-top: 25px;
+    padding-top: 10px;
     padding-bottom: 150px;
     padding-left: 5px;
     padding-right: 5px;
@@ -104,7 +104,7 @@ canvas {
     position: absolute;
     color: black;
     background-color: yellow;
-    height: 215px;
+    height: 230px;
     width: 639px;
   }
 
