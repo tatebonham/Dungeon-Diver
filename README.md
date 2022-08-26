@@ -61,6 +61,21 @@ Delve deep into the dungeons! ...why? To save the survivors of the last party th
 
 ---
 
+## Game Info
+
+- You can cancel attack and hurt animations with dive
+- You can throw spikes during attack animations and during swim
+- Normal attack swings will do 2 damage while dive and spikes do 1 damage
+- Dive will push you back 60px upon collision of a unit with more than 1hp but if you kill the unit it will not bounce you back leaving you
+- open to be hit by the enemy behind them if you arent careful.
+- You can cancel dive early stopping the healing and putting it on cooldown
+- You can shoot spikes through dying enemies and it will pass over them to the next enemy
+- Enemy stats:
+- Goblin{dmg:4,hp:5, no ablity},
+- Hound{dmg:2, hp:4, charges and dashes left and right if rammed into the wall it can do some serious damage if not just straight killing you,
+- if hounds are charging they can stack or "merge" on top of eachother meaning you are about to take double the damage, good luck},
+- Reaper{dmg:3,hp:14,blinks on top of the player slashing his scythe and doing 6 damage
+
 ## Art Credit
 
 - Doors: https://opengameart.org/content/lpc-animated-doors
