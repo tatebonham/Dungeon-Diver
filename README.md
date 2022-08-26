@@ -105,6 +105,7 @@ The Golum, woke up in the forest, half buried and covered in dirt and vines, wit
 
 ## Post-Project Reflection
 
+- Work on my time estimation
 - I tried too hard to force multipurpose fucntions and class, I eventually realized after after watching a tiktok that it's okay to just use single purpose functions.
 - Take more breaks, I have so much trouble not just going on for hours without taking a break, and I definitely felt it come back to bite me.
 - Wish I realized sooner, any functions in the animate would run over and over and take priority over anything else in the Javascript because its running frame by frame.
