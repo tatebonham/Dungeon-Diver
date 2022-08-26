@@ -6,7 +6,7 @@ You have been asked to save a survivor stuck deep in the dungeon, although hesit
 
 ## Game Description
 
-An HTML Canvas game with animations that run off of your browser's frame rate. Game logic runs off Javascript and off the screen, the presentation is set up with HTML and CSS.
+An HTML Canvas game with animations that run off of your browser's frame rate. Game logic runs off Javascript and off the screen, the presentation is set up with HTML, CSS and DOM.
 
 ---
 
@@ -47,6 +47,7 @@ An HTML Canvas game with animations that run off of your browser's frame rate. G
 - CSS
 - Javascript
 - Canvas
+- DOM
 
 ---
 
