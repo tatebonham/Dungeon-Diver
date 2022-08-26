@@ -39,6 +39,10 @@ An HTML Canvas game with animations that run off of your browser's frame rate. G
 - You can cancel dive early stopping the healing and putting it on cooldown.
 - You can shoot spikes through dying enemies and it will pass over them to the next enemy.
 
+### Lore
+
+The Golum, woke up in the forest, half buried and covered in dirt and vines, with no memory of who they were. Wondering for a purpose he eventually found a house in the middle of no where. Where they would meet, Horris, a gnome tinkerer well versed in wizardry, who would take the Golumd in and clean them up. The Golum not having any memory of his past, was named Geraldo and taught spells by Horris. Months later after being trained by Horris, Geraldo came home after going hunting some food for their teacher, Horris was no where to be found with no site of anything happening. Geraldo left his now home in search of what happened to Horris.
+
 ---
 
 ## Tech Stack
