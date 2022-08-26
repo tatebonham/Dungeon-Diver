@@ -71,45 +71,6 @@ class Entity{
     }
     
 }
-class Sprite{
-    constructor({position, imageSrc, scale = 1, framesMax = 1}){
-        this.position = position
-        this.width = 25
-        this.height = 25
-        this.image = new Image()
-        this.image.src = imageSrc
-        this.scale = scale
-        this.framesMax = framesMax
-        this.framesCurrent = this.framesCurrent
-        this.framesElaped = 0
-        this.framesHold = 10
-    }
-
-    draw(){
-        ctx.drawImage(
-            this.image, 
-            0,
-            0,
-            this.image.width,
-            this.image.height,
-            
-
-            this.position.x - this.offset.x, 
-            this.position.y - this.offset.y, 
-            this.image.width  * this.scale,
-            this.image.height * this.scale
-            )
-            // ctx.fillStyle = 'green'
-            // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-
-
-        update(){
-            this.draw()
-        }
-        
-       
-}
 
 class Player {
     constructor({position, width, height, speed, health, imageSrc, scale = 1, offset, sprites}){
@@ -1311,6 +1272,14 @@ const reaper = new Entity({
                 width: 20,
                 height: 30
             },
+            reaperIdleLeft:{
+                imageSrc: './images/entities/reaper/reaperIdleLeft.png',
+                framesMax: 5,
+                framesHold: 7,
+                offset: {x: 16, y:10},
+                width: 20,
+                height: 30
+            },
             reaperAttackRight:{
                 imageSrc: './images/entities/reaper/reaperAttackRight.png',
                 framesMax: 10,
@@ -1319,27 +1288,11 @@ const reaper = new Entity({
                 width: 20,
                 height: 30
             },
-            reaperEquipWeaponLeft:{
-                imageSrc: './images/entities/reaper/reaperEquipWeaponLeft.png',
-                framesMax: 10,
-                framesHold: 10,
-                offset: {x: 5, y:11},
-                width: 20,
-                height: 30
-            },
-            reaperEquipWeaponRight:{
-                imageSrc: './images/entities/reaper/reaperEquipWeaponRight.png',
-                framesMax: 10,
-                framesHold: 10,
-                offset: {x: 5, y:11},
-                width: 20,
-                height: 30
-            },
             reaperHolsterWeaponLeft:{
                 imageSrc: './images/entities/reaper/reaperHolsterWeaponLeft.png',
                 framesMax: 10,
                 framesHold: 10,
-                offset: {x: 5, y:11},
+                offset: {x: 16, y:10},
                 width: 20,
                 height: 30
             },
@@ -1347,7 +1300,7 @@ const reaper = new Entity({
                 imageSrc: './images/entities/reaper/reaperHolsterWeaponRight.png',
                 framesMax: 10,
                 framesHold: 10,
-                offset: {x: 5, y:11},
+                offset: {x: 14, y:10},
                 width: 20,
                 height: 30
             },
@@ -1488,6 +1441,7 @@ const reaperBlink=()=>{
 const reaperAttack = (player, enemy)=>{
     enemy.scale = 1
     if(enemy.attacking){
+        enemy.direction = 'right'
         enemy.position.x -= 0
         enemy.framesMax = enemy.sprites.reaperAttackRight.framesMax
         enemy.height = enemy.sprites.reaperAttackRight.height
@@ -1524,12 +1478,12 @@ const reaperAttack = (player, enemy)=>{
     } else if(enemy.hurt && !enemy.dying){
         if(enemy.direction == 'left'){
             enemy.position.x -= 0
-            enemy.framesMax = enemy.sprites.reaperIdle.framesMax
-            enemy.width = enemy.sprites.reaperIdle.width
-            enemy.height = enemy.sprites.reaperIdle.height
-            enemy.image = enemy.sprites.reaperIdle.image 
-            enemy.offset.x = enemy.sprites.reaperIdle.offset.x
-            enemy.offset.y = enemy.sprites.reaperIdle.offset.y
+            enemy.framesMax = enemy.sprites.reaperIdleLeft.framesMax
+            enemy.width = enemy.sprites.reaperIdleLeft.width
+            enemy.height = enemy.sprites.reaperIdleLeft.height
+            enemy.image = enemy.sprites.reaperIdleLeft.image 
+            enemy.offset.x = enemy.sprites.reaperIdleLeft.offset.x
+            enemy.offset.y = enemy.sprites.reaperIdleLeft.offset.y
         } if(enemy.direction == 'right'){
             enemy.position.x -= 0
             enemy.framesMax = enemy.sprites.reaperIdle.framesMax
@@ -1641,9 +1595,9 @@ let dialogue = false
 
 const levelOne = ()=>{
     
-    if(enemyA.alive){
-        goblinAttack(adventurer, enemyA)
-        enemyA.update()
+    if(reaper.alive){
+        reaperAttack(adventurer, reaper)
+        reaper.update()
     }
    
     if(enemyB.alive){
@@ -2048,7 +2002,7 @@ const spikeHit = (spike, enemy) => {
     
         const Bottom = spike.position.y <= enemy.position.y + enemy.height
     
-        if(Right && Left && Bottom && Top){
+        if(Right && Left && Bottom && Top && !enemy.dying){
             enemy.health -= 1
             if(enemy.health >= 1 && spike.speed.x > 0){
                 enemy.position.x += 30
@@ -2091,9 +2045,9 @@ const spikeHit = (spike, enemy) => {
                 spike.alive = false
                 enemy.framesCurrent = 0
                 setTimeout(()=>{
-                    enemy.dying = false
                     enemy.alive = false
                     enemy.framesCurrent = 0
+                    enemy.dying = false
                 }, 500)
             }    
         } else {
@@ -2643,11 +2597,6 @@ const checkPlayerHit = () => {
         
  }
 let moved = false
-
-
-
-
-
 
 function animate(){
     window.requestAnimationFrame(animate)
