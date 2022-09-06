@@ -1,6 +1,6 @@
 # Dungeon-Diver
 
-You have been asked to save a survivor stuck deep in the dungeon, although hesitant at first, the promise of treasure and riches ripe for the taking convinces you to delve into the dungeons depths. Becareful along the way, there are many strange monsters, be sure to use your spells and hack and slash your way through to get to that treasure.
+You have been asked to save a survivor stuck deep in the dungeon, although hesitant at first, the promise of treasure and riches ripe for the taking convinces you to delve into the dungeons depths. Be careful along the way, there are many strange monsters, be sure to use your spells and hack and slash your way through to get to that treasure.
 
 ---
 
